@@ -1,9 +1,16 @@
 <?php
 
-class AdminDashboardController extends Controller 
+class AdminDashboardController extends Controller
 {
-    public function index() 
+    public function __construct()
     {
-        $this->view("Admin/dashboard/index");
+        Middleware::adminAuth();
+    }
+
+    public function index()
+    {
+        $this->view("Admin/dashboard/index", [
+            "layout" => "admin"
+        ]);
     }
 }

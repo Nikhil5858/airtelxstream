@@ -1,6 +1,9 @@
 <?php
-require "../../app/core/config.php";
-require "../../app/core/App.php";
-require "../../app/core/Controller.php";
+session_start();
 
-$app = new App("admin");
+require "../../app/core/config.php";
+require "../../app/core/Middleware.php"; 
+require "../../app/core/Controller.php";
+require "../../app/core/App.php";
+
+$app = new App();

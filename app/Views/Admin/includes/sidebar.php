@@ -3,20 +3,13 @@
         <img type="image/png"  class="sidebar-logo me-2">
         <h5></h5>
     </div>
-
-    
 </div>
 
 <div class="sidebar" id="sidebar">
 
-    <div class="sidebar-brand d-flex align-items-center mb-4">
-        <img src="<?php echo BASE_URL; ?>/assets/images/xsteamplay.png" alt="Logo" class="sidebar-logo me-2">
-        <div>
-            <h5 class="mb-0 sidebar-title">AirtelXstream</h5>
-            <small class="text-white-50">Admin Management</small>
-        </div>
+    <div class="sidebar-brand d-flex align-items-center">
+        <img src="<?php echo BASE_URL; ?>/assets/images/logo.png" alt="Logo" class="sidebar-logo ms-5">
     </div>
-
 
     <ul class="nav flex-column">
         <li><a href="<?= ADMIN_URL ?>/dashboard" class="nav-link"><i class="bi bi-speedometer2"></i> Dashboard</a></li>

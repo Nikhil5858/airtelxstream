@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AirtelXstream</title>
+    <title>AirtelXstream-Admin</title>
 
     <link rel="icon" type="image/png" href="<?= BASE_URL ?>/assets-admin/image/xsteamplay.png">
 
@@ -17,21 +17,32 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-3">
+
     <button class="btn btn-outline-secondary d-lg-none me-3" id="menu-toggle">
         <i class="bi bi-list" style="font-size: 1.6rem;"></i>
     </button>
 
-    <h3>AirtelXstream</h3>
+    <h3 class="mb-0">AirtelXstream</h3>
 
-    <ul class="navbar-nav ms-auto">
-        <li class="nav-item ms-3">
-            <div class="user-profile d-flex align-items-center">
-                <div class="profile-circle">AD</div>
-                <span class="ms-2">Admin User</span>
-            </div>
+    <ul class="navbar-nav ms-auto align-items-center">
+
+        <li class="nav-item d-flex align-items-center me-3">
+            <div class="profile-circle me-2">AD</div>
+            <span class="fw-semibold">Admin User</span>
         </li>
+
+        <li class="nav-item">
+            <form method="post" action="<?= BASE_URL ?>/admin/logout" class="m-0">
+                <button type="submit" class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-box-arrow-right me-1"></i> Logout
+                </button>
+            </form>
+        </li>
+
     </ul>
+
 </nav>
+
 
 
 
