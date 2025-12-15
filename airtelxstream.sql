@@ -143,7 +143,8 @@ CREATE TABLE seasons (
 );
 
 INSERT INTO seasons VALUES
-(1,3,1,4,10);
+(1,3,1,4,10,3,'2022');
+
 
 /* ===========================
    TABLE: episodes

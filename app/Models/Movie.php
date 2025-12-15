@@ -43,17 +43,13 @@ class Movie
 
     public function update(int $id, array $data): bool
     {
-        $data['id'] = $id;
-
-        return $this->db->prepare("
+        $stmt = $this->db->prepare("
             UPDATE movies SET
                 title=:title,
                 description=:description,
                 release_year=:release_year,
                 language=:language,
                 type=:type,
-                movie_url=:movie_url,
-                trailer_url=:trailer_url,
                 banner_url=:banner_url,
                 poster_url=:poster_url,
                 is_free=:is_free,
@@ -63,8 +59,25 @@ class Movie
                 genre_id=:genre_id,
                 updated_at=NOW()
             WHERE id=:id
-        ")->execute($data);
+        ");
+
+        return $stmt->execute([
+            'id'             => $id,
+            'title'          => $data['title'],
+            'description'    => $data['description'] ?? null,
+            'release_year'   => $data['release_year'] ?? null,
+            'language'       => $data['language'] ?? null,
+            'type'           => $data['type'] ?? 'movie',
+            'poster_url'     => $data['poster_url'] ?? null,
+            'banner_url'     => $data['banner_url'] ?? null,
+            'is_free'        => $data['is_free'] ?? 0,
+            'is_new_release' => $data['is_new_release'] ?? 0,
+            'is_feature'     => $data['is_feature'] ?? 0,
+            'is_banner'      => $data['is_banner'] ?? 0,
+            'genre_id'       => $data['genre_id']
+        ]);
     }
+
 
     public function delete(int $id): bool
     {

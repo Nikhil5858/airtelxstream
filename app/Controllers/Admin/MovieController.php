@@ -1,5 +1,4 @@
 <?php
-
 class MovieController extends Controller
 {
     private Movie $movie;
@@ -14,39 +13,122 @@ class MovieController extends Controller
     {
         $movies = $this->movie->all();
 
+        // fetch genres for dropdown
+        $genres = $this->model('Genre')->all();
+
         $this->view("Admin/movies/index", [
             "layout" => "admin",
-            "movies" => $movies
+            "movies" => $movies,
+            "genres" => $genres
         ]);
     }
 
     public function store()
     {
+        // 1. Validate required fields
+        if (empty($_POST['title'])) {
+            die("Title is required");
+        }
+
+        // 2. Handle file uploads
+        $posterName  = null;
+        $bannerName  = null;
+        $movieName   = null;
+        $trailerName = null;
+
+        if (!empty($_FILES['poster_file']['name'])) {
+            $posterName = time() . '_' . $_FILES['poster_file']['name'];
+            move_uploaded_file(
+                $_FILES['poster_file']['tmp_name'],
+                ROOT_PATH . 'public/assets/images/' . $posterName
+            );
+        }
+
+        if (!empty($_FILES['banner_file']['name'])) {
+            $bannerName = time() . '_' . $_FILES['banner_file']['name'];
+            move_uploaded_file(
+                $_FILES['banner_file']['tmp_name'],
+                ROOT_PATH . 'public/assets/images/' . $bannerName
+            );
+        }
+
+        if (!empty($_FILES['movie_file']['name'])) {
+            $movieName = time() . '_' . $_FILES['movie_file']['name'];
+            move_uploaded_file(
+                $_FILES['movie_file']['tmp_name'],
+                ROOT_PATH . 'public/assets/videos/' . $movieName
+            );
+        }
+
+        if (!empty($_FILES['trailer_file']['name'])) {
+            $trailerName = time() . '_' . $_FILES['trailer_file']['name'];
+            move_uploaded_file(
+                $_FILES['trailer_file']['tmp_name'],
+                ROOT_PATH . 'public/assets/videos/' . $trailerName
+            );
+        }
+
+        // 3. Insert into DB
         $this->movie->create([
             "title"          => $_POST['title'],
-            "description"    => $_POST['description'],
-            "release_year"   => $_POST['release_year'],
-            "language"       => $_POST['language'],
-            "type"           => $_POST['type'],
-            "movie_url"      => $_POST['movie_url'],
-            "trailer_url"    => $_POST['trailer_url'],
-            "banner_url"     => $_POST['banner_url'],
-            "poster_url"     => $_POST['poster_url'],
+            "description"    => $_POST['description'] ?? null,
+            "release_year"   => $_POST['release_year'] ?? null,
+            "language"       => $_POST['language'] ?? null,
+            "type"           => $_POST['type'] ?? 'movie',
+            "movie_url"      => $movieName,
+            "trailer_url"    => $trailerName,
+            "poster_url"     => $posterName,
+            "banner_url"     => $bannerName,
             "is_free"        => $_POST['is_free'] ?? 0,
             "is_new_release" => $_POST['is_new_release'] ?? 0,
             "is_feature"     => $_POST['is_feature'] ?? 0,
             "is_banner"      => $_POST['is_banner'] ?? 0,
-            "genre_id"       => $_POST['genre_id'],
+            "genre_id"       => $_POST['genre_id']
         ]);
 
         $this->redirect("admin/movies");
     }
 
+
     public function update()
     {
-        $this->movie->update($_POST['id'], $_POST);
+        $posterName = $_POST['old_poster'] ?? null;
+        $bannerName = $_POST['old_banner'] ?? null;
+
+        if (!empty($_FILES['poster_file']['name'])) {
+            $posterName = time().'_'.$_FILES['poster_file']['name'];
+            move_uploaded_file(
+                $_FILES['poster_file']['tmp_name'],
+                ROOT_PATH.'public/assets/images/'.$posterName
+            );
+        }
+
+        if (!empty($_FILES['banner_file']['name'])) {
+            $bannerName = time().'_'.$_FILES['banner_file']['name'];
+            move_uploaded_file(
+                $_FILES['banner_file']['tmp_name'],
+                ROOT_PATH.'public/assets/images/'.$bannerName
+            );
+        }
+
+        $this->movie->update($_POST['id'], [
+            'title'          => $_POST['title'],
+            'description'    => $_POST['description'],
+            'release_year'   => $_POST['release_year'],
+            'language'       => $_POST['language'],
+            'type'           => $_POST['type'],
+            'poster_url'     => $posterName,
+            'banner_url'     => $bannerName,
+            'is_free'        => $_POST['is_free'] ?? 0,
+            'is_new_release' => $_POST['is_new_release'] ?? 0,
+            'is_feature'     => $_POST['is_feature'] ?? 0,
+            'is_banner'      => $_POST['is_banner'] ?? 0,
+            'genre_id'       => $_POST['genre_id']
+        ]);
+
         $this->redirect("admin/movies");
     }
+
 
     public function delete()
     {
