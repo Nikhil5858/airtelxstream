@@ -42,8 +42,6 @@ class User
             return false;
         }
 
-        // Store minimal session data
-        $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin_id'] = $user['id'];
         $_SESSION['admin_email'] = $user['email'];
 

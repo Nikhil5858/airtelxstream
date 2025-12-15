@@ -133,8 +133,10 @@ CREATE TABLE seasons (
     id INT AUTO_INCREMENT PRIMARY KEY,
     movie_id INT,
     season_number INT,
+    episode_number INT,
     genre_id INT,
     ott_id INT,
+    release_year VARCHAR(50),
     FOREIGN KEY (movie_id) REFERENCES movies(id),
     FOREIGN KEY (genre_id) REFERENCES genres(id),
     FOREIGN KEY (ott_id) REFERENCES ott_providers(id)

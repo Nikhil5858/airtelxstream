@@ -1,3 +1,8 @@
+<?php
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+?>
+
 <div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
     <div class="card shadow-sm border-0 rounded-3" style="width: 100%; max-width: 420px;">
 
