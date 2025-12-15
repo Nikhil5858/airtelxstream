@@ -47,4 +47,48 @@ class User
 
         return true;
     }
+
+    public function all(): array
+    {
+        return $this->db->query("
+            SELECT 
+                id, name, email,
+                is_subscription_active,
+                created_at,
+                last_login
+            FROM users
+            ORDER BY id DESC
+        ")->fetchAll();
+    }
+
+    public function create(array $data): bool
+    {
+        $stmt = $this->db->prepare("
+            INSERT INTO users
+            (name, email, password, is_subscription_active)
+            VALUES
+            (:name, :email, :password, :is_subscription_active)
+        ");
+
+        return $stmt->execute($data);
+    }
+
+    public function update(int $id, array $data): bool
+    {
+        $data['id'] = $id;
+
+        return $this->db->prepare("
+            UPDATE users SET
+                name=:name,
+                is_subscription_active=:is_subscription_active
+            WHERE id=:id
+        ")->execute($data);
+    }
+
+    public function delete(int $id): bool
+    {
+        return $this->db
+            ->prepare("DELETE FROM users WHERE id=?")
+            ->execute([$id]);
+    }
 }

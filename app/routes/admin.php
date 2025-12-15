@@ -30,4 +30,17 @@ $routes = [
     "seasons/store"  => "Admin/SeasonController@store",
     "seasons/update" => "Admin/SeasonController@update",
     "seasons/delete" => "Admin/SeasonController@delete",
+
+    //Users
+    "users"         => "Admin/UsersController@index",
+    "users/store"   => "Admin/UsersController@store",
+    "users/update"  => "Admin/UsersController@update",
+    "users/delete"  => "Admin/UsersController@delete",
+
+    // Subscription
+    "subscription"           => "Admin/SubscriptionController@index",
+    "subscription/store"     => "Admin/SubscriptionController@store",
+    "subscription/update"    => "Admin/SubscriptionController@update",
+    "subscription/delete"    => "Admin/SubscriptionController@delete",
+
 ];

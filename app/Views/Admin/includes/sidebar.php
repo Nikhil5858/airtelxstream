@@ -19,7 +19,7 @@
         <li><a href="<?= ADMIN_URL ?>/ott" class="nav-link"><i class="bi bi-app-indicator"></i> OTT Providers</a></li>
         <li><a href="<?= ADMIN_URL ?>/genres" class="nav-link"><i class="bi bi-tags"></i> Genres</a></li>
         <li><a href="<?= ADMIN_URL ?>/users" class="nav-link"><i class="bi bi-people"></i> Users</a></li>
-        <li><a href="<?= ADMIN_URL ?>/subscriptions" class="nav-link"><i class="bi bi-cash-stack"></i> Subscriptions</a></li>
+        <li><a href="<?= ADMIN_URL ?>/subscription" class="nav-link"><i class="bi bi-cash-stack"></i> Subscriptions</a></li>
     </ul>
     
 </div>
