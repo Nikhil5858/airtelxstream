@@ -33,41 +33,45 @@
             <table class="table align-middle">
                 <thead class="table-light">
                     <tr>
-                        <th>#</th>
                         <th>Season Name</th>
                         <th>Season No</th>
-                        <th>Episodes</th>
+                        <th>Total Episodes</th>
+                        <th>Ott</th>
+                        <th>Genre</th>
                         <th>Release Year</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
 
                 <tbody id="seasonTable">
-                <?php foreach ($seasons as $s): ?>
-                    <tr>
-                        <td><?= $s['id'] ?></td>
-                        <td><strong>Season <?= $s['season_number'] ?></strong></td>
-                        <td><?= $s['season_number'] ?></td>
-                        <td><?= $s['total_episodes'] ?></td>
-                        <td><?= $s['release_year'] ?></td>
-                        <td>
-                            <button class="btn btn-outline-primary btn-sm edit-btn"
-                                    data-id="<?= $s['id'] ?>"
-                                    data-season="<?= $s['season_number'] ?>"
-                                    data-episodes="<?= $s['total_episodes'] ?>"
-                                    data-year="<?= $s['release_year'] ?>">
-                                <i class="bi bi-pencil"></i>
-                            </button>
+                    <?php foreach ($seasons as $s): ?>
+                        <tr>
+                            <td>
+                                <strong><?= htmlspecialchars($s['movie_title']) ?></strong>
+                            </td>
+                            <td><?= (int)$s['season_number'] ?></td>
+                            <td><?= (int)$s['total_episodes'] ?></td>
+                            <td><?= htmlspecialchars($s['ott'] ?? '-') ?></td>
+                            <td><?= htmlspecialchars($s['genre'] ?? '-') ?></td>
+                            <td><?= (int)$s['release_year'] ?></td>
+                            <td>
+                                <button class="btn btn-outline-primary btn-sm edit-btn"
+                                        data-id="<?= $s['id'] ?>"
+                                        data-season="<?= $s['season_number'] ?>"
+                                        data-episodes="<?= $s['total_episodes'] ?>"
+                                        data-year="<?= $s['release_year'] ?>">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
 
-                            <button class="btn btn-outline-danger btn-sm delete-btn"
-                                    data-id="<?= $s['id'] ?>"
-                                    data-name="Season <?= $s['season_number'] ?>">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-                </tbody>
+                                <button class="btn btn-outline-danger btn-sm delete-btn"
+                                        data-id="<?= $s['id'] ?>"
+                                        data-name="<?= htmlspecialchars($s['season_name']) ?>">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
             </table>
         </div>
 
@@ -84,35 +88,61 @@
                     <form method="POST" action="<?= BASE_URL ?>/admin/seasons/store">
                         <div class="modal-body">
 
-                            <div class="d-flex justify-content-between align-items-center">
-                                <label class="form-label">Season Number</label>
-                                <span class="error-message text-danger small d-none"></span>
-                            </div>
-                            <input type="number"
-                                   name="season_number"
-                                   class="form-control mb-3"
-                                   data-required="true"
-                                   data-error="Season number is required">
+                            <label class="form-label">Series</label>
+                            <select name="movie_id" class="form-select mb-3" required>
+                                <option value="">Select Series</option>
 
-                            <div class="d-flex justify-content-between align-items-center">
-                                <label class="form-label">Episodes</label>
-                                <span class="error-message text-danger small d-none"></span>
-                            </div>
-                            <input type="number"
-                                   name="total_episodes"
-                                   class="form-control mb-3"
-                                   data-required="true"
-                                   data-error="Episodes count is required">
+                                <?php foreach ($movies as $m): ?>
+                                    <option value="<?= $m['id'] ?>"
+                                            data-genre="<?= $m['genre_id'] ?>"
+                                            data-ott="<?= $m['ott_id'] ?>">
+                                        <?= htmlspecialchars($m['title']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
 
-                            <div class="d-flex justify-content-between align-items-center">
-                                <label class="form-label">Release Year</label>
-                                <span class="error-message text-danger small d-none"></span>
-                            </div>
+
+                            <label class="form-label">Season Number</label>
                             <input type="number"
-                                   name="release_year"
-                                   class="form-control"
-                                   data-required="true"
-                                   data-error="Release year is required">
+                                name="season_number"
+                                class="form-control mb-3"
+                                min="1"
+                                required>
+
+                            <label class="form-label">Total Episodes</label>
+                            <input type="number"
+                                name="episode_number"
+                                class="form-control mb-3"
+                                min="1"
+                                required>
+
+                            <label class="form-label">Genre</label>
+                            <select name="genre_id" class="form-select mb-3">
+                                <option value="">Select Genre</option>
+                                <?php foreach ($genres as $g): ?>
+                                    <option value="<?= $g['id'] ?>">
+                                        <?= htmlspecialchars($g['name']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+
+                            <label class="form-label">OTT Provider</label>
+                            <select name="ott_id" class="form-select mb-3">
+                                <option value="">Select OTT</option>
+                                <?php foreach ($otts as $o): ?>
+                                    <option value="<?= $o['id'] ?>">
+                                        <?= htmlspecialchars($o['name']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+
+                            <label class="form-label">Release Year</label>
+                            <input type="number"
+                                name="release_year"
+                                class="form-control"
+                                min="1900"
+                                max="<?= date('Y') + 5 ?>"
+                                required>
 
                         </div>
 
@@ -125,6 +155,7 @@
                 </div>
             </div>
         </div>
+
 
         <!-- EDIT MODAL -->
         <div class="modal fade" id="editSeasonModal" tabindex="-1">
@@ -220,14 +251,15 @@
 </div>
 
 <script>
-    /* EDIT */
     document.querySelectorAll(".edit-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-            editSeasonId.value = btn.dataset.id;
-            editSeasonNumber.value = btn.dataset.season;
-            editEpisodes.value = btn.dataset.total_episodes;
-            editReleaseYear.value = btn.dataset.year;
-            new bootstrap.Modal(editSeasonModal).show();
+            document.getElementById("editSeasonId").value     = btn.dataset.id;
+            document.getElementById("editSeasonNumber").value = btn.dataset.season;
+            document.getElementById("editReleaseYear").value  = btn.dataset.year;
+
+            new bootstrap.Modal(
+                document.getElementById("editSeasonModal")
+            ).show();
         });
     });
 
@@ -246,5 +278,20 @@
         document.querySelectorAll("#seasonTable tr").forEach(row => {
             row.style.display = row.innerText.toLowerCase().includes(keyword) ? "" : "none";
         });
+    });
+
+    document.querySelector('select[name="movie_id"]').addEventListener('change', function () {
+        const selected = this.options[this.selectedIndex];
+
+        const genreId = selected.dataset.genre;
+        const ottId   = selected.dataset.ott;
+
+        if (genreId) {
+            document.querySelector('select[name="genre_id"]').value = genreId;
+        }
+
+        if (ottId) {
+            document.querySelector('select[name="ott_id"]').value = ottId;
+        }
     });
 </script>

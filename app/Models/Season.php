@@ -9,63 +9,93 @@ class Season
         $this->db = Database::getInstance()->getConnection();
     }
 
-    /** Fetch all seasons with relations */
     public function all(): array
     {
-        $stmt = $this->db->query("
-            SELECT 
-            s.*,
-            m.title AS movie,
-            g.name  AS genre,
-            o.name  AS ott,
-            COUNT(e.id) AS total_episodes
+        $sql = "
+            SELECT
+                s.id,
+                s.movie_id,
+                m.title AS movie_title,
+                CONCAT('Season ', s.season_number) AS season_name,
+                s.season_number,
+                s.episode_number AS total_episodes,
+                s.release_year,
+                s.genre_id,
+                s.ott_id,
+                o.name AS ott,
+                g.name AS genre
             FROM seasons s
-            LEFT JOIN movies m ON m.id = s.movie_id
-            LEFT JOIN genres g ON g.id = s.genre_id
-            LEFT JOIN ott_providers o ON o.id = s.ott_id
-            LEFT JOIN episodes e ON e.season_id = s.id
-            GROUP BY s.id
-        ");
+            INNER JOIN movies m 
+                ON m.id = s.movie_id
+               AND m.type = 'series'
+            LEFT JOIN genres g 
+                ON g.id = s.genre_id
+            LEFT JOIN ott_providers o 
+                ON o.id = s.ott_id
+            ORDER BY s.id DESC
+        ";
 
-        return $stmt->fetchAll();
+        return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /** Create season */
     public function create(array $data): bool
     {
         $stmt = $this->db->prepare("
             INSERT INTO seasons
-            (movie_id, season_number, episodes, release_year, genre_id, ott_id)
+                (movie_id, season_number, episode_number, release_year, genre_id, ott_id)
             VALUES
-            (:movie_id, :season_number, :episodes, :release_year, :genre_id, :ott_id)
+                (:movie_id, :season_number, :episode_number, :release_year, :genre_id, :ott_id)
         ");
 
-        return $stmt->execute($data);
+        return $stmt->execute([
+            'movie_id'       => $data['movie_id'],
+            'season_number'  => $data['season_number'],
+            'episode_number' => $data['episode_number'],
+            'release_year'   => $data['release_year'],
+            'genre_id'       => $data['genre_id'],
+            'ott_id'         => $data['ott_id']
+        ]);
     }
 
-    /** Update season */
     public function update(int $id, array $data): bool
     {
-        $data['id'] = $id;
-
         $stmt = $this->db->prepare("
             UPDATE seasons SET
-                movie_id = :movie_id,
-                season_number = :season_number,
-                episodes = :episodes,
-                release_year = :release_year,
-                genre_id = :genre_id,
-                ott_id = :ott_id
+                movie_id       = :movie_id,
+                season_number  = :season_number,
+                episode_number = :episode_number,
+                release_year   = :release_year,
+                genre_id       = :genre_id,
+                ott_id         = :ott_id
             WHERE id = :id
         ");
 
-        return $stmt->execute($data);
+        return $stmt->execute([
+            'id'             => $id,
+            'movie_id'       => $data['movie_id'],
+            'season_number'  => $data['season_number'],
+            'episode_number' => $data['episode_number'],
+            'release_year'   => $data['release_year'],
+            'genre_id'       => $data['genre_id'],
+            'ott_id'         => $data['ott_id']
+        ]);
     }
 
-    /** Delete season */
     public function delete(int $id): bool
     {
         $stmt = $this->db->prepare("DELETE FROM seasons WHERE id = :id");
         return $stmt->execute(['id' => $id]);
     }
+
+    public function allSeries(): array
+    {
+        $stmt = $this->db->query("
+            SELECT id, title, genre_id, ott_id
+            FROM movies
+            WHERE type = 'series'
+            ORDER BY title ASC
+        ");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

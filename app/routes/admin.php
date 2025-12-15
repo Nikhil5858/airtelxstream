@@ -43,4 +43,11 @@ $routes = [
     "subscription/update"    => "Admin/SubscriptionController@update",
     "subscription/delete"    => "Admin/SubscriptionController@delete",
 
+    //Ott
+    "ott"      => "Admin/OttController@index",
+    "ott/store"  => "Admin/OttController@store",
+    "ott/update" => "Admin/OttController@update",
+    "otts/delete"  =>"Admin/OttController@delete",
+
+
 ];
