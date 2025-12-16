@@ -14,6 +14,16 @@ CREATE TABLE users (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE user_otp (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    otp VARCHAR(10),
+    expires_at DATETIME,
+    created_at DATETIME,
+    is_used TINYINT(1) NOT NULL DEFAULT 1,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 INSERT INTO users
 (id,email,password,name,role,is_active,is_subscription_active,created_at)
 VALUES
@@ -25,14 +35,6 @@ VALUES
 'Normal User','user',1,0,NOW());
 
 
-CREATE TABLE user_otp (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    otp VARCHAR(10),
-    expires_at DATETIME,
-    created_at DATETIME,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
 
 INSERT INTO user_otp VALUES
 (1,1,'999999',DATE_ADD(NOW(),INTERVAL 10 MINUTE),NOW()),

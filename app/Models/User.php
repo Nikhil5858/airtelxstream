@@ -91,4 +91,82 @@ class User
             ->prepare("DELETE FROM users WHERE id=?")
             ->execute([$id]);
     }
+
+    public function saveOtp(int $userId, string $otp, string $expires): void
+    {
+        $this->db->prepare("
+            UPDATE user_otp SET is_used = 1 WHERE user_id = ?
+        ")->execute([$userId]);
+
+        $stmt = $this->db->prepare("
+            INSERT INTO user_otp (user_id, otp, expires_at)
+            VALUES (:uid, :otp, :exp)
+        ");
+
+        $stmt->execute([
+            'uid' => $userId,
+            'otp' => $otp,
+            'exp' => $expires
+        ]);
+    }
+
+    public function verifyOtp(int $userId, string $otp): bool
+    {
+        $stmt = $this->db->prepare("
+            SELECT id 
+            FROM user_otp
+            WHERE user_id = :uid
+            AND otp = :otp
+            AND is_used = 0
+            AND expires_at >= NOW()
+            ORDER BY id DESC
+            LIMIT 1
+        ");
+
+        $stmt->execute([
+            'uid' => $userId,
+            'otp' => $otp
+        ]);
+
+        $row = $stmt->fetch();
+
+        if (!$row) return false;
+
+        $this->db->prepare("
+            UPDATE user_otp SET is_used = 1 WHERE id = ?
+        ")->execute([$row['id']]);
+
+        return true;
+    }
+
+    public function findOrCreateByEmail(string $email, string $name): array
+    {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = ? LIMIT 1");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            // update name if empty
+            if (!$user['name'] && $name) {
+                $this->db->prepare(
+                    "UPDATE users SET name = ? WHERE id = ?"
+                )->execute([$name, $user['id']]);
+            }
+            return $user;
+        }
+
+        // create new user
+        $this->db->prepare("
+            INSERT INTO users (email, name, is_active)
+            VALUES (?, ?, 1)
+        ")->execute([$email, $name]);
+
+        return [
+            'id' => $this->db->lastInsertId(),
+            'email' => $email,
+            'name' => $name
+        ];
+    }
+
+
 }

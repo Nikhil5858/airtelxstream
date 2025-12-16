@@ -6,4 +6,8 @@ $routes = [
 
     "singlepage" => "Frontend/SinglepageController@index",
     "singlepage/index" => "Frontend/SinglepageController@index",
+
+    "auth/send-otp"   => "Frontend/AuthController@sendOtp",
+    "auth/verify-otp" => "Frontend/AuthController@verifyOtp",
+
 ];
