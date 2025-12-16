@@ -33,7 +33,15 @@
                     <tr>
                         <td><?= $o['id'] ?></td>
                         <td><strong><?= htmlspecialchars($o['name']) ?></strong></td>
-                        <td><?= htmlspecialchars($o['logo_url']) ?></td>
+                        <td>
+                            <?php if ($o['logo_url']): ?>
+                                <img src="<?= BASE_URL ?>/assets/images/<?= htmlspecialchars($o['logo_url']) ?>"
+                                    alt="<?= htmlspecialchars($o['name']) ?>"
+                                    style="height:40px">
+                            <?php else: ?>
+                                -
+                            <?php endif; ?>
+                        </td>
                         <td>
                             <?= $o['is_active'] ? 'Active' : 'Inactive' ?>
                         </td>
@@ -63,7 +71,8 @@
 <!-- ADD MODAL -->
 <div class="modal fade" id="addOttModal">
     <div class="modal-dialog">
-        <form method="POST" action="<?= BASE_URL ?>/admin/ott/store" class="modal-content">
+        <form method="POST" action="<?= BASE_URL ?>/admin/ott/store" enctype="multipart/form-data" class="modal-content">
+
             <div class="modal-header">
                 <h5>Add OTT</h5>
                 <button class="btn-close" data-bs-dismiss="modal"></button>
@@ -73,8 +82,13 @@
                 <label>Name</label>
                 <input type="text" name="name" class="form-control mb-3" required>
 
-                <label>Logo URL</label>
-                <input type="text" name="logo_url" class="form-control mb-3">
+                <label>Logo</label>
+                <input type="file"
+                    name="logo"
+                    class="form-control mb-3"
+                    accept="image/*"
+                    required>
+
 
                 <div class="form-check">
                     <input type="checkbox" name="is_active" class="form-check-input" checked>
@@ -88,3 +102,110 @@
         </form>
     </div>
 </div>
+
+<!-- EDIT MODAL -->
+<div class="modal fade" id="editOttModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="POST"
+              action="<?= BASE_URL ?>/admin/ott/update"
+              enctype="multipart/form-data"
+              class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Edit OTT</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <input type="hidden" name="id" id="editOttId">
+
+                <label>Name</label>
+                <input type="text"
+                       name="name"
+                       id="editOttName"
+                       class="form-control mb-3"
+                       required>
+
+                <label>Change Logo (optional)</label>
+                <input type="file"
+                       name="logo"
+                       class="form-control mb-3"
+                       accept="image/*">
+
+                <div class="form-check">
+                    <input type="checkbox"
+                           name="is_active"
+                           id="editOttActive"
+                           class="form-check-input">
+                    <label class="form-check-label">Active</label>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary">Update</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- DELETE OTT MODAL -->
+<div class="modal fade" id="deleteOttModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <form method="POST"
+              action="<?= BASE_URL ?>/admin/ott/delete"
+              class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title text-danger">Delete OTT</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <input type="hidden" name="id" id="deleteOttId">
+
+                <p>Are you sure you want to delete this OTT platform?</p>
+                <p class="fw-bold text-danger mb-0" id="deleteOttName"></p>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-danger">Delete</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<script>
+    /* EDIT */
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.getElementById('editOttId').value   = btn.dataset.id;
+            document.getElementById('editOttName').value = btn.dataset.name;
+            document.getElementById('editOttActive').checked = btn.dataset.active == 1;
+
+            new bootstrap.Modal(
+                document.getElementById('editOttModal')
+            ).show();
+        });
+    });
+
+    /* DELETE */
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.getElementById('deleteOttId').value   = btn.dataset.id;
+            document.getElementById('deleteOttName').innerText = btn.dataset.name;
+
+            new bootstrap.Modal(
+                document.getElementById('deleteOttModal')
+            ).show();
+        });
+    });
+</script>
