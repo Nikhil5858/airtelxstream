@@ -15,6 +15,17 @@ body {
     left: 0;
     padding: 25px 22px;
     z-index: 3000;
+    overflow-y: auto;     
+}
+
+.sidebar .nav-item ul {
+    padding-left: 10px;
+}
+
+.sidebar .nav-item ul .nav-link {
+    font-size: 14px;
+    padding: 8px 14px;
+    margin-bottom: 4px;
 }
 
 .sidebar h6 {
@@ -55,6 +66,14 @@ body {
 .sidebar-title {
     font-size: 100px;
     font-weight: 800;
+}
+
+.sidebar .nav-link[aria-expanded="true"] .bi-chevron-down {
+    transform: rotate(180deg);
+}
+
+.sidebar .bi-chevron-down {
+    transition: transform 0.2s ease;
 }
 
 

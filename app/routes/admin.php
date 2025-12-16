@@ -55,9 +55,21 @@ $routes = [
     "episodes/update" => "Admin/EpisodesController@update",
     "episodes/delete"  =>"Admin/EpisodesController@delete",
 
+    //Cast Roles
+    "cast_roles"      => "Admin/CastRoleController@index",
+    "cast_roles/store"  => "Admin/CastRoleController@store",
+    "cast_roles/update" => "Admin/CastRoleController@update",
+    "cast_roles/delete"  =>"Admin/CastRoleController@delete",
+
     //Cast
     "cast"      => "Admin/CastController@index",
     "cast/store"  => "Admin/CastController@store",
     "cast/update" => "Admin/CastController@update",
     "cast/delete"  =>"Admin/CastController@delete",
+
+    //Cast Content
+    "cast_content"      => "Admin/CastContentController@index",
+    "cast_content/store"  => "Admin/CastContentController@store",
+    "cast_content/update" => "Admin/CastContentController@update",
+    "cast_content/delete"  =>"Admin/CastContentController@delete",
 ];

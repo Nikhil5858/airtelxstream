@@ -1,14 +1,9 @@
 <div class="sidebar" id="sidebar">
-    <div class="sidebar-brand">
-        <img type="image/png"  class="sidebar-logo me-2">
-        <h5></h5>
-    </div>
-</div>
 
-<div class="sidebar" id="sidebar">
-
-    <div class="sidebar-brand d-flex align-items-center">
-        <img src="<?php echo BASE_URL; ?>/assets/images/logo.png" alt="Logo" class="sidebar-logo ms-5">
+    <div class="sidebar-brand d-flex justify-content-center mb-4">
+        <img src="<?= BASE_URL ?>/assets/images/logo.png"
+             alt="Logo"
+             class="sidebar-logo">
     </div>
 
     <ul class="nav flex-column">
@@ -20,10 +15,31 @@
         <li><a href="<?= ADMIN_URL ?>/genres" class="nav-link"><i class="bi bi-tags"></i> Genres</a></li>
         <li><a href="<?= ADMIN_URL ?>/users" class="nav-link"><i class="bi bi-people"></i> Users</a></li>
         <li><a href="<?= ADMIN_URL ?>/subscription" class="nav-link"><i class="bi bi-cash-stack"></i> Subscriptions</a></li>
-        <li><a href="<?= ADMIN_URL ?>/cast" class="nav-link"><i class="bi bi-person-add"></i> Cast</a></li>
+
+        <li class="nav-item">
+            <a  href="javascript:void(0)"
+                role="button"
+                class="nav-link d-flex justify-content-between align-items-center"
+                data-bs-toggle="collapse"
+                data-bs-target="#castMenu"
+                aria-expanded="false">
+
+                <span>
+                    <i class="bi bi-people me-2"></i> Cast
+                </span>
+
+                <i class="bi bi-chevron-down small"></i>
+            </a>
+
+            <ul class="collapse nav flex-column ms-3" id="castMenu">
+                <li><a href="<?= ADMIN_URL ?>/cast_roles" class="nav-link">Cast Roles</a></li>
+                <li><a href="<?= ADMIN_URL ?>/cast" class="nav-link">Cast People</a></li>
+                <li><a href="<?= ADMIN_URL ?>/cast_content" class="nav-link">Movie Cast</a></li>
+            </ul>
+        </li>
+
     </ul>
-    
+
 </div>
 
-<!-- Overlay for mobile -->
 <div id="overlay"></div>
