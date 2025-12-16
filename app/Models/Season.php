@@ -96,4 +96,38 @@ class Season
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+
+
+    // for the usage of episodes
+    public function getEpisodeLimit(int $seasonId): int
+    {
+        $stmt = $this->db->prepare("
+            SELECT episode_number FROM seasons WHERE id = :id
+        ");
+        $stmt->execute(['id' => $seasonId]);
+        return (int)$stmt->fetchColumn();
+    }
+
+    public function allWithEpisodeUsage(): array
+    {
+        $sql = "
+            SELECT
+                s.id,
+                s.movie_id,
+                m.title AS movie_title,
+                s.season_number,
+                s.episode_number AS total_episodes,
+                COUNT(e.id) AS used_episodes
+            FROM seasons s
+            INNER JOIN movies m ON m.id = s.movie_id
+            LEFT JOIN episodes e ON e.season_id = s.id
+            GROUP BY s.id
+            ORDER BY m.title, s.season_number
+        ";
+
+        return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 }

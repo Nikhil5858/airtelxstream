@@ -49,5 +49,15 @@ $routes = [
     "ott/update" => "Admin/OttController@update",
     "ott/delete"  =>"Admin/OttController@delete",
 
+    //Episodes
+    "episodes"      => "Admin/EpisodesController@index",
+    "episodes/store"  => "Admin/EpisodesController@store",
+    "episodes/update" => "Admin/EpisodesController@update",
+    "episodes/delete"  =>"Admin/EpisodesController@delete",
 
+    //Cast
+    "cast"      => "Admin/CastController@index",
+    "cast/store"  => "Admin/CastController@store",
+    "cast/update" => "Admin/CastController@update",
+    "cast/delete"  =>"Admin/CastController@delete",
 ];

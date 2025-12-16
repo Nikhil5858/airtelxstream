@@ -2,9 +2,6 @@ DROP DATABASE IF EXISTS airtelxstream;
 CREATE DATABASE airtelxstream;
 USE airtelxstream;
 
-/* ===========================
-   TABLE: users
-   =========================== */
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -21,15 +18,13 @@ INSERT INTO users
 (id,email,password,name,role,is_active,is_subscription_active,created_at)
 VALUES
 (1,'admin@airtelxstream.com',
-'$2y$10$Qw8z7sPZqkJ0x7pQ0xjO7e8l0M1W9xV0XHkFz2zR8l7O5yJq',
+'1',
 'Admin User','admin',1,1,NOW()),
 (2,'user@airtelxstream.com',
 '$2y$10$uK3V8xY6Zq9H4yR8D1x5P0fK2M8E7S1z6NQqJ0A9W',
 'Normal User','user',1,0,NOW());
 
-/* ===========================
-   TABLE: user_otp
-   =========================== */
+
 CREATE TABLE user_otp (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -43,9 +38,7 @@ INSERT INTO user_otp VALUES
 (1,1,'999999',DATE_ADD(NOW(),INTERVAL 10 MINUTE),NOW()),
 (2,2,'111111',DATE_ADD(NOW(),INTERVAL 10 MINUTE),NOW());
 
-/* ===========================
-   TABLE: genres
-   =========================== */
+
 CREATE TABLE genres (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255)
@@ -56,9 +49,7 @@ INSERT INTO genres VALUES
 (5,'Thriller'),(6,'Crime'),(7,'Comedy'),(8,'Adventure'),
 (9,'Fantasy'),(10,'Biography');
 
-/* ===========================
-   TABLE: ott_providers
-   =========================== */
+
 CREATE TABLE ott_providers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
@@ -78,9 +69,7 @@ INSERT INTO ott_providers VALUES
 (9,'Apple TV+','/logos/appletv.png',1),
 (10,'Theatrical/Other','/logos/other.png',1);
 
-/* ===========================
-   TABLE: movies
-   =========================== */
+
 CREATE TABLE movies (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255),
@@ -110,9 +99,7 @@ INSERT INTO movies VALUES
 (2,'Interstellar','Space survival',2014,'English','movie','in.mp4','in_t.mp4','in_b.jpg','in_p.jpg',NOW(),NOW(),0,2,0,0,1,0,3),
 (3,'RRR','Revolutionary drama',2022,'Telugu','movie','rrr.mp4','rrr_t.mp4','rrr_b.jpg','rrr_p.jpg',NOW(),NOW(),0,10,1,0,1,1,4);
 
-/* ===========================
-   TABLE: watchlist
-   =========================== */
+
 CREATE TABLE watchlist (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -126,9 +113,7 @@ INSERT INTO watchlist VALUES
 (1,1,1,NOW()),
 (2,2,2,NOW());
 
-/* ===========================
-   TABLE: seasons
-   =========================== */
+
 CREATE TABLE seasons (
     id INT AUTO_INCREMENT PRIMARY KEY,
     movie_id INT,
@@ -146,9 +131,6 @@ INSERT INTO seasons VALUES
 (1,3,1,4,10,3,'2022');
 
 
-/* ===========================
-   TABLE: episodes
-   =========================== */
 CREATE TABLE episodes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     season_id INT,
@@ -164,9 +146,7 @@ CREATE TABLE episodes (
 INSERT INTO episodes VALUES
 (1,1,1,'RRR BTS','Behind Scenes','rrr_ep.mp4',NOW(),'rrr_ep.jpg');
 
-/* ===========================
-   TABLE: subscription
-   =========================== */
+
 CREATE TABLE subscription (
     id INT AUTO_INCREMENT PRIMARY KEY,
     plan_name VARCHAR(255),
@@ -180,9 +160,7 @@ INSERT INTO subscription VALUES
 (1,'Basic Monthly',99,30,1,NOW()),
 (2,'Premium Monthly',299,30,1,NOW());
 
-/* ===========================
-   TABLE: user_subscription
-   =========================== */
+
 CREATE TABLE user_subscription (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -203,9 +181,7 @@ INSERT INTO user_subscription VALUES
 (1,1,2,'2024-01-01','2025-01-01','active','Card','success','TXN_ADMIN',1,NOW()),
 (2,2,1,'2024-10-01','2024-10-31','active','UPI','success','TXN_USER',0,NOW());
 
-/* ===========================
-   CAST TABLES
-   =========================== */
+
 CREATE TABLE `cast` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
@@ -229,12 +205,14 @@ CREATE TABLE `cast_content` (
     FOREIGN KEY (cast_roles_id) REFERENCES `cast_roles`(id)
 );
 
-INSERT INTO cast_roles VALUES
-(1,'Lead'),(2,'Supporting');
+
 
 INSERT INTO `cast` VALUES
 (1,'Leonardo DiCaprio','/cast/leo.jpg','Actor','1974-11-11'),
 (2,'Ram Charan','/cast/ram.jpg','Actor','1985-03-27');
+
+INSERT INTO cast_roles VALUES
+(1,'Actor'),(2,'Director');
 
 INSERT INTO cast_content VALUES
 (1,1,1,1),

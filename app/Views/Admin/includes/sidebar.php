@@ -20,6 +20,7 @@
         <li><a href="<?= ADMIN_URL ?>/genres" class="nav-link"><i class="bi bi-tags"></i> Genres</a></li>
         <li><a href="<?= ADMIN_URL ?>/users" class="nav-link"><i class="bi bi-people"></i> Users</a></li>
         <li><a href="<?= ADMIN_URL ?>/subscription" class="nav-link"><i class="bi bi-cash-stack"></i> Subscriptions</a></li>
+        <li><a href="<?= ADMIN_URL ?>/cast" class="nav-link"><i class="bi bi-person-add"></i> Cast</a></li>
     </ul>
     
 </div>

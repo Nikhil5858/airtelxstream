@@ -125,7 +125,11 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button"
+                            class="btn btn-light"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
                     <button class="btn btn-primary">Save User</button>
                 </div>
 
@@ -169,7 +173,11 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button"
+                            class="btn btn-light"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
                     <button class="btn btn-primary">Update User</button>
                 </div>
 
@@ -196,7 +204,11 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button"
+                            class="btn btn-light"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
                     <button class="btn btn-danger">Delete</button>
                 </div>
             </form>
