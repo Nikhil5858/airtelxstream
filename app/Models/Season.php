@@ -31,9 +31,7 @@ class Season
             LEFT JOIN genres g 
                 ON g.id = s.genre_id
             LEFT JOIN ott_providers o 
-                ON o.id = s.ott_id
-            ORDER BY s.id DESC
-        ";
+                ON o.id = s.ott_id";
 
         return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }

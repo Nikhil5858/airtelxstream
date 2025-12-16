@@ -56,12 +56,16 @@
                             <td><?= (int)$s['release_year'] ?></td>
                             <td>
                                 <button class="btn btn-outline-primary btn-sm edit-btn"
-                                        data-id="<?= $s['id'] ?>"
-                                        data-season="<?= $s['season_number'] ?>"
-                                        data-episodes="<?= $s['total_episodes'] ?>"
-                                        data-year="<?= $s['release_year'] ?>">
+                                    data-id="<?= $s['id'] ?>"
+                                    data-movie="<?= $s['movie_id'] ?>"
+                                    data-season="<?= $s['season_number'] ?>"
+                                    data-episodes="<?= $s['total_episodes'] ?>"
+                                    data-genre="<?= $s['genre_id'] ?>"
+                                    data-ott="<?= $s['ott_id'] ?>"
+                                    data-year="<?= $s['release_year'] ?>">
                                     <i class="bi bi-pencil"></i>
                                 </button>
+
 
                                 <button class="btn btn-outline-danger btn-sm delete-btn"
                                         data-id="<?= $s['id'] ?>"
@@ -172,39 +176,57 @@
 
                             <input type="hidden" name="id" id="editSeasonId">
 
-                            <div class="d-flex justify-content-between align-items-center">
-                                <label class="form-label">Season Number</label>
-                                <span class="error-message text-danger small d-none"></span>
-                            </div>
-                            <input type="number"
-                                   name="season_number"
-                                   id="editSeasonNumber"
-                                   class="form-control mb-3"
-                                   data-required="true"
-                                   data-error="Season number is required">
+                            <label class="form-label">Series</label>
+                            <select name="movie_id" id="editMovieId" class="form-select mb-3" required>
+                                <?php foreach ($movies as $m): ?>
+                                    <option value="<?= $m['id'] ?>">
+                                        <?= htmlspecialchars($m['title']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
 
-                            <div class="d-flex justify-content-between align-items-center">
-                                <label class="form-label">Episodes</label>
-                                <span class="error-message text-danger small d-none"></span>
-                            </div>
+                            <label class="form-label">Season Number</label>
                             <input type="number"
-                                   name="total_episodes"
-                                   id="editEpisodes"
-                                   class="form-control mb-3"
-                                   data-required="true"
-                                   data-error="Episodes count is required">
+                                name="season_number"
+                                id="editSeasonNumber"
+                                class="form-control mb-3"
+                                min="1"
+                                required>
 
-                            <div class="d-flex justify-content-between align-items-center">
-                                <label class="form-label">Release Year</label>
-                                <span class="error-message text-danger small d-none"></span>
-                            </div>
+                            <label class="form-label">Total Episodes</label>
                             <input type="number"
-                                   name="release_year"
-                                   id="editReleaseYear"
-                                   class="form-control"
-                                   data-required="true"
-                                   data-error="Release year is required">
+                                name="episode_number"
+                                id="editEpisodes"
+                                class="form-control mb-3"
+                                min="1"
+                                required>
 
+                            <label class="form-label">Genre</label>
+                            <select name="genre_id" id="editGenreId" class="form-select mb-3">
+                                <option value="">Select Genre</option>
+                                <?php foreach ($genres as $g): ?>
+                                    <option value="<?= $g['id'] ?>">
+                                        <?= htmlspecialchars($g['name']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+
+                            <label class="form-label">OTT Provider</label>
+                            <select name="ott_id" id="editOttId" class="form-select mb-3">
+                                <option value="">Select OTT</option>
+                                <?php foreach ($otts as $o): ?>
+                                    <option value="<?= $o['id'] ?>">
+                                        <?= htmlspecialchars($o['name']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+
+                            <label class="form-label">Release Year</label>
+                            <input type="number"
+                                name="release_year"
+                                id="editReleaseYear"
+                                class="form-control"
+                                required>
                         </div>
 
                         <div class="modal-footer">
@@ -254,7 +276,11 @@
     document.querySelectorAll(".edit-btn").forEach(btn => {
         btn.addEventListener("click", () => {
             document.getElementById("editSeasonId").value     = btn.dataset.id;
+            document.getElementById("editMovieId").value      = btn.dataset.movie;
             document.getElementById("editSeasonNumber").value = btn.dataset.season;
+            document.getElementById("editEpisodes").value     = btn.dataset.episodes;
+            document.getElementById("editGenreId").value      = btn.dataset.genre || '';
+            document.getElementById("editOttId").value        = btn.dataset.ott || '';
             document.getElementById("editReleaseYear").value  = btn.dataset.year;
 
             new bootstrap.Modal(
@@ -262,6 +288,7 @@
             ).show();
         });
     });
+
 
     /* DELETE */
     document.querySelectorAll(".delete-btn").forEach(btn => {
