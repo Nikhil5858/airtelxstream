@@ -51,6 +51,9 @@
 </div>
 
 <div class="tempmargin" style="margin-top: 500px;"></div>
+<!-- Upper Footer -->
+<?php require ROOT_PATH . "app/Views/layouts/upper_footer.php"; ?>
+
 <script>
     const input = document.getElementById("searchInput");
     const resultsBox = document.getElementById("searchResults");

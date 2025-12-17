@@ -168,5 +168,17 @@ class User
         ];
     }
 
+    public function find(int $id): ?array
+    {
+        $stmt = $this->db->prepare("
+            SELECT id, email, name
+            FROM users
+            WHERE id = :id
+            LIMIT 1
+        ");
+
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
 
 }
