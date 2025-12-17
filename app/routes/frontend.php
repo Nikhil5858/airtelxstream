@@ -10,4 +10,7 @@ $routes = [
     "auth/send-otp"   => "Frontend/AuthController@sendOtp",
     "auth/verify-otp" => "Frontend/AuthController@verifyOtp",
 
+    "search" => "Frontend/SearchController@index",
+    "search/results" => "Frontend/SearchController@results",
+
 ];

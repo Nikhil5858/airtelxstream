@@ -141,4 +141,37 @@ class Movie
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /** Search movies by title */
+    public function search(string $query): array
+    {
+        $stmt = $this->db->prepare("
+            SELECT id, title, banner_url, type
+            FROM movies
+            WHERE title LIKE :q
+            ORDER BY title ASC
+            LIMIT 20
+        ");
+
+        $stmt->execute([
+            'q' => '%' . $query . '%'
+        ]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /** Trending movies */
+    public function getTrending(): array
+    {
+        $stmt = $this->db->query("
+            SELECT id, title, banner_url, type
+            FROM movies
+            WHERE is_feature = 1
+            ORDER BY created_at DESC
+            LIMIT 10
+        ");
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 }
