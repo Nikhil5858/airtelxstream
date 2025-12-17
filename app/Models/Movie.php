@@ -85,4 +85,24 @@ class Movie
             ->prepare("DELETE FROM movies WHERE id=?")
             ->execute([$id]);
     }
+
+    public function getBannerMovies(): array
+    {
+        $stmt = $this->db->query("
+            SELECT 
+                m.id,
+                m.title,
+                m.language,
+                m.movie_url,
+                m.trailer_url,
+                m.banner_url,
+                g.name AS genre
+            FROM movies m
+            LEFT JOIN genres g ON g.id = m.genre_id
+            WHERE m.is_banner = 1
+            ORDER BY m.id DESC
+        ");
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
