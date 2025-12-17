@@ -7,7 +7,7 @@
         <div class="d-flex justify-content-between align-items-start mt-1">
             <div>
                 <h3>Homepage Sections</h3>
-                <p class="text-muted">Drag & reorder homepage sections</p>
+                <h2 class="text-muted mt-5">Drag & Reorder homepage sections</h2>
             </div>
 
             <button class="btn btn-primary d-flex align-items-center mt-2"
