@@ -24,5 +24,7 @@
             </a>
         </li>
         <?php endif; ?>
+        <li><a href="https://play.google.com/store/apps/details?id=tv.accedo.airtel.wynk&_branch_match_id=1522531487299482637&utm_source=Website&utm_campaign=Top_Bottom_CTA&utm_medium=Website&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXzy9IzdNLzCwqSc2pKC4pSk3M1cvM00%2F0DMzzCg%2BwcHdKsq8rSk1LLSrKzEuPTyrKLy9OLbJ1ywSK5VcAAJQeFpZEAAAA" target="_blank"><i class="bi bi-phone"></i><span>Get App</span></a>
+        </li>   
     </ul>
 </div>

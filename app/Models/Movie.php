@@ -105,4 +105,26 @@ class Movie
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getNewReleases(int $limit = 12): array
+    {
+        $stmt = $this->db->prepare("
+            SELECT 
+                id,
+                title,
+                poster_url,
+                is_free,
+                type
+            FROM movies
+            WHERE is_new_release = 1
+            ORDER BY created_at DESC
+            LIMIT :limit
+        ");
+
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

@@ -7,170 +7,43 @@
                 <button class="scroll-btn left-btn">❮</button>
                 <div class="movie-scroller">
                     <div class="movie-scroll-inner">
-                        <div class="movie-card-wrapper">
-                            <a href="./webseriespage.html" class="movie-link">
-                                <div class="movie-card">
 
-                                    <span class="free-badge">Free</span>
+                        <?php if (!empty($newReleases)): ?>
+                            <?php foreach ($newReleases as $movie): ?>
+                                <div class="movie-card-wrapper">
+                                    <a href="<?= BASE_URL ?>/movie/<?= $movie['id'] ?>" class="movie-link">
+                                        <div class="movie-card">
 
-                                    <img src="<?php echo BASE_URL; ?>/assets/images/episodes/maharani2.webp" alt="movie">
+                                            <?php if ($movie['is_free']): ?>
+                                                <span class="free-badge">Free</span>
+                                            <?php endif; ?>
 
-                                    <div class="card-overlay">
-                                        <h5 class="movie-title">Maharani</h5>
-                                        <div class="badges">
-                                            <span class="badge age">U/A 13+</span>
-                                            <span class="badge type">Movie</span>
-                                        </div>
-                                        <button class="watchlist-btn"><span>+</span> Add To Watchlist</button>
-                                    </div>
+                                            <img src="<?= BASE_URL . '/assets/images/' . htmlspecialchars($movie['poster_url']) ?>"
+                                                alt="<?= htmlspecialchars($movie['title']) ?>">
 
-                                </div>
-                            </a>
-                        </div>
+                                            <div class="card-overlay">
+                                                <h5 class="movie-title">
+                                                    <?= htmlspecialchars($movie['title']) ?>
+                                                </h5>
 
-                        <div class="movie-card-wrapper">
-                            <a href="<?= BASE_URL ?>/singlepage" class="movie-link">
-                                <div class="movie-card">
-                                    <span class="free-badge">Free</span>
-                                    <img src="<?php echo BASE_URL; ?>/assets/images/index/super30.webp" alt="movie">
-                                    <div class="card-overlay">
-                                        <h5 class="movie-title">Super 30</h5>
-                                        <div class="badges">
-                                            <span class="badge age">U/A 13+</span>
-                                            <span class="badge type">Movie</span>
-                                        </div>
-                                        <button class="watchlist-btn"><span>+</span> Add To Watchlist</button>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                                                <div class="badges">
+                                                    <span class="badge age">U/A 13+</span>
+                                                    <span class="badge type"><?= htmlspecialchars($movie['type']) ?></span>
+                                                </div>
 
-                        <div class="movie-card-wrapper">
-                            <a href="<?= BASE_URL ?>/singlepage" class="movie-link">
-                                <div class="movie-card">
-                                    <img src="<?php echo BASE_URL; ?>/assets/images/index/lokah.webp" alt="movie">
-                                    <div class="card-overlay">
-                                        <h5 class="movie-title">Lokah</h5>
-                                        <div class="badges">
-                                            <span class="badge age">U/A 13+</span>
-                                            <span class="badge type">Movie</span>
-                                        </div>
-                                        <button class="watchlist-btn"><span>+</span> Add To Watchlist</button>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="movie-card-wrapper">
-                            <a href="<?= BASE_URL ?>/singlepage" class="movie-link">
-                                <div class="movie-card">
-                                    <img src="<?php echo BASE_URL; ?>/assets/images/index/insidiousthelastkey_portrait_thumb.webp" alt="movie">
-                                    <div class="card-overlay">
-                                        <h5 class="movie-title">Insidious The Lastkey</h5>
-                                        <div class="badges">
-                                            <span class="badge age">U/A 13+</span>
-                                            <span class="badge type">Movie</span>
-                                        </div>
-                                        <button class="watchlist-btn"><span>+</span> Add To Watchlist</button>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="movie-card-wrapper">
-                            <a href="<?= BASE_URL ?>/singlepage" class="movie-link">
-                                <div class="movie-card">
-                                    <img src="<?php echo BASE_URL; ?>/assets/images/index/super30.webp" alt="movie">
-                                    <div class="card-overlay">
-                                        <h5 class="movie-title">Super 30</h5>
-                                        <div class="badges">
-                                            <span class="badge age">U/A 13+</span>
-                                            <span class="badge type">Movie</span>
-                                        </div>
-                                        <button class="watchlist-btn"><span>+</span> Add To Watchlist</button>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                                                <button class="watchlist-btn">
+                                                    <span>+</span> Add To Watchlist
+                                                </button>
+                                            </div>
 
-                        <div class="movie-card-wrapper">
-                            <a href="<?= BASE_URL ?>/singlepage" class="movie-link">
-                                <div class="movie-card">
-                                    <span class="free-badge">Free</span>
-
-                                    <img src="<?php echo BASE_URL; ?>/assets/images/index/lokah.webp" alt="movie">
-                                    <div class="card-overlay">
-                                        <h5 class="movie-title">Lokah</h5>
-                                        <div class="badges">
-                                            <span class="badge age">U/A 13+</span>
-                                            <span class="badge type">Movie</span>
                                         </div>
-                                        <button class="watchlist-btn"><span>+</span> Add To Watchlist</button>
-                                    </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="movie-card-wrapper">
-                            <a href="<?= BASE_URL ?>/singlepage" class="movie-link">
-                                <div class="movie-card">
-                                    <img src="<?php echo BASE_URL; ?>/assets/images/index/lokah.webp" alt="movie">
-                                    <div class="card-overlay">
-                                        <h5 class="movie-title">Lokah</h5>
-                                        <div class="badges">
-                                            <span class="badge age">U/A 13+</span>
-                                            <span class="badge type">Movie</span>
-                                        </div>
-                                        <button class="watchlist-btn"><span>+</span> Add To Watchlist</button>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="movie-card-wrapper">
-                            <a href="<?= BASE_URL ?>/singlepage" class="movie-link">
-                                <div class="movie-card">
-                                    <img src="<?php echo BASE_URL; ?>/assets/images/index/insidiousthelastkey_portrait_thumb.webp" alt="movie">
-                                    <div class="card-overlay">
-                                        <h5 class="movie-title">Insidious The Lastkey</h5>
-                                        <div class="badges">
-                                            <span class="badge age">U/A 13+</span>
-                                            <span class="badge type">Movie</span>
-                                        </div>
-                                        <button class="watchlist-btn"><span>+</span> Add To Watchlist</button>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="movie-card-wrapper">
-                            <a href="<?= BASE_URL ?>/singlepage" class="movie-link">
-                                <div class="movie-card">
-                                    <img src="<?php echo BASE_URL; ?>/assets/images/index/super30.webp" alt="movie">
-                                    <div class="card-overlay">
-                                        <h5 class="movie-title">Super 30</h5>
-                                        <div class="badges">
-                                            <span class="badge age">U/A 13+</span>
-                                            <span class="badge type">Movie</span>
-                                        </div>
-                                        <button class="watchlist-btn"><span>+</span> Add To Watchlist</button>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="movie-card-wrapper">
-                            <a href="<?= BASE_URL ?>/singlepage" class="movie-link">
-                                <div class="movie-card">
-                                    <img src="<?php echo BASE_URL; ?>/assets/images/index/lokah.webp" alt="movie">
-                                    <div class="card-overlay">
-                                        <h5 class="movie-title">Lokah</h5>
-                                        <div class="badges">
-                                            <span class="badge age">U/A 13+</span>
-                                            <span class="badge type">Movie</span>
-                                        </div>
-                                        <button class="watchlist-btn"><span>+</span> Add To Watchlist</button>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
 
                     </div>
+
                 </div>
                 <button class="scroll-btn right-btn">❯</button>
             </div>

@@ -8,12 +8,15 @@ class HomeController extends Controller
         $genreModel = new Genre();
         $movieModel = new Movie();
 
-        $genres  = $genreModel->all();
-        $banners = $movieModel->getBannerMovies();
+        $genres      = $genreModel->all();
+        $banners     = $movieModel->getBannerMovies();
+        $newReleases = $movieModel->getNewReleases();
 
         $this->view("Frontend/home/index", [
-            'genres'  => $genres,
-            'banners' => $banners
+            'genres'      => $genres,
+            'banners'     => $banners,
+            'newReleases' => $newReleases
         ]);
     }
 }
+
