@@ -15,7 +15,6 @@ let timerInterval;
 otpTriggerButton.addEventListener("click", () => {
   const email = emailInput.value.trim();
   const name = nameInput.value.trim();
-
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!emailPattern.test(email)) {
@@ -24,31 +23,31 @@ otpTriggerButton.addEventListener("click", () => {
     return;
   }
 
-  if (name == "") {
+  if (name === "") {
     errorMessage.style.display = "block";
     errorMessage.textContent = "Enter Name";
     return;
   }
 
   errorMessage.style.display = "none";
-  document.getElementById("otpMobile").textContent = email;
 
-  fetch(BASE_URL +"/auth/send-otp", {
+  // Disable button
+  otpTriggerButton.disabled = true;
+  otpTriggerButton.textContent = "Sending OTP...";
+
+  fetch(BASE_URL + "/auth/send-otp", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      email: email,
-      name: name  
-
-    }),
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ email, name }),
   })
     .then((res) => res.json())
     .then((res) => {
       if (!res.status) {
         errorMessage.style.display = "block";
         errorMessage.textContent = res.msg;
+
+        otpTriggerButton.disabled = false;
+        otpTriggerButton.textContent = "Continue";
         return;
       }
 
@@ -56,8 +55,16 @@ otpTriggerButton.addEventListener("click", () => {
       loginModal.hide();
       otpModal.show();
       startOTPTimer();
+    })
+    .catch(() => {
+      errorMessage.style.display = "block";
+      errorMessage.textContent = "Server error. Try again.";
+
+      otpTriggerButton.disabled = false;
+      otpTriggerButton.textContent = "Continue";
     });
 });
+
 
 // Auto move + backspace handling
 otpInputs.forEach((input, index) => {
