@@ -110,14 +110,13 @@ class User
         ]);
     }
 
-    public function verifyOtp(int $userId, string $otp): bool
+   public function verifyOtp(int $userId, string $otp): bool
     {
         $stmt = $this->db->prepare("
-            SELECT id 
+            SELECT id
             FROM user_otp
             WHERE user_id = :uid
             AND otp = :otp
-            AND is_used = 0
             AND expires_at >= NOW()
             ORDER BY id DESC
             LIMIT 1
@@ -128,16 +127,24 @@ class User
             'otp' => $otp
         ]);
 
-        $row = $stmt->fetch();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$row) return false;
+        if (!$row) {
+            return false;
+        }
 
-        $this->db->prepare("
-            UPDATE user_otp SET is_used = 1 WHERE id = ?
-        ")->execute([$row['id']]);
+        // DELETE OTP after successful verification
+        $delete = $this->db->prepare("
+            DELETE FROM user_otp WHERE id = :id
+        ");
+
+        $delete->execute([
+            'id' => $row['id']
+        ]);
 
         return true;
     }
+
 
     public function findOrCreateByEmail(string $email, string $name): array
     {

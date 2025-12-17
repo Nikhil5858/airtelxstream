@@ -23,6 +23,6 @@ $routes = [
     "profile/plans"      => "Frontend/ProfileController@plans",
     "profile/help"       => "Frontend/ProfileController@help",
     "profile/language"   => "Frontend/ProfileController@language",
-    "logout" => "Frontend/AuthController@logout",
+    "profile/logout" => "Frontend/ProfileController@logout",
 
 ];
