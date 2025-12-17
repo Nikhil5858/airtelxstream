@@ -127,4 +127,18 @@ class Movie
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getBySection(int $sectionId): array
+    {
+        $stmt = $this->db->prepare("
+            SELECT m.*
+            FROM homepage_section_movies sm
+            JOIN movies m ON m.id = sm.movie_id
+            WHERE sm.section_id = :sid
+            ORDER BY sm.position ASC
+        ");
+
+        $stmt->execute(['sid' => $sectionId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

@@ -72,4 +72,17 @@ $routes = [
     "cast_content/store"  => "Admin/CastContentController@store",
     "cast_content/update" => "Admin/CastContentController@update",
     "cast_content/delete"  =>"Admin/CastContentController@delete",
+
+    // Homepage Sections
+    "homepage_sections"            => "Admin/HomepageSectionController@index",
+    "homepage_sections/store"      => "Admin/HomepageSectionController@store",
+    "homepage_sections/update"     => "Admin/HomepageSectionController@update",
+    "homepage_sections/delete"     => "Admin/HomepageSectionController@delete",
+    "homepage_sections/reorder" => "Admin/HomepageSectionController@reorder",
+
+
+    // Homepage Section Movies (manual selection)
+    "homepage_sections/movies"     => "Admin/HomepageSectionController@movies",
+    "homepage_sections/movies/save"=> "Admin/HomepageSectionController@saveMovies",
+
 ];

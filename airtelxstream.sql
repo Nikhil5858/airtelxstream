@@ -102,6 +102,39 @@ INSERT INTO movies VALUES
 (3,'RRR','Revolutionary drama',2022,'Telugu','movie','rrr.mp4','rrr_t.mp4','rrr_b.jpg','rrr_p.jpg',NOW(),NOW(),0,10,1,0,1,1,4);
 
 
+CREATE TABLE homepage_sections (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    type ENUM('slider', 'grid') DEFAULT 'slider',
+    source ENUM('manual') NOT NULL,
+    position INT NOT NULL,
+    is_active TINYINT(1) DEFAULT 1
+);
+
+CREATE TABLE homepage_section_movies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    section_id INT NOT NULL,
+    movie_id INT NOT NULL,
+    position INT NOT NULL,
+    FOREIGN KEY (section_id) REFERENCES homepage_sections(id) ON DELETE CASCADE,
+    FOREIGN KEY (movie_id) REFERENCES movies(id) ON DELETE CASCADE
+);
+
+INSERT INTO homepage_sections
+(title, type, source, position)
+VALUES
+('Trending Now', 'slider', 'manual', 1);
+
+
+INSERT INTO homepage_section_movies
+(section_id, movie_id, position)
+VALUES
+(1, 1, 1),
+(1, 2, 2),
+(1, 3, 3)
+
+
+
 CREATE TABLE watchlist (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
