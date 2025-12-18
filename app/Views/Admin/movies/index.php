@@ -53,7 +53,15 @@
                             </td>
 
                             <td><strong><?= htmlspecialchars($m['title']) ?></strong></td>
-                            <td><?= htmlspecialchars($m['description']) ?></td>
+                            <?php
+                                $desc = strip_tags($m['description']);
+                                $limit = 130;
+
+                                if (strlen($desc) > $limit) {
+                                    $desc = substr($desc, 0, $limit) . '...';
+                                }
+                            ?>
+                            <td><?= htmlspecialchars($desc) ?></td>
                             <td><?= $m['release_year'] ?></td>
                             <td><?= htmlspecialchars($m['language']) ?></td>
                             <td><?= ucfirst($m['type']) ?></td>

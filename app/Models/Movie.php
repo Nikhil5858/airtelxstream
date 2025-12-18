@@ -207,4 +207,46 @@ class Movie
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function find(int $id): ?array
+    {
+        $stmt = $this->db->prepare("
+            SELECT 
+                m.*,
+                g.name AS genre
+            FROM movies m
+            LEFT JOIN genres g ON g.id = m.genre_id
+            WHERE m.id = :id
+            LIMIT 1
+        ");
+
+        $stmt->execute(['id' => $id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
+
+    public function getCastByMovie(int $movieId): array
+    {
+        $stmt = $this->db->prepare("
+            SELECT 
+                c.id,
+                c.name,
+                c.profile_image_url,
+                cr.role_name
+            FROM cast_content cc
+            INNER JOIN `cast` c 
+                ON c.id = cc.cast_id
+            INNER JOIN cast_roles cr 
+                ON cr.id = cc.cast_roles_id
+            WHERE cc.movie_id = :movie_id
+            ORDER BY c.name
+        ");
+
+        $stmt->execute([
+            'movie_id' => $movieId
+        ]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 }

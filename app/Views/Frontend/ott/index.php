@@ -148,7 +148,7 @@
             <div class="movie-scroll-inner">
                 <?php foreach ($ott['movies'] as $movie): ?>
                     <div class="movie-card-wrapper">
-                        <a href="<?= BASE_URL ?>/movie/<?= (int)$movie['id'] ?>" class="movie-link">
+                        <a href="<?= BASE_URL ?>/movie/show?id=<?= (int)$movie['id'] ?>" class="movie-link">
                             <div class="movie-card">
 
                                 <img

@@ -5,6 +5,7 @@ $routes = [
     //Home 
     "" => "Frontend/HomeController@index",
     "home/index" => "Frontend/HomeController@index",
+    "movie/show" => "Frontend/MovieController@show",
 
     //Single Page
     "singlepage" => "Frontend/SinglepageController@index",
@@ -34,4 +35,7 @@ $routes = [
 
     //Ott
     "ott" => "Frontend/OttController@index",
+
+    //Cast
+    "cast/show" => "Frontend/CastController@show",
 ];
