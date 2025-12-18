@@ -25,8 +25,8 @@
                 <div class="live-scroll-inner" id="searchResults">
 
                     <?php foreach ($trending as $movie): ?>
-                        <a href="<?= BASE_URL ?>/movie/<?= $movie['id'] ?>">
-                            <div class="live-card-wrapper">
+                        <div class="live-card-wrapper">
+                            <a href="<?= BASE_URL ?>/movie/<?= $movie['id'] ?>">
                                 <div class="live-card">
                                     <img src="<?= BASE_URL ?>/assets/images/<?= htmlspecialchars($movie['banner_url']) ?>">
 
@@ -39,8 +39,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     <?php endforeach; ?>
 
                 </div>

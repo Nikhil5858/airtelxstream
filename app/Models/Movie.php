@@ -191,4 +191,20 @@ class Movie
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getByOtt(int $ottId): array
+    {
+        $stmt = $this->db->prepare("
+            SELECT *
+            FROM movies
+            WHERE ott_id = :ott_id
+            ORDER BY id DESC
+        ");
+
+        $stmt->execute([
+            'ott_id' => $ottId
+        ]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

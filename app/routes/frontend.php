@@ -31,4 +31,7 @@ $routes = [
     
     //Free
     "free" => "Frontend/FreeController@index",
+
+    //Ott
+    "ott" => "Frontend/OttController@index",
 ];
