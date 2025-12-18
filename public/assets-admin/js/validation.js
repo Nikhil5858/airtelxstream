@@ -1,66 +1,68 @@
-document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll("form").forEach(form => {
+document.addEventListener("submit", function (event) {
 
-        form.addEventListener("submit", function (event) {
-            let isValid = true;
+    const form = event.target;
+    const requiredInputs = form.querySelectorAll("[data-required='true']");
+    if (requiredInputs.length === 0) return;
 
-            form.querySelectorAll("[data-required='true']").forEach(input => {
-                const errorMessage = input.dataset.error || "This field is required";
+    let isValid = true;
 
-                const wrapperDiv = input.previousElementSibling;
-                const errorSpan = wrapperDiv.querySelector(".error-message");
+    requiredInputs.forEach(input => {
 
-                let value = input.value.trim();
-                let fieldName = input.getAttribute("name");
+        const errorMessage = input.dataset.error || "This field is required";
 
-                if (value === "") {
-                    isValid = false;
-                    showError(input, errorSpan, errorMessage);
-                    return;
-                }
+        let errorSpan =
+            input.previousElementSibling?.querySelector(".error-message") ||
+            input.parentElement?.querySelector(".error-message") ||
+            input.closest("div")?.querySelector(".error-message") ||
+            null;
 
-                if (fieldName === "email") {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(value)) {
-                        isValid = false;
-                        showError(input, errorSpan, "Please enter a valid email address");
-                        return;
-                    }
-                }
+        hideError(input, errorSpan);
 
-                if (fieldName === "phone") {
-                    const phoneRegex = /^[0-9]{10}$/;
-                    if (!phoneRegex.test(value)) {
-                        isValid = false;
-                        showError(input, errorSpan, "Phone number must be 10 digits");
-                        return;
-                    }
-                }
-                
-                if (input.tagName === "SELECT") {
-                    if (value === "" || input.selectedIndex === 0) {
-                        isValid = false;
-                        showError(input, errorSpan, errorMessage);
-                        return;
-                    }
-                }
-
-                hideError(input, errorSpan);
-            });
-
-            if (!isValid) event.preventDefault();
-        });
-
-        function showError(input, span, msg) {
-            span.textContent = msg;
-            span.classList.remove("d-none");
-            input.classList.add("is-invalid");
+        /* CHECKBOX */
+        if (input.type === "checkbox") {
+            if (!input.checked) {
+                isValid = false;
+                showError(input, errorSpan, errorMessage);
+            }
+            return;
         }
 
-        function hideError(input, span) {
-            span.classList.add("d-none");
-            input.classList.remove("is-invalid");
+        /* SELECT */
+        if (input.tagName === "SELECT") {
+            if (input.value === "" || input.selectedIndex === 0) {
+                isValid = false;
+                showError(input, errorSpan, errorMessage);
+            }
+            return;
         }
 
+        /* TEXT */
+        if (input.value.trim() === "") {
+            isValid = false;
+            showError(input, errorSpan, errorMessage);
+        }
     });
-});
+
+    if (!isValid) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+}, true);
+
+
+
+/* ===== Helpers ===== */
+
+function showError(input, span, msg) {
+    if (!span) return;
+    span.textContent = msg;
+    span.classList.remove("d-none");
+    input.classList.add("is-invalid");
+}
+
+function hideError(input, span) {
+    if (!span) return;
+    span.classList.add("d-none");
+    input.classList.remove("is-invalid");
+}

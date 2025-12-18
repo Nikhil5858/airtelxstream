@@ -100,12 +100,15 @@
 
                     <input type="hidden" name="id" id="editSectionId">
 
-                    <label class="form-label">Title</label>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <label class="form-label">Title *</label>
+                        <span class="error-message text-danger small d-none"></span>
+                    </div>
                     <input type="text" name="title" id="editSectionTitle"
-                           class="form-control mb-2" required>
-
+                    class="form-control mb-2" data-required="true" data-error="Movie Title is required">
+                
                     <label class="form-label">Type</label>
-                    <select name="type" id="editSectionType" class="form-control mb-2">
+                    <select name="type" id="editSectionType" class="form-control mb-2" >
                         <option value="slider">Slider</option>
                         <option value="grid">Grid</option>
                     </select>
@@ -175,14 +178,17 @@
             <form method="POST" action="<?= ADMIN_URL ?>/homepage_sections/store">
                 <div class="modal-body">
 
-                    <label class="form-label">Title</label>
-                    <input type="text" name="title" class="form-control mb-2" required>
-
+                    <div class="d-flex justify-content-between align-items-center">
+                        <label class="form-label">Title *</label>
+                        <span class="error-message text-danger small d-none"></span>
+                    </div>
+                    <input type="text" name="title" class="form-control mb-2" data-required="true" data-error="Movie Title is required">
+                    
                     <label class="form-label">Type</label>
-                    <select name="type" class="form-control mb-2">
+                    <select name="type" class="form-control mb-2" >
                         <option value="slider">Slider</option>
-                        <option value="grid">Grid</option>
                     </select>
+                    
                     <label>
                         <input type="checkbox" name="is_active" checked> Active
                     </label>

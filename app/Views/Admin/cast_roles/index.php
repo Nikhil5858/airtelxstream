@@ -61,8 +61,11 @@
             </div>
 
             <div class="modal-body">
-                <label>Role Name</label>
-                <input type="text" name="role_name" class="form-control" required>
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Role Name</label>
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
+                <input type="text" name="role_name" class="form-control" data-required="true" data-error="Role name is required">
             </div>
 
             <div class="modal-footer">
@@ -88,8 +91,11 @@
             <div class="modal-body">
                 <input type="hidden" name="id" id="editRoleId">
 
-                <label>Role Name</label>
-                <input type="text" name="role_name" id="editRoleName" class="form-control" required>
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Role Name</label>
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
+                <input type="text" name="role_name" id="editRoleName" class="form-control" data-required="true" data-error="Role name is required">
             </div>
 
             <div class="modal-footer">
@@ -132,19 +138,19 @@
     </div>
 </div>
 <script>
-document.querySelectorAll('.edit-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        editRoleId.value   = btn.dataset.id;
-        editRoleName.value = btn.dataset.name;
-        new bootstrap.Modal(editRoleModal).show();
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            editRoleId.value   = btn.dataset.id;
+            editRoleName.value = btn.dataset.name;
+            new bootstrap.Modal(editRoleModal).show();
+        });
     });
-});
 
-document.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        deleteRoleId.value = btn.dataset.id;
-        deleteRoleName.innerText = btn.dataset.name;
-        new bootstrap.Modal(deleteRoleModal).show();
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            deleteRoleId.value = btn.dataset.id;
+            deleteRoleName.innerText = btn.dataset.name;
+            new bootstrap.Modal(deleteRoleModal).show();
+        });
     });
-});
 </script>

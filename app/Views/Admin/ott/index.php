@@ -79,16 +79,21 @@
             </div>
 
             <div class="modal-body">
-                <label>Name</label>
-                <input type="text" name="name" class="form-control mb-3" required>
-
-                <label>Logo</label>
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Name</label>
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
+                <input type="text" name="name" class="form-control mb-3" data-required="true" data-error="Ott Name is required">
+                
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Logo</label>
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
                 <input type="file"
                     name="logo"
                     class="form-control mb-3"
-                    accept="image/*"
-                    required>
-
+                    data-required="true" data-error="Ott Image is required"
+                    accept="image/*">
 
                 <div class="form-check">
                     <input type="checkbox" name="is_active" class="form-check-input" checked>
@@ -120,16 +125,24 @@
 
                 <input type="hidden" name="id" id="editOttId">
 
-                <label>Name</label>
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Name</label>
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
                 <input type="text"
                        name="name"
                        id="editOttName"
-                       class="form-control mb-3"
-                       required>
+                       data-required="true" data-error="Ott Name is required"
+                       class="form-control mb-3">
 
-                <label>Change Logo (optional)</label>
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Logo</label>
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
+                
                 <input type="file"
                        name="logo"
+                       data-required="true" data-error="Ott Logo is required"
                        class="form-control mb-3"
                        accept="image/*">
 

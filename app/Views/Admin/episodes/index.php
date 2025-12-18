@@ -108,26 +108,42 @@
                     <?php endforeach; ?>
                 </select>
 
-                <label class="form-label">Episode Number</label>
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Episode Number</label>
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
                 <input type="number"
                        name="episode_number"
                        class="form-control mb-3"
                        min="1"
-                       required>
+                       data-required="true" data-error="Episode Number is required"
+                       >
 
-                <label class="form-label">Title</label>
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Title</label>
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
                 <input type="text"
                        name="title"
+                       data-required="true" data-error="Episode Title is required"
                        class="form-control mb-3"
-                       required>
+                       >
 
-                <label class="form-label">Description</label>
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Description</label>
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
                 <textarea name="description"
+                data-required="true" data-error="Episode Description is required"
                           class="form-control mb-3"></textarea>
 
-                <label class="form-label">Video URL</label>
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Video URL</label>
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
                 <input type="text"
                        name="video_url"
+                       data-required="true" data-error="Episode Video URL is required"
                        class="form-control">
 
             </div>
@@ -168,24 +184,35 @@
                        class="form-control mb-3"
                        disabled>
 
-                <label class="form-label">Title</label>
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Title</label>
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
                 <input type="text"
-                       name="title"
-                       id="editEpisodeTitle"
-                       class="form-control mb-3"
-                       required>
-
-                <label class="form-label">Description</label>
+                name="title"
+                id="editEpisodeTitle"
+                data-required="true" data-error="Episode Title is required"
+                class="form-control mb-3"
+                >
+                
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Description</label>
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
                 <textarea name="description"
-                          id="editEpisodeDesc"
-                          class="form-control mb-3"></textarea>
-
-                <label class="form-label">Video URL</label>
+                id="editEpisodeDesc"
+                data-required="true" data-error="Episode Description is required"
+                class="form-control mb-3"></textarea>
+                
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Video URL</label>
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
                 <input type="text"
+                       data-required="true" data-error="Episode Video URL is required"
                        name="video_url"
                        id="editEpisodeUrl"
                        class="form-control">
-
             </div>
 
             <div class="modal-footer">

@@ -92,8 +92,11 @@
                     <form method="POST" action="<?= BASE_URL ?>/admin/seasons/store">
                         <div class="modal-body">
 
-                            <label class="form-label">Series</label>
-                            <select name="movie_id" class="form-select mb-3" required>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label">Series</label>
+                                <span class="error-message text-danger small d-none"></span>
+                            </div>
+                            <select name="movie_id" class="form-select mb-3" data-required="true" data-error="Series is required">
                                 <option value="">Select Series</option>
 
                                 <?php foreach ($movies as $m): ?>
@@ -105,23 +108,33 @@
                                 <?php endforeach; ?>
                             </select>
 
-
-                            <label class="form-label">Season Number</label>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label">Season Number</label>
+                                <span class="error-message text-danger small d-none"></span>
+                            </div>
                             <input type="number"
                                 name="season_number"
+                                data-required="true" data-error="Season Number is required"
                                 class="form-control mb-3"
                                 min="1"
-                                required>
+                                >
 
-                            <label class="form-label">Total Episodes</label>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label">Total Episodes</label>
+                                <span class="error-message text-danger small d-none"></span>
+                            </div>
                             <input type="number"
                                 name="episode_number"
+                                data-required="true" data-error="Season Total Episodes is required"
                                 class="form-control mb-3"
                                 min="1"
-                                required>
+                                >
 
-                            <label class="form-label">Genre</label>
-                            <select name="genre_id" class="form-select mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label">Genre</label>
+                                <span class="error-message text-danger small d-none"></span>
+                            </div>
+                            <select name="genre_id" class="form-select mb-3" data-required="true" data-error="Season Genre is required">
                                 <option value="">Select Genre</option>
                                 <?php foreach ($genres as $g): ?>
                                     <option value="<?= $g['id'] ?>">
@@ -130,8 +143,11 @@
                                 <?php endforeach; ?>
                             </select>
 
-                            <label class="form-label">OTT Provider</label>
-                            <select name="ott_id" class="form-select mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label">OTT Provider</label>
+                                <span class="error-message text-danger small d-none"></span>
+                            </div>
+                            <select name="ott_id" class="form-select mb-3" data-required="true" data-error="Season OTT Provider is required">
                                 <option value="">Select OTT</option>
                                 <?php foreach ($otts as $o): ?>
                                     <option value="<?= $o['id'] ?>">
@@ -140,13 +156,17 @@
                                 <?php endforeach; ?>
                             </select>
 
-                            <label class="form-label">Release Year</label>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label">Release Year</label>
+                                <span class="error-message text-danger small d-none"></span>
+                            </div>
                             <input type="number"
                                 name="release_year"
                                 class="form-control"
+                                data-required="true" data-error="Season Release Year is required"
                                 min="1900"
                                 max="<?= date('Y') + 5 ?>"
-                                required>
+                                >
 
                         </div>
 
@@ -181,7 +201,7 @@
                             <input type="hidden" name="id" id="editSeasonId">
 
                             <label class="form-label">Series</label>
-                            <select name="movie_id" id="editMovieId" class="form-select mb-3" required>
+                            <select name="movie_id" id="editMovieId" class="form-select mb-3">
                                 <?php foreach ($movies as $m): ?>
                                     <option value="<?= $m['id'] ?>">
                                         <?= htmlspecialchars($m['title']) ?>
@@ -189,24 +209,35 @@
                                 <?php endforeach; ?>
                             </select>
 
-                            <label class="form-label">Season Number</label>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label">Season Number</label>
+                                <span class="error-message text-danger small d-none"></span>
+                            </div>
                             <input type="number"
                                 name="season_number"
                                 id="editSeasonNumber"
+                                data-required="true" data-error="Season Season Number is required"
                                 class="form-control mb-3"
                                 min="1"
-                                required>
+                                >
 
-                            <label class="form-label">Total Episodes</label>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label">Total Episodes</label>
+                                <span class="error-message text-danger small d-none"></span>
+                            </div>
                             <input type="number"
                                 name="episode_number"
                                 id="editEpisodes"
+                                data-required="true" data-error="Season Total Episodes is required"
                                 class="form-control mb-3"
                                 min="1"
-                                required>
+                                >
 
-                            <label class="form-label">Genre</label>
-                            <select name="genre_id" id="editGenreId" class="form-select mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label">Genre</label>
+                                <span class="error-message text-danger small d-none"></span>
+                            </div>
+                            <select name="genre_id" id="editGenreId" class="form-select mb-3" data-required="true" data-error="Season Genre is required">
                                 <option value="">Select Genre</option>
                                 <?php foreach ($genres as $g): ?>
                                     <option value="<?= $g['id'] ?>">
@@ -215,8 +246,11 @@
                                 <?php endforeach; ?>
                             </select>
 
-                            <label class="form-label">OTT Provider</label>
-                            <select name="ott_id" id="editOttId" class="form-select mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label">OTT Provider</label>
+                                <span class="error-message text-danger small d-none"></span>
+                            </div>
+                            <select name="ott_id" id="editOttId" class="form-select mb-3" data-required="true" data-error="Season OTT Provider is required">
                                 <option value="">Select OTT</option>
                                 <?php foreach ($otts as $o): ?>
                                     <option value="<?= $o['id'] ?>">
@@ -225,12 +259,16 @@
                                 <?php endforeach; ?>
                             </select>
 
-                            <label class="form-label">Release Year</label>
+                             <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label">Release Year</label>
+                                <span class="error-message text-danger small d-none"></span>
+                            </div>
                             <input type="number"
                                 name="release_year"
                                 id="editReleaseYear"
+                                data-required="true" data-error="Season Release Year is required"
                                 class="form-control"
-                                required>
+                                >
                         </div>
 
                         <div class="modal-footer">

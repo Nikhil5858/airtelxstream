@@ -63,7 +63,7 @@
 <div class="modal fade" id="addCastContentModal" tabindex="-1">
     <div class="modal-dialog">
         <form method="POST"
-            action="<?= BASE_URL ?>/admin/cast-content/store"
+            action="<?= BASE_URL ?>/admin/cast_content/store"
             class="modal-content">
 
             <div class="modal-header">
@@ -73,21 +73,30 @@
 
             <div class="modal-body">
 
-                <select name="movie_id" class="form-select mb-3" required>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
+                <select name="movie_id" class="form-select mb-3" data-required="true" data-error="Select Movie is required">
                     <option value="">Select Movie</option>
                     <?php foreach ($movies as $m): ?>
                         <option value="<?= $m['id'] ?>"><?= $m['title'] ?></option>
                     <?php endforeach; ?>
                 </select>
 
-                <select name="cast_id" class="form-select mb-3" required>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
+                <select name="cast_id" class="form-select mb-3" data-required="true" data-error="Select Cast is required">
                     <option value="">Select Cast</option>
                     <?php foreach ($casts as $c): ?>
                         <option value="<?= $c['id'] ?>"><?= $c['name'] ?></option>
                     <?php endforeach; ?>
                 </select>
 
-                <select name="cast_roles_id" class="form-select" required>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="error-message text-danger small d-none"></span>
+                </div>
+                <select name="cast_roles_id" class="form-select" data-required="true" data-error="Select Role is required">
                     <option value="">Select Role</option>
                     <?php foreach ($roles as $r): ?>
                         <option value="<?= $r['id'] ?>"><?= $r['role_name'] ?></option>
@@ -109,7 +118,7 @@
 <div class="modal fade" id="editCastContentModal" tabindex="-1">
     <div class="modal-dialog">
         <form method="POST"
-            action="<?= BASE_URL ?>/admin/cast-content/update"
+            action="<?= BASE_URL ?>/admin/cast_content/update"
             class="modal-content">
 
             <div class="modal-header">

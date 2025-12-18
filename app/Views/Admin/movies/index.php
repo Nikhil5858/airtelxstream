@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var array $movies
  * @var array $genres
@@ -16,8 +17,8 @@
             </div>
 
             <button class="btn btn-primary mt-2"
-                    data-bs-toggle="modal"
-                    data-bs-target="#addMovieModal">
+                data-bs-toggle="modal"
+                data-bs-target="#addMovieModal">
                 <i class="bi bi-plus-lg me-2"></i> Add Movie
             </button>
         </div>
@@ -26,94 +27,94 @@
         <div class="card mt-3">
             <table class="table align-middle">
                 <thead class="table-light">
-                <tr>
-                    <th>Poster</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Year</th>
-                    <th>Language</th>
-                    <th>Type</th>
-                    <th>Genre</th>
-                    <th>Free</th>
-                    <th>Actions</th>
-                </tr>
+                    <tr>
+                        <th>Poster</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Year</th>
+                        <th>Language</th>
+                        <th>Type</th>
+                        <th>Genre</th>
+                        <th>Free</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
 
                 <tbody>
-                <?php if (!empty($movies)): ?>
-                    <?php foreach ($movies as $m): ?>
-                        <tr>
-                            <td>
-                                <?php if ($m['poster_url']): ?>
-                                    <img src="<?= BASE_URL ?>/assets/images/<?= $m['poster_url'] ?>"
-                                         width="45" class="rounded">
-                                <?php else: ?>
-                                    —
-                                <?php endif; ?>
-                            </td>
+                    <?php if (!empty($movies)): ?>
+                        <?php foreach ($movies as $m): ?>
+                            <tr>
+                                <td>
+                                    <?php if ($m['poster_url']): ?>
+                                        <img src="<?= BASE_URL ?>/assets/images/<?= $m['poster_url'] ?>"
+                                            width="45" class="rounded">
+                                    <?php else: ?>
+                                        —
+                                    <?php endif; ?>
+                                </td>
 
-                            <td><strong><?= htmlspecialchars($m['title']) ?></strong></td>
-                            <?php
+                                <td><strong><?= htmlspecialchars($m['title']) ?></strong></td>
+                                <?php
                                 $desc = strip_tags($m['description']);
                                 $limit = 130;
 
                                 if (strlen($desc) > $limit) {
                                     $desc = substr($desc, 0, $limit) . '...';
                                 }
-                            ?>
-                            <td><?= htmlspecialchars($desc) ?></td>
-                            <td><?= $m['release_year'] ?></td>
-                            <td><?= htmlspecialchars($m['language']) ?></td>
-                            <td><?= ucfirst($m['type']) ?></td>
-                            <td><?= htmlspecialchars($m['genre']) ?></td>
+                                ?>
+                                <td><?= htmlspecialchars($desc) ?></td>
+                                <td><?= $m['release_year'] ?></td>
+                                <td><?= htmlspecialchars($m['language']) ?></td>
+                                <td><?= ucfirst($m['type']) ?></td>
+                                <td><?= htmlspecialchars($m['genre']) ?></td>
 
-                            <td>
-                                <?= $m['is_free']
-                                    ? '<span class="badge bg-success-subtle text-success">Yes</span>'
-                                    : 'No' ?>
-                            </td>
+                                <td>
+                                    <?= $m['is_free']
+                                        ? '<span class="badge bg-success-subtle text-success">Yes</span>'
+                                        : 'No' ?>
+                                </td>
 
-                            <td>
-                                <button class="btn btn-outline-primary btn-sm edit-btn"
-                                    data-id="<?= $m['id'] ?>"
-                                    data-title="<?= htmlspecialchars($m['title']) ?>"
-                                    data-description="<?= htmlspecialchars($m['description']) ?>"
-                                    data-year="<?= $m['release_year'] ?>"
-                                    data-language="<?= htmlspecialchars($m['language']) ?>"
-                                    data-type="<?= $m['type'] ?>"
-                                    data-genre="<?= $m['genre_id'] ?>"
-                                    data-poster="<?= $m['poster_url'] ?>"
-                                    data-banner="<?= $m['banner_url'] ?>"
-                                    data-free="<?= $m['is_free'] ?>"
-                                    data-new="<?= $m['is_new_release'] ?>"
-                                    data-feature="<?= $m['is_feature'] ?>"
-                                    data-bannerflag="<?= $m['is_banner'] ?>">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-
-                                <form method="POST"
-                                      action="<?= BASE_URL ?>/admin/movies/delete"
-                                      class="d-inline">
-                                    <input type="hidden" name="id" value="<?= $m['id'] ?>">
-
-                                    <button type="button"
-                                            class="btn btn-outline-danger btn-sm delete-btn"
-                                            data-id="<?= $m['id'] ?>"
-                                            data-title="<?= htmlspecialchars($m['title']) ?>">
-                                        <i class="bi bi-trash"></i>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm edit-btn"
+                                        data-id="<?= $m['id'] ?>"
+                                        data-title="<?= htmlspecialchars($m['title']) ?>"
+                                        data-description="<?= htmlspecialchars($m['description']) ?>"
+                                        data-year="<?= $m['release_year'] ?>"
+                                        data-language="<?= htmlspecialchars($m['language']) ?>"
+                                        data-type="<?= $m['type'] ?>"
+                                        data-genre="<?= $m['genre_id'] ?>"
+                                        data-poster="<?= $m['poster_url'] ?>"
+                                        data-banner="<?= $m['banner_url'] ?>"
+                                        data-free="<?= $m['is_free'] ?>"
+                                        data-new="<?= $m['is_new_release'] ?>"
+                                        data-feature="<?= $m['is_feature'] ?>"
+                                        data-bannerflag="<?= $m['is_banner'] ?>">
+                                        <i class="bi bi-pencil"></i>
                                     </button>
 
-                                </form>
+                                    <form method="POST"
+                                        action="<?= BASE_URL ?>/admin/movies/delete"
+                                        class="d-inline">
+                                        <input type="hidden" name="id" value="<?= $m['id'] ?>">
+
+                                        <button type="button"
+                                            class="btn btn-outline-danger btn-sm delete-btn mt-1"
+                                            data-id="<?= $m['id'] ?>"
+                                            data-title="<?= htmlspecialchars($m['title']) ?>">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="8" class="text-center text-muted">
+                                No movies found
                             </td>
                         </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="8" class="text-center text-muted">
-                            No movies found
-                        </td>
-                    </tr>
-                <?php endif; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
@@ -135,39 +136,70 @@
                     <button class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
+                <!-- ===== MODAL BODY ===== -->
                 <div class="modal-body row g-3">
 
+                    <!-- TITLE -->
                     <div class="col-md-6">
-                        <label class="form-label">Title *</label>
-                        <input type="text" name="title" class="form-control" required>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Title *</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <input type="text" name="title" class="form-control"
+                               data-required="true" data-error="Movie Title is required">
                     </div>
 
+                    <!-- DESCRIPTION -->
                     <div class="col-md-6">
-                        <label class="form-label">Description</label>
-                        <input type="text" name="description" class="form-control">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Description</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <textarea type="text" name="description" class="form-control"
+                               data-required="true" data-error="Movie Description is required"></textarea>
                     </div>
 
+                    <!-- YEAR -->
                     <div class="col-md-6">
-                        <label class="form-label">Release Year</label>
-                        <input type="number" name="release_year" class="form-control">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Release Year</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <input type="number" name="release_year" class="form-control"
+                               data-required="true" data-error="Movie Release Year is required">
                     </div>
 
+                    <!-- LANGUAGE -->
                     <div class="col-md-6">
-                        <label class="form-label">Language</label>
-                        <input type="text" name="language" class="form-control">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Language</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <input type="text" name="language" class="form-control"
+                               data-required="true" data-error="Movie Language is required">
                     </div>
 
+                    <!-- TYPE -->
                     <div class="col-md-6">
-                        <label class="form-label">Type</label>
-                        <select name="type" class="form-select">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Type</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <select name="type" class="form-select"
+                                data-required="true" data-error="Movie Type is required">
                             <option value="movie">Movie</option>
                             <option value="series">Series</option>
                         </select>
                     </div>
 
+                    <!-- GENRE -->
                     <div class="col-md-6">
-                        <label class="form-label">Genre</label>
-                        <select name="genre_id" class="form-select">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Genre</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <select name="genre_id" class="form-select"
+                                data-required="true" data-error="Movie Genre is required">
                             <?php foreach ($genres as $g): ?>
                                 <option value="<?= $g['id'] ?>"><?= $g['name'] ?></option>
                             <?php endforeach; ?>
@@ -176,101 +208,91 @@
 
                     <!-- POSTER -->
                     <div class="col-md-6">
-                        <label class="form-label">Poster Image</label>
-                        <input type="file"
-                               name="poster_file"
-                               accept="image/*"
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Poster Image</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <input type="file" name="poster_file" accept="image/*"
                                class="form-control"
+                               data-required="true" data-error="Movie Poster Image is required"
                                onchange="previewImage(this,'posterPreview')">
                         <img id="posterPreview" class="mt-2 rounded" width="80">
                     </div>
 
                     <!-- BANNER -->
                     <div class="col-md-6">
-                        <label class="form-label">Banner Image</label>
-                        <input type="file"
-                               name="banner_file"
-                               accept="image/*"
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Banner Image</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <input type="file" name="banner_file" accept="image/*"
                                class="form-control"
+                               data-required="true" data-error="Movie Banner Image is required"
                                onchange="previewImage(this,'bannerPreview')">
                         <img id="bannerPreview" class="mt-2 rounded" width="120">
                     </div>
 
                     <!-- MOVIE VIDEO -->
                     <div class="col-md-6">
-                        <label class="form-label">Movie Video</label>
-                        <input type="file"
-                               name="movie_file"
-                               accept="video/*"
-                               class="form-control">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Movie Video</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <input type="file" name="movie_file" accept="video/*"
+                               class="form-control"
+                               data-required="true" data-error="Movie Video is required">
                     </div>
 
                     <!-- TRAILER VIDEO -->
                     <div class="col-md-6">
-                        <label class="form-label">Trailer Video</label>
-                        <input type="file"
-                               name="trailer_file"
-                               accept="video/*"
-                               class="form-control">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Trailer Video</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <input type="file" name="trailer_file" accept="video/*"
+                               class="form-control"
+                               data-required="true" data-error="Movie Trailer Video is required">
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="form-check mt-4">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   name="is_free"
-                                   value="1">
-                            <label class="form-check-label">
-                                Free
-                            </label>
+                    <!-- ===== FLAGS (ONE ROW) ===== -->
+                    <div class="col-md-3">
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" name="is_free" value="1">
+                            <label class="form-check-label">Free</label>
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="form-check mt-2">
-                            <input class="form-check-input"
-                                type="checkbox"
-                                name="is_new_release"
-                                value="1">
-                            <label class="form-check-label">
-                                New Release
-                            </label>
+                    <div class="col-md-3">
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" name="is_new_release" value="1">
+                            <label class="form-check-label">New Release</label>
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="form-check mt-2">
-                            <input class="form-check-input"
-                                type="checkbox"
-                                name="is_feature"
-                                value="1">
-                            <label class="form-check-label">
-                                Featured
-                            </label>
+                    <div class="col-md-3">
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" name="is_feature" value="1">
+                            <label class="form-check-label">Featured</label>
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="form-check mt-2">
-                            <input class="form-check-input"
-                                type="checkbox"
-                                name="is_banner"
-                                value="1">
-                            <label class="form-check-label">
-                                Show in Banner
-                            </label>
+                    <div class="col-md-3">
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" name="is_banner" value="1">
+                            <label class="form-check-label">Show in Banner</label>
                         </div>
                     </div>
 
                 </div>
 
+                <!-- ===== MODAL FOOTER ===== -->
                 <div class="modal-footer">
-                    <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">
                         Cancel
                     </button>
-                    <button class="btn btn-primary">Save Movie</button>
+                    <button class="btn btn-primary">
+                        Save Movie
+                    </button>
                 </div>
 
             </form>
@@ -280,14 +302,15 @@
 </div>
 
 
+
 <!-- ================= EDIT MOVIE MODAL ================= -->
 <div class="modal fade" id="editMovieModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
             <form method="POST"
-                  action="<?= BASE_URL ?>/admin/movies/update"
-                  enctype="multipart/form-data">
+                action="<?= BASE_URL ?>/admin/movies/update"
+                enctype="multipart/form-data">
 
                 <input type="hidden" name="id" id="editId">
                 <input type="hidden" name="old_poster" id="editOldPoster">
@@ -304,26 +327,38 @@
 
                     <!-- TITLE -->
                     <div class="col-md-6">
-                        <label class="form-label">Title</label>
-                        <input type="text" name="title" id="editTitle" class="form-control">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Title</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <input type="text" name="title" id="editTitle" class="form-control" data-required="true" data-error="Movie Title is required">
                     </div>
 
                     <!-- DESCRIPTION -->
                     <div class="col-md-6">
-                        <label class="form-label">Description</label>
-                        <input type="text" name="description" id="editDescription" class="form-control">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Description</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <textarea type="text" name="description" id="editDescription" class="form-control" data-required="true" data-error="Movie Description is required"></textarea>
                     </div>
 
                     <!-- YEAR -->
                     <div class="col-md-4">
-                        <label class="form-label">Release Year</label>
-                        <input type="number" name="release_year" id="editYear" class="form-control">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Release Year</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <input type="number" name="release_year" id="editYear" class="form-control" data-required="true" data-error="Movie Release Year is required">
                     </div>
 
                     <!-- LANGUAGE -->
                     <div class="col-md-4">
-                        <label class="form-label">Language</label>
-                        <input type="text" name="language" id="editLanguage" class="form-control">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">Language</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <input type="text" name="language" id="editLanguage" class="form-control" data-required="true" data-error="Movie Language is required">
                     </div>
 
                     <!-- TYPE -->
@@ -392,8 +427,8 @@
 
                 <div class="modal-footer">
                     <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
+                        class="btn btn-light"
+                        data-bs-dismiss="modal">
                         Cancel
                     </button>
                     <button class="btn btn-primary">Update Movie</button>
@@ -426,8 +461,8 @@
 
                 <div class="modal-footer">
                     <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
+                        class="btn btn-light"
+                        data-bs-dismiss="modal">
                         Cancel
                     </button>
 
@@ -493,6 +528,4 @@
             new bootstrap.Modal(document.getElementById('editMovieModal')).show();
         });
     });
-
 </script>
-
