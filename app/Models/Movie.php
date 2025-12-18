@@ -173,5 +173,22 @@ class Movie
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getFreeBySection(int $sectionId): array
+    {
+        $stmt = $this->db->prepare("
+            SELECT m.*
+            FROM homepage_section_movies sm
+            JOIN movies m ON m.id = sm.movie_id
+            WHERE sm.section_id = :section_id
+            AND m.is_free = 1
+            ORDER BY sm.position ASC
+        ");
+
+        $stmt->execute([
+            'section_id' => $sectionId
+        ]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }

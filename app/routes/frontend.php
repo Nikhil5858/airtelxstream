@@ -25,4 +25,10 @@ $routes = [
     "profile/language"   => "Frontend/ProfileController@language",
     "profile/logout" => "Frontend/ProfileController@logout",
 
+    //Myplan
+    "myplan" => "Frontend/MyplanController@index",
+    "myplan/subscribe" => "Frontend/MyplanController@subscribe",
+    
+    //Free
+    "free" => "Frontend/FreeController@index",
 ];

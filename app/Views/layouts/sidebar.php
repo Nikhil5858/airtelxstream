@@ -7,8 +7,8 @@
         <li><a href="<?php echo BASE_URL; ?>"><i class="bi bi-house"></i><span>Home</span></a></li>
         <li><a href="<?= BASE_URL ?>/search"><i class="bi bi-search"></i><span>Search</span></a></li>
         <li><a href="#"><i class="bi bi-layers"></i><span>OTTs</span></a></li>
-        <li><a href="#"><i class="bi bi-play-circle"></i><span>Free</span></a></li>
-        <li><a href="#"><i class="bi bi-play-btn"></i><span>My Plans</span></a></li>
+        <li><a href="<?= BASE_URL ?>/free"><i class="bi bi-play-circle"></i><span>Free</span></a></li>
+        <li><a href="<?= BASE_URL ?>/myplan"><i class="bi bi-play-btn"></i><span>My Plans</span></a></li>
         <?php if (!empty($_SESSION['user_logged_in'])): ?>
 
             <li>
