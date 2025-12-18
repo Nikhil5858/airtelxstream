@@ -1,6 +1,6 @@
 <div class="sidebar" id="sidebar">
 
-    <div class="sidebar-brand d-flex justify-content-center mb-4">
+    <div class="sidebar-brand d-flex justify-content-center">
         <img src="<?= BASE_URL ?>/assets/images/logo.png"
              alt="Logo"
              class="sidebar-logo">

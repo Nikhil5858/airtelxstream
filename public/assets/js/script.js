@@ -11,156 +11,169 @@ const resendTimer = document.getElementById("resendTimer");
 
 let timerInterval;
 
-// Open OTP Modal
+/* =======================
+   SEND OTP
+======================= */
 otpTriggerButton.addEventListener("click", () => {
   const email = emailInput.value.trim();
-  const name = nameInput.value.trim();
+  const name  = nameInput.value.trim();
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+  errorMessage.style.display = "none";
+
   if (!emailPattern.test(email)) {
-    errorMessage.style.display = "block";
     errorMessage.textContent = "Enter a valid email address";
+    errorMessage.style.display = "block";
     return;
   }
 
   if (name === "") {
+    errorMessage.textContent = "Enter your name";
     errorMessage.style.display = "block";
-    errorMessage.textContent = "Enter Name";
     return;
   }
 
-  errorMessage.style.display = "none";
-
-  // Disable button
   otpTriggerButton.disabled = true;
   otpTriggerButton.textContent = "Sending OTP...";
 
   fetch(BASE_URL + "/auth/send-otp", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({ email, name }),
+    body: new URLSearchParams({ email, name })
   })
-    .then((res) => res.json())
-    .then((res) => {
-      if (!res.status) {
-        errorMessage.style.display = "block";
-        errorMessage.textContent = res.msg;
+    .then(r => r.json())
+    .then(res => {
+      otpTriggerButton.disabled = false;
+      otpTriggerButton.textContent = "Continue";
 
-        otpTriggerButton.disabled = false;
-        otpTriggerButton.textContent = "Continue";
+      if (!res.status) {
+        errorMessage.textContent = res.msg || "Failed to send OTP";
+        errorMessage.style.display = "block";
         return;
       }
 
       document.getElementById("otpMobile").textContent = email;
+      otpInputs.forEach(i => i.value = "");
+      otpError.style.display = "none";
+
       loginModal.hide();
       otpModal.show();
       startOTPTimer();
     })
     .catch(() => {
-      errorMessage.style.display = "block";
-      errorMessage.textContent = "Server error. Try again.";
-
       otpTriggerButton.disabled = false;
       otpTriggerButton.textContent = "Continue";
+      errorMessage.textContent = "Server error. Try again.";
+      errorMessage.style.display = "block";
     });
 });
 
-
-// Auto move + backspace handling
+/* =======================
+   OTP INPUT UX
+======================= */
 otpInputs.forEach((input, index) => {
   input.addEventListener("input", () => {
-    if (input.value.length === 1 && index < otpInputs.length - 1) {
+    input.value = input.value.replace(/\D/g, "");
+    if (input.value && index < otpInputs.length - 1) {
       otpInputs[index + 1].focus();
     }
   });
 
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Backspace" && input.value === "" && index > 0) {
+  input.addEventListener("keydown", e => {
+    if (e.key === "Backspace" && !input.value && index > 0) {
       otpInputs[index - 1].focus();
     }
   });
 });
 
-// VERIFY button action
-document.querySelector("#otpModal button.btn").addEventListener("click", () => {
-  let otp = "";
-  otpInputs.forEach((i) => (otp += i.value));
+/* =======================
+   VERIFY OTP
+======================= */
+document.querySelector("#otpModal .btn").addEventListener("click", () => {
+  otpError.style.display = "none";
 
-  if (otp.length !== 4 || isNaN(otp)) {
+  let otp = "";
+  otpInputs.forEach(i => otp += i.value);
+
+  if (otp.length !== 4) {
+    otpError.textContent = "Enter the 4-digit OTP";
     otpError.style.display = "block";
-    otpError.textContent = "Enter valid OTP";
     return;
   }
 
-  fetch(BASE_URL+"/auth/verify-otp", {
+  fetch(BASE_URL + "/auth/verify-otp", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({ otp }),
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ otp })
   })
-    .then((res) => res.json())
-    .then((res) => {
-      if (res.status) {
-        otpModal.hide();
-        window.location.reload(); // or redirect
-      } else {
+    .then(r => r.json())
+    .then(res => {
+      if (!res.status) {
+        otpError.textContent = res.msg || "Invalid OTP";
         otpError.style.display = "block";
-        otpError.textContent = res.msg;
+        return;
       }
+
+      otpModal.hide();
+      window.location.reload();
+    })
+    .catch(() => {
+      otpError.textContent = "Verification failed. Try again.";
+      otpError.style.display = "block";
     });
 });
 
-// Start OTP countdown
+/* =======================
+   OTP TIMER + RESEND
+======================= */
 function startOTPTimer() {
   let time = 60;
-  resendTimer.textContent = `Resend OTP in (0:${time})`;
   resendTimer.style.pointerEvents = "none";
   resendTimer.style.opacity = "0.5";
 
   clearInterval(timerInterval);
-  timerInterval = setInterval(() => {
-    time--;
-    resendTimer.textContent = `Resend OTP in (0:${
-      time < 10 ? "0" + time : time
-    })`;
 
-    if (time === 0) {
+  timerInterval = setInterval(() => {
+    resendTimer.textContent = `Resend OTP in (0:${time < 10 ? "0" : ""}${time})`;
+    time--;
+
+    if (time < 0) {
       clearInterval(timerInterval);
       resendTimer.innerHTML = `<a href="#" id="resendBtn" style="color:#fff;">Resend OTP</a>`;
       resendTimer.style.pointerEvents = "auto";
       resendTimer.style.opacity = "1";
 
-      document.getElementById("resendBtn").addEventListener("click", () => {
-        const email = emailInput.value.trim();
-
-        fetch(BASE_URL+"/auth/send-otp", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({
-            email: email,
-            name: nameInput.value.trim()
-          })
-
-        })
-          .then((res) => res.json())
-          .then((res) => {
-            if (!res.status) {
-              otpError.style.display = "block";
-              otpError.textContent = res.msg;
-              return;
-            }
-
-            otpError.style.display = "none";
-            otpInputs.forEach((i) => (i.value = ""));
-            otpInputs[0].focus();
-            startOTPTimer();
-          });
-      });
+      document.getElementById("resendBtn").onclick = e => {
+        e.preventDefault();
+        resendOtp();
+      };
     }
   }, 1000);
+}
+
+function resendOtp() {
+  otpError.style.display = "none";
+
+  fetch(BASE_URL + "/auth/send-otp", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      email: emailInput.value.trim(),
+      name: nameInput.value.trim()
+    })
+  })
+    .then(r => r.json())
+    .then(res => {
+      if (!res.status) {
+        otpError.textContent = res.msg || "Failed to resend OTP";
+        otpError.style.display = "block";
+        return;
+      }
+
+      otpInputs.forEach(i => i.value = "");
+      otpInputs[0].focus();
+      startOTPTimer();
+    });
 }
 
 const scrollers = document.querySelectorAll(".movie-scroll-container");
