@@ -119,6 +119,17 @@ class HomepageSection
         );
     }
 
+    public function getNextPosition(): int
+    {
+        $stmt = $this->db->query("
+            SELECT COALESCE(MAX(position), 0) + 1 AS next_pos
+            FROM homepage_sections
+        ");
+
+        return (int)$stmt->fetchColumn();
+    }
+
+
     /** Sync movies for a section (delete + insert) */
     public function syncMovies(int $sectionId, array $movieIds): void
     {

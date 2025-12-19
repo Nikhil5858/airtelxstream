@@ -106,40 +106,56 @@ class Movie
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getNewReleases(int $limit = 12): array
+    public function getNewReleases(int $userId, int $limit = 12): array
     {
         $stmt = $this->db->prepare("
             SELECT 
-                id,
-                title,
-                poster_url,
-                is_free,
-                type
-            FROM movies
-            WHERE is_new_release = 1
-            ORDER BY created_at DESC
+                m.id,
+                m.title,
+                m.poster_url,
+                m.is_free,
+                m.type,
+                IF(w.id IS NULL, 0, 1) AS in_watchlist
+            FROM movies m
+            LEFT JOIN watchlist w
+                ON w.movie_id = m.id
+            AND w.user_id = :uid
+            WHERE m.is_new_release = 1
+            ORDER BY m.created_at DESC
             LIMIT :limit
         ");
 
+        $stmt->bindValue(':uid', $userId, PDO::PARAM_INT);
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getBySection(int $sectionId): array
+
+    public function getBySection(int $sectionId, int $userId): array
     {
         $stmt = $this->db->prepare("
-            SELECT m.*
+            SELECT 
+                m.*,
+                IF(w.id IS NULL, 0, 1) AS in_watchlist
             FROM homepage_section_movies sm
             JOIN movies m ON m.id = sm.movie_id
+            LEFT JOIN watchlist w
+                ON w.movie_id = m.id
+            AND w.user_id = :uid
             WHERE sm.section_id = :sid
             ORDER BY sm.position ASC
         ");
 
-        $stmt->execute(['sid' => $sectionId]);
+        $stmt->execute([
+            'sid' => $sectionId,
+            'uid' => $userId
+        ]);
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     /** Search movies by title */
     public function search(string $query): array
@@ -173,23 +189,30 @@ class Movie
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getFreeBySection(int $sectionId): array
+   public function getFreeBySection(int $sectionId, int $userId): array
     {
         $stmt = $this->db->prepare("
-            SELECT m.*
+            SELECT 
+                m.*,
+                IF(w.id IS NULL, 0, 1) AS in_watchlist
             FROM homepage_section_movies sm
             JOIN movies m ON m.id = sm.movie_id
+            LEFT JOIN watchlist w
+                ON w.movie_id = m.id
+            AND w.user_id = :uid
             WHERE sm.section_id = :section_id
             AND m.is_free = 1
             ORDER BY sm.position ASC
         ");
 
         $stmt->execute([
-            'section_id' => $sectionId
+            'section_id' => $sectionId,
+            'uid'        => $userId
         ]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     public function getByOtt(int $ottId): array
     {

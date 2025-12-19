@@ -127,15 +127,18 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
+
             <form method="POST"
-                  action="<?= BASE_URL ?>/admin/movies/store"
-                  enctype="multipart/form-data">
+                action="<?= BASE_URL ?>/admin/movies/store"
+                enctype="multipart/form-data">
 
                 <div class="modal-header">
                     <h5 class="modal-title">Add Movie</h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
 
+                </div>
                 <!-- ===== MODAL BODY ===== -->
                 <div class="modal-body row g-3">
 
@@ -146,7 +149,7 @@
                             <span class="error-message text-danger small d-none"></span>
                         </div>
                         <input type="text" name="title" class="form-control"
-                               data-required="true" data-error="Movie Title is required">
+                            data-required="true" data-error="Movie Title is required">
                     </div>
 
                     <!-- DESCRIPTION -->
@@ -156,7 +159,7 @@
                             <span class="error-message text-danger small d-none"></span>
                         </div>
                         <textarea type="text" name="description" class="form-control"
-                               data-required="true" data-error="Movie Description is required"></textarea>
+                            data-required="true" data-error="Movie Description is required"></textarea>
                     </div>
 
                     <!-- YEAR -->
@@ -166,7 +169,7 @@
                             <span class="error-message text-danger small d-none"></span>
                         </div>
                         <input type="number" name="release_year" class="form-control"
-                               data-required="true" data-error="Movie Release Year is required">
+                            data-required="true" data-error="Movie Release Year is required">
                     </div>
 
                     <!-- LANGUAGE -->
@@ -176,7 +179,7 @@
                             <span class="error-message text-danger small d-none"></span>
                         </div>
                         <input type="text" name="language" class="form-control"
-                               data-required="true" data-error="Movie Language is required">
+                            data-required="true" data-error="Movie Language is required">
                     </div>
 
                     <!-- TYPE -->
@@ -186,7 +189,7 @@
                             <span class="error-message text-danger small d-none"></span>
                         </div>
                         <select name="type" class="form-select"
-                                data-required="true" data-error="Movie Type is required">
+                            data-required="true" data-error="Movie Type is required">
                             <option value="movie">Movie</option>
                             <option value="series">Series</option>
                         </select>
@@ -199,7 +202,7 @@
                             <span class="error-message text-danger small d-none"></span>
                         </div>
                         <select name="genre_id" class="form-select"
-                                data-required="true" data-error="Movie Genre is required">
+                            data-required="true" data-error="Movie Genre is required">
                             <?php foreach ($genres as $g): ?>
                                 <option value="<?= $g['id'] ?>"><?= $g['name'] ?></option>
                             <?php endforeach; ?>
@@ -213,9 +216,9 @@
                             <span class="error-message text-danger small d-none"></span>
                         </div>
                         <input type="file" name="poster_file" accept="image/*"
-                               class="form-control"
-                               data-required="true" data-error="Movie Poster Image is required"
-                               onchange="previewImage(this,'posterPreview')">
+                            class="form-control"
+                            data-required="true" data-error="Movie Poster Image is required"
+                            onchange="previewImage(this,'posterPreview')">
                         <img id="posterPreview" class="mt-2 rounded" width="80">
                     </div>
 
@@ -226,9 +229,9 @@
                             <span class="error-message text-danger small d-none"></span>
                         </div>
                         <input type="file" name="banner_file" accept="image/*"
-                               class="form-control"
-                               data-required="true" data-error="Movie Banner Image is required"
-                               onchange="previewImage(this,'bannerPreview')">
+                            class="form-control"
+                            data-required="true" data-error="Movie Banner Image is required"
+                            onchange="previewImage(this,'bannerPreview')">
                         <img id="bannerPreview" class="mt-2 rounded" width="120">
                     </div>
 
@@ -239,8 +242,8 @@
                             <span class="error-message text-danger small d-none"></span>
                         </div>
                         <input type="file" name="movie_file" accept="video/*"
-                               class="form-control"
-                               data-required="true" data-error="Movie Video is required">
+                            class="form-control"
+                            data-required="true" data-error="Movie Video is required">
                     </div>
 
                     <!-- TRAILER VIDEO -->
@@ -250,8 +253,8 @@
                             <span class="error-message text-danger small d-none"></span>
                         </div>
                         <input type="file" name="trailer_file" accept="video/*"
-                               class="form-control"
-                               data-required="true" data-error="Movie Trailer Video is required">
+                            class="form-control"
+                            data-required="true" data-error="Movie Trailer Video is required">
                     </div>
 
                     <!-- ===== FLAGS (ONE ROW) ===== -->
@@ -308,9 +311,17 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
+
             <form method="POST"
                 action="<?= BASE_URL ?>/admin/movies/update"
                 enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Movie</h5>
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+
+                </div>
 
                 <input type="hidden" name="id" id="editId">
                 <input type="hidden" name="old_poster" id="editOldPoster">
@@ -318,10 +329,6 @@
 
 
 
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Movie</h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
 
                 <div class="modal-body row g-3">
 
@@ -446,7 +453,10 @@
 
             <div class="modal-header">
                 <h5 class="modal-title text-danger">Delete Movie</h5>
-                <button class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"></button>
+
             </div>
 
             <form method="POST" action="<?= BASE_URL ?>/admin/movies/delete">

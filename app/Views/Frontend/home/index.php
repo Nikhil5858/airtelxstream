@@ -54,9 +54,17 @@
                                             </span>
                                         </div>
 
-                                        <button class="watchlist-btn">
-                                            <span>+</span> Add To Watchlist
-                                        </button>
+                                        <?php if (!empty($movie['in_watchlist'])): ?>
+                                            <button class="watchlist-btn added" disabled>
+                                                ✓ Added
+                                            </button>
+                                            <?php else: ?>
+                                            <button class="watchlist-btn"
+                                                    data-movie-id="<?= (int)$movie['id'] ?>">
+                                                <span>+</span> Add To Watchlist
+                                            </button>
+                                        <?php endif; ?>
+
                                     </div>
 
                                 </div>
@@ -84,3 +92,24 @@
 
 <!-- Upper Footer -->
 <?php require ROOT_PATH . "app/Views/layouts/upper_footer.php"; ?>
+
+<script>
+    document.querySelectorAll('.watchlist-btn:not(.added)').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+
+            fetch("<?= BASE_URL ?>/movie/add-watchlist", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "movie_id=" + btn.dataset.movieId
+            })
+            .then(() => {
+                btn.classList.add('added');
+                btn.innerHTML = "✓ Added";
+                btn.disabled = true;
+            });
+        });
+    });
+</script>

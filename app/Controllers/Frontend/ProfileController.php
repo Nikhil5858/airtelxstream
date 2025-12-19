@@ -11,12 +11,17 @@ class ProfileController extends Controller
 
     public function index()
     {
-        $user = $this->model('User')->find($_SESSION['user_id']);
+        $userId = $_SESSION['user_id'];
+
+        $user = $this->model('User')->find($userId);
+        $watchlist = $this->model('Watchlist')->getUserWatchlist($userId);
 
         $this->view("Frontend/profile/index", [
-            'user' => $user
+            'user'      => $user,
+            'watchlist' => $watchlist
         ]);
     }
+
 
     public function help()
     {
@@ -48,4 +53,37 @@ class ProfileController extends Controller
 
         $this->redirect('home/index');
     }    
+
+    public function addToWatchlist()
+    {
+        if (empty($_SESSION['user_id'])) {
+            http_response_code(401);
+            return;
+        }
+
+        $movieId = (int)($_POST['movie_id'] ?? 0);
+        $userId  = $_SESSION['user_id'];
+
+        if ($movieId <= 0) return;
+
+        $this->model('Watchlist')->add($userId, $movieId);
+    }
+
+
+    public function removeFromWatchlist()
+    {
+        if (empty($_SESSION['user_id'])) {
+            http_response_code(401);
+            return;
+        }
+
+        $movieId = (int) ($_POST['movie_id'] ?? 0);
+        $userId  = $_SESSION['user_id'];
+
+        if ($movieId <= 0) return;
+
+        $this->model('Watchlist')->remove($userId, $movieId);
+    }
+
+    
 }

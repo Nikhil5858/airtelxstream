@@ -9,8 +9,8 @@
             </div>
 
             <button class="btn btn-primary mt-2"
-                    data-bs-toggle="modal"
-                    data-bs-target="#addUserModal">
+                data-bs-toggle="modal"
+                data-bs-target="#addUserModal">
                 <i class="bi bi-plus-lg me-2"></i> Add User
             </button>
         </div>
@@ -29,48 +29,48 @@
                 </thead>
 
                 <tbody>
-                <?php if (!empty($users)): ?>
-                    <?php foreach ($users as $u): ?>
-                        <tr>
-                            <td><strong><?= htmlspecialchars($u['name']) ?></strong></td>
+                    <?php if (!empty($users)): ?>
+                        <?php foreach ($users as $u): ?>
+                            <tr>
+                                <td><strong><?= htmlspecialchars($u['name']) ?></strong></td>
 
-                            <td>
-                                <?= $u['is_subscription_active']
-                                    ? '<span class="badge bg-success-subtle text-success">Active</span>'
-                                    : '<span class="badge bg-secondary-subtle text-dark">Inactive</span>' ?>
-                            </td>
+                                <td>
+                                    <?= $u['is_subscription_active']
+                                        ? '<span class="badge bg-success-subtle text-success">Active</span>'
+                                        : '<span class="badge bg-secondary-subtle text-dark">Inactive</span>' ?>
+                                </td>
 
-                            <td><?= date('d M Y', strtotime($u['created_at'])) ?></td>
+                                <td><?= date('d M Y', strtotime($u['created_at'])) ?></td>
 
-                            <td>
-                                <?= $u['last_login']
-                                    ? date('d M Y H:i', strtotime($u['last_login']))
-                                    : '—' ?>
-                            </td>
+                                <td>
+                                    <?= $u['last_login']
+                                        ? date('d M Y H:i', strtotime($u['last_login']))
+                                        : '—' ?>
+                                </td>
 
-                            <td>
-                                <button class="btn btn-outline-primary btn-sm edit-btn"
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm edit-btn"
                                         data-id="<?= $u['id'] ?>"
                                         data-name="<?= htmlspecialchars($u['name']) ?>"
                                         data-sub="<?= $u['is_subscription_active'] ?>">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
 
-                                <button class="btn btn-outline-danger btn-sm delete-btn"
+                                    <button class="btn btn-outline-danger btn-sm delete-btn"
                                         data-id="<?= $u['id'] ?>"
                                         data-name="<?= htmlspecialchars($u['name']) ?>">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">
+                                No users found
                             </td>
                         </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="5" class="text-center text-muted">
-                            No users found
-                        </td>
-                    </tr>
-                <?php endif; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
@@ -87,7 +87,10 @@
 
                 <div class="modal-header">
                     <h5 class="modal-title">Add User</h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+
                 </div>
 
                 <div class="modal-body">
@@ -97,28 +100,28 @@
                         <span class="error-message text-danger small d-none"></span>
                     </div>
                     <input type="text" name="name" class="form-control mb-3"
-                           data-required="true"
-                           data-error="User name is required">
+                        data-required="true"
+                        data-error="User name is required">
 
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="form-label">Email *</label>
                         <span class="error-message text-danger small d-none"></span>
                     </div>
                     <input type="email" name="email" class="form-control mb-3"
-                           data-required="true"
-                           data-error="Email is required">
+                        data-required="true"
+                        data-error="Email is required">
 
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="form-label">Password *</label>
                         <span class="error-message text-danger small d-none"></span>
                     </div>
                     <input type="password" name="password" class="form-control mb-3"
-                           data-required="true"
-                           data-error="Password is required">
+                        data-required="true"
+                        data-error="Password is required">
 
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox"
-                               name="is_subscription_active" value="1">
+                            name="is_subscription_active" value="1">
                         <label class="form-check-label">Subscription Active</label>
                     </div>
 
@@ -126,8 +129,8 @@
 
                 <div class="modal-footer">
                     <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
+                        class="btn btn-light"
+                        data-bs-dismiss="modal">
                         Cancel
                     </button>
                     <button class="btn btn-primary">Save User</button>
@@ -149,7 +152,10 @@
 
                 <div class="modal-header">
                     <h5 class="modal-title">Edit User</h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+
                 </div>
 
                 <div class="modal-body">
@@ -159,14 +165,14 @@
                         <span class="error-message text-danger small d-none"></span>
                     </div>
                     <input type="text" name="name" id="editName"
-                           class="form-control mb-3"
-                           data-required="true"
-                           data-error="User name is required">
+                        class="form-control mb-3"
+                        data-required="true"
+                        data-error="User name is required">
 
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox"
-                               name="is_subscription_active"
-                               id="editSubscription" value="1">
+                            name="is_subscription_active"
+                            id="editSubscription" value="1">
                         <label class="form-check-label">Subscription Active</label>
                     </div>
 
@@ -174,8 +180,8 @@
 
                 <div class="modal-footer">
                     <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
+                        class="btn btn-light"
+                        data-bs-dismiss="modal">
                         Cancel
                     </button>
                     <button class="btn btn-primary">Update User</button>
@@ -205,8 +211,8 @@
 
                 <div class="modal-footer">
                     <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
+                        class="btn btn-light"
+                        data-bs-dismiss="modal">
                         Cancel
                     </button>
                     <button class="btn btn-danger">Delete</button>

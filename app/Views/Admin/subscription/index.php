@@ -1,4 +1,6 @@
-<?php /** @var array $plans */ ?>
+<?php
+
+/** @var array $plans */ ?>
 
 <div class="main-content">
     <div class="container-fluid">
@@ -11,8 +13,8 @@
             </div>
 
             <button class="btn btn-primary mt-2"
-                    data-bs-toggle="modal"
-                    data-bs-target="#addPlanModal">
+                data-bs-toggle="modal"
+                data-bs-target="#addPlanModal">
                 <i class="bi bi-plus-lg me-2"></i> Add Plan
             </button>
         </div>
@@ -44,17 +46,17 @@
 
                             <div class="p-3 border-top d-flex justify-content-end gap-2">
                                 <button class="btn btn-outline-primary btn-sm edit-btn"
-                                        data-id="<?= $p['id'] ?>"
-                                        data-name="<?= htmlspecialchars($p['plan_name']) ?>"
-                                        data-price="<?= $p['price'] ?>"
-                                        data-days="<?= $p['duration_days'] ?>"
-                                        data-active="<?= $p['is_active'] ?>">
+                                    data-id="<?= $p['id'] ?>"
+                                    data-name="<?= htmlspecialchars($p['plan_name']) ?>"
+                                    data-price="<?= $p['price'] ?>"
+                                    data-days="<?= $p['duration_days'] ?>"
+                                    data-active="<?= $p['is_active'] ?>">
                                     <i class="bi bi-pencil"></i>
                                 </button>
 
                                 <button class="btn btn-outline-danger btn-sm delete-btn"
-                                        data-id="<?= $p['id'] ?>"
-                                        data-name="<?= htmlspecialchars($p['plan_name']) ?>">
+                                    data-id="<?= $p['id'] ?>"
+                                    data-name="<?= htmlspecialchars($p['plan_name']) ?>">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
@@ -81,7 +83,10 @@
 
                 <div class="modal-header">
                     <h5 class="modal-title">Add Subscription Plan</h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+
                 </div>
 
                 <div class="modal-body">
@@ -91,31 +96,31 @@
                         <span class="error-message text-danger small d-none"></span>
                     </div>
                     <input type="text" name="plan_name"
-                           class="form-control mb-3"
-                           data-required="true"
-                           data-error="Plan name is required">
+                        class="form-control mb-3"
+                        data-required="true"
+                        data-error="Plan name is required">
 
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="form-label">Price</label>
                         <span class="error-message text-danger small d-none"></span>
                     </div>
                     <input type="number" step="0.01" name="price"
-                           class="form-control mb-3"
-                           data-required="true"
-                           data-error="Price is required">
+                        class="form-control mb-3"
+                        data-required="true"
+                        data-error="Price is required">
 
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="form-label">Duration (Days)</label>
                         <span class="error-message text-danger small d-none"></span>
                     </div>
                     <input type="number" name="duration_days"
-                           class="form-control mb-3"
-                           data-required="true"
-                           data-error="Duration is required">
+                        class="form-control mb-3"
+                        data-required="true"
+                        data-error="Duration is required">
 
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox"
-                               name="is_active" value="1">
+                            name="is_active" value="1">
                         <label class="form-check-label">Active</label>
                     </div>
 
@@ -123,8 +128,8 @@
 
                 <div class="modal-footer">
                     <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
+                        class="btn btn-light"
+                        data-bs-dismiss="modal">
                         Cancel
                     </button>
                     <button class="btn btn-primary">Save Plan</button>
@@ -141,14 +146,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
 
+
             <form method="POST" action="<?= BASE_URL ?>/admin/subscription/update">
-
-                <input type="hidden" name="id" id="editId">
-
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Subscription Plan</h5>
-                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+
                 </div>
+
+                <input type="hidden" name="id" id="editId">
 
                 <div class="modal-body">
 
@@ -157,31 +165,31 @@
                         <span class="error-message text-danger small d-none"></span>
                     </div>
                     <input type="text" name="plan_name" id="editName"
-                           class="form-control mb-3"
-                           data-required="true"
-                           data-error="Plan name is required">
+                        class="form-control mb-3"
+                        data-required="true"
+                        data-error="Plan name is required">
 
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="form-label">Price</label>
                         <span class="error-message text-danger small d-none"></span>
                     </div>
                     <input type="number" step="0.01" name="price" id="editPrice"
-                           class="form-control mb-3"
-                           data-required="true"
-                           data-error="Price is required">
+                        class="form-control mb-3"
+                        data-required="true"
+                        data-error="Price is required">
 
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="form-label">Duration (Days)</label>
                         <span class="error-message text-danger small d-none"></span>
                     </div>
                     <input type="number" name="duration_days" id="editDays"
-                           class="form-control mb-3"
-                           data-required="true"
-                           data-error="Duration is required">
+                        class="form-control mb-3"
+                        data-required="true"
+                        data-error="Duration is required">
 
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox"
-                               name="is_active" id="editActive" value="1">
+                            name="is_active" id="editActive" value="1">
                         <label class="form-check-label">Active</label>
                     </div>
 
@@ -189,8 +197,8 @@
 
                 <div class="modal-footer">
                     <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
+                        class="btn btn-light"
+                        data-bs-dismiss="modal">
                         Cancel
                     </button>
                     <button class="btn btn-primary">Update Plan</button>
@@ -221,8 +229,8 @@
 
                 <div class="modal-footer">
                     <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
+                        class="btn btn-light"
+                        data-bs-dismiss="modal">
                         Cancel
                     </button>
                     <button class="btn btn-danger">Delete</button>

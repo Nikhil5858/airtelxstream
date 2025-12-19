@@ -68,7 +68,10 @@
 
             <div class="modal-header">
                 <h5>Add Movie Cast</h5>
-                <button class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"></button>
+
             </div>
 
             <div class="modal-body">
@@ -120,11 +123,14 @@
         <form method="POST"
             action="<?= BASE_URL ?>/admin/cast_content/update"
             class="modal-content">
-
             <div class="modal-header">
                 <h5>Edit Movie Cast</h5>
-                <button class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"></button>
+
             </div>
+
 
             <div class="modal-body">
 

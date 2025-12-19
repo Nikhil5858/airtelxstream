@@ -92,7 +92,10 @@
 
             <div class="modal-header">
                 <h5>Add Cast</h5>
-                <button class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"></button>
+
             </div>
 
             <div class="modal-body">
@@ -146,7 +149,10 @@
 
             <div class="modal-header">
                 <h5>Edit Cast</h5>
-                <button class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"></button>
+
             </div>
 
             <div class="modal-body">
@@ -160,7 +166,7 @@
                 </div>
                 <input type="text" name="name" id="editCastName" class="form-control mb-3" data-required="true" data-error="Cast name is required">
 
-                    <label class="form-label">Profile Image</label>
+                <label class="form-label">Profile Image</label>
                 <input type="file" name="image" class="form-control mb-2" accept="image/*">
 
                 <img id="editCastPreview"

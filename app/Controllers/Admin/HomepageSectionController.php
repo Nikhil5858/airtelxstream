@@ -26,14 +26,16 @@ class HomepageSectionController extends Controller
     /** Store new homepage section */
     public function store()
     {
-        $title    = trim($_POST['title'] ?? '');
-        $type     = trim($_POST['type'] ?? 'slider');
-        $position = (int)($_POST['position'] ?? 0);
-        $active   = isset($_POST['is_active']) ? 1 : 0;
+        $title  = trim($_POST['title'] ?? '');
+        $type   = trim($_POST['type'] ?? 'slider');
+        $active = isset($_POST['is_active']) ? 1 : 0;
 
-        if ($title === '' || $position <= 0) {
+        if ($title === '') {
             $this->redirect('admin/homepage_sections');
         }
+
+        // auto position
+        $position = $this->section->getNextPosition();
 
         $this->section->create([
             'title'     => $title,
@@ -44,6 +46,7 @@ class HomepageSectionController extends Controller
 
         $this->redirect('admin/homepage_sections');
     }
+
 
     /** Update homepage section */
     public function update()

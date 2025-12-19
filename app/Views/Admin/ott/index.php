@@ -1,4 +1,6 @@
-<?php /** @var array $otts */ ?>
+<?php
+
+/** @var array $otts */ ?>
 
 <div class="main-content">
     <div class="container-fluid">
@@ -10,8 +12,8 @@
             </div>
 
             <button class="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#addOttModal">
+                data-bs-toggle="modal"
+                data-bs-target="#addOttModal">
                 <i class="bi bi-plus-lg"></i> Add OTT
             </button>
         </div>
@@ -29,39 +31,39 @@
                 </thead>
 
                 <tbody>
-                <?php foreach ($otts as $o): ?>
-                    <tr>
-                        <td><?= $o['id'] ?></td>
-                        <td><strong><?= htmlspecialchars($o['name']) ?></strong></td>
-                        <td>
-                            <?php if ($o['logo_url']): ?>
-                                <img src="<?= BASE_URL ?>/assets/images/<?= htmlspecialchars($o['logo_url']) ?>"
-                                    alt="<?= htmlspecialchars($o['name']) ?>"
-                                    style="height:40px">
-                            <?php else: ?>
-                                -
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <?= $o['is_active'] ? 'Active' : 'Inactive' ?>
-                        </td>
-                        <td>
-                            <button class="btn btn-outline-primary btn-sm edit-btn"
+                    <?php foreach ($otts as $o): ?>
+                        <tr>
+                            <td><?= $o['id'] ?></td>
+                            <td><strong><?= htmlspecialchars($o['name']) ?></strong></td>
+                            <td>
+                                <?php if ($o['logo_url']): ?>
+                                    <img src="<?= BASE_URL ?>/assets/images/<?= htmlspecialchars($o['logo_url']) ?>"
+                                        alt="<?= htmlspecialchars($o['name']) ?>"
+                                        style="height:40px">
+                                <?php else: ?>
+                                    -
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?= $o['is_active'] ? 'Active' : 'Inactive' ?>
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-primary btn-sm edit-btn"
                                     data-id="<?= $o['id'] ?>"
                                     data-name="<?= htmlspecialchars($o['name']) ?>"
                                     data-logo="<?= htmlspecialchars($o['logo_url']) ?>"
                                     data-active="<?= $o['is_active'] ?>">
-                                <i class="bi bi-pencil"></i>
-                            </button>
+                                    <i class="bi bi-pencil"></i>
+                                </button>
 
-                            <button class="btn btn-outline-danger btn-sm delete-btn"
+                                <button class="btn btn-outline-danger btn-sm delete-btn"
                                     data-id="<?= $o['id'] ?>"
                                     data-name="<?= htmlspecialchars($o['name']) ?>">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -71,11 +73,14 @@
 <!-- ADD MODAL -->
 <div class="modal fade" id="addOttModal">
     <div class="modal-dialog">
-        <form method="POST" action="<?= BASE_URL ?>/admin/ott/store" enctype="multipart/form-data" class="modal-content">
 
+        <form method="POST" action="<?= BASE_URL ?>/admin/ott/store" enctype="multipart/form-data" class="modal-content">
             <div class="modal-header">
                 <h5>Add OTT</h5>
-                <button class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"></button>
+
             </div>
 
             <div class="modal-body">
@@ -84,7 +89,7 @@
                     <span class="error-message text-danger small d-none"></span>
                 </div>
                 <input type="text" name="name" class="form-control mb-3" data-required="true" data-error="Ott Name is required">
-                
+
                 <div class="d-flex justify-content-between align-items-center">
                     <label class="form-label">Logo</label>
                     <span class="error-message text-danger small d-none"></span>
@@ -111,15 +116,21 @@
 <!-- EDIT MODAL -->
 <div class="modal fade" id="editOttModal" tabindex="-1">
     <div class="modal-dialog">
-        <form method="POST"
-              action="<?= BASE_URL ?>/admin/ott/update"
-              enctype="multipart/form-data"
-              class="modal-content">
 
+        <form method="POST"
+            action="<?= BASE_URL ?>/admin/ott/update"
+            enctype="multipart/form-data"
+            class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit OTT</h5>
-                <button class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"></button>
+
             </div>
+
+            <input type="hidden" name="existing_logo" id="editOttExistingLogo">
+
 
             <div class="modal-body">
 
@@ -130,27 +141,28 @@
                     <span class="error-message text-danger small d-none"></span>
                 </div>
                 <input type="text"
-                       name="name"
-                       id="editOttName"
-                       data-required="true" data-error="Ott Name is required"
-                       class="form-control mb-3">
+                    name="name"
+                    id="editOttName"
+                    data-required="true" data-error="Ott Name is required"
+                    class="form-control mb-3">
 
-                <div class="d-flex justify-content-between align-items-center">
-                    <label class="form-label">Logo</label>
-                    <span class="error-message text-danger small d-none"></span>
-                </div>
-                
+                <label class="form-label">Logo</label>
+
+                <img id="editOttPreview"
+                    style="max-height:60px; display:none;"
+                    class="mb-2">
+
                 <input type="file"
-                       name="logo"
-                       data-required="true" data-error="Ott Logo is required"
-                       class="form-control mb-3"
-                       accept="image/*">
+                    name="logo"
+                    class="form-control mb-3"
+                    accept="image/*">
+
 
                 <div class="form-check">
                     <input type="checkbox"
-                           name="is_active"
-                           id="editOttActive"
-                           class="form-check-input">
+                        name="is_active"
+                        id="editOttActive"
+                        class="form-check-input">
                     <label class="form-check-label">Active</label>
                 </div>
 
@@ -158,10 +170,10 @@
 
             <div class="modal-footer">
                 <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
-                        Cancel
-                    </button>
+                    class="btn btn-light"
+                    data-bs-dismiss="modal">
+                    Cancel
+                </button>
                 <button class="btn btn-primary">Update</button>
             </div>
 
@@ -173,8 +185,8 @@
 <div class="modal fade" id="deleteOttModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <form method="POST"
-              action="<?= BASE_URL ?>/admin/ott/delete"
-              class="modal-content">
+            action="<?= BASE_URL ?>/admin/ott/delete"
+            class="modal-content">
 
             <div class="modal-header">
                 <h5 class="modal-title text-danger">Delete OTT</h5>
@@ -192,10 +204,10 @@
 
             <div class="modal-footer">
                 <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
-                        Cancel
-                    </button>
+                    class="btn btn-light"
+                    data-bs-dismiss="modal">
+                    Cancel
+                </button>
                 <button class="btn btn-danger">Delete</button>
             </div>
 
@@ -205,12 +217,25 @@
 
 
 <script>
-    /* EDIT */
+    //Edit
     document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.getElementById('editOttId').value   = btn.dataset.id;
+
+            const logo = btn.dataset.logo;
+
+            document.getElementById('editOttId').value = btn.dataset.id;
             document.getElementById('editOttName').value = btn.dataset.name;
             document.getElementById('editOttActive').checked = btn.dataset.active == 1;
+            document.getElementById('editOttExistingLogo').value = logo;
+
+            const preview = document.getElementById('editOttPreview');
+
+            if (logo) {
+                preview.src = "<?= BASE_URL ?>/assets/images/" + logo;
+                preview.style.display = "block";
+            } else {
+                preview.style.display = "none";
+            }
 
             new bootstrap.Modal(
                 document.getElementById('editOttModal')
@@ -218,10 +243,11 @@
         });
     });
 
+
     /* DELETE */
     document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.getElementById('deleteOttId').value   = btn.dataset.id;
+            document.getElementById('deleteOttId').value = btn.dataset.id;
             document.getElementById('deleteOttName').innerText = btn.dataset.name;
 
             new bootstrap.Modal(

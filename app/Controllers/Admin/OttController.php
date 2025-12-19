@@ -59,24 +59,32 @@ class OttController extends Controller
             return;
         }
 
-        $logo = null;
+        $logo = $_POST['existing_logo'] ?? '';
 
         if (!empty($_FILES['logo']['name'])) {
-            $ext      = pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
-            $logo     = uniqid('ott_') . '.' . $ext;
-            $path     = ROOT_PATH . 'public/assets/images/' . $logo;
 
-            move_uploaded_file($_FILES['logo']['tmp_name'], $path);
+            if ($logo && file_exists(ROOT_PATH . 'public/assets/images/' . $logo)) {
+                unlink(ROOT_PATH . 'public/assets/images/' . $logo);
+            }
+
+            $ext  = pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
+            $logo = uniqid('ott_') . '.' . $ext;
+
+            move_uploaded_file(
+                $_FILES['logo']['tmp_name'],
+                ROOT_PATH . 'public/assets/images/' . $logo
+            );
         }
 
         $this->ott->update($id, [
             'name'      => $name,
-            'logo_url'  => $logo ?? $_POST['existing_logo'] ?? '',
+            'logo_url'  => $logo,
             'is_active' => isset($_POST['is_active']) ? 1 : 0
         ]);
 
         $this->redirect('admin/ott');
     }
+
 
 
     public function delete()

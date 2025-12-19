@@ -5,25 +5,38 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $genreModel = new Genre();
-        $movieModel = new Movie();
+        $userId = $_SESSION['user_id'] ?? 0;
+
+        $movieModel   = $this->model('Movie');
+        $genreModel   = $this->model('Genre');
         $sectionModel = $this->model('HomepageSection');
 
-        $genres      = $genreModel->all();
-        $banners     = $movieModel->getBannerMovies();
-        $newReleases = $movieModel->getNewReleases();
+        // REQUIRED by hero_slider.php
+        $banners = $movieModel->getBannerMovies();
+
+        // REQUIRED by categories.php
+        $genres = $genreModel->all();
+
+        // Homepage sections
         $sections = $sectionModel->allActive();
 
         foreach ($sections as &$section) {
-            $section['movies'] = $movieModel->getBySection($section['id']);
+            $section['movies'] = $movieModel->getBySection(
+                $section['id'],
+                $userId
+            );
         }
 
+        // New Releases section
+        $newReleases = $movieModel->getNewReleases($userId);
+
         $this->view("Frontend/home/index", [
-            'genres'      => $genres,
             'banners'     => $banners,
-            'newReleases' => $newReleases,
-            'sections' => $sections
+            'genres'      => $genres,
+            'sections'    => $sections,
+            'newReleases' => $newReleases
         ]);
     }
 }
+
 

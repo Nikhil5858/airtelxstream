@@ -1,4 +1,6 @@
-<?php /** @var array $roles */ ?>
+<?php
+
+/** @var array $roles */ ?>
 
 <div class="main-content">
     <div class="container-fluid">
@@ -10,8 +12,8 @@
             </div>
 
             <button class="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#addRoleModal">
+                data-bs-toggle="modal"
+                data-bs-target="#addRoleModal">
                 <i class="bi bi-plus-lg"></i> Add Role
             </button>
         </div>
@@ -27,25 +29,25 @@
                 </thead>
 
                 <tbody>
-                <?php foreach ($roles as $r): ?>
-                    <tr>
-                        <td><?= $r['id'] ?></td>
-                        <td><strong><?= htmlspecialchars($r['role_name']) ?></strong></td>
-                        <td>
-                            <button class="btn btn-outline-primary btn-sm edit-btn"
+                    <?php foreach ($roles as $r): ?>
+                        <tr>
+                            <td><?= $r['id'] ?></td>
+                            <td><strong><?= htmlspecialchars($r['role_name']) ?></strong></td>
+                            <td>
+                                <button class="btn btn-outline-primary btn-sm edit-btn"
                                     data-id="<?= $r['id'] ?>"
                                     data-name="<?= htmlspecialchars($r['role_name']) ?>">
-                                <i class="bi bi-pencil"></i>
-                            </button>
+                                    <i class="bi bi-pencil"></i>
+                                </button>
 
-                            <button class="btn btn-outline-danger btn-sm delete-btn"
+                                <button class="btn btn-outline-danger btn-sm delete-btn"
                                     data-id="<?= $r['id'] ?>"
                                     data-name="<?= htmlspecialchars($r['role_name']) ?>">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -57,7 +59,10 @@
         <form method="POST" action="<?= BASE_URL ?>/admin/cast_roles/store" class="modal-content">
             <div class="modal-header">
                 <h5>Add Cast Role</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"></button>
+
             </div>
 
             <div class="modal-body">
@@ -70,8 +75,8 @@
 
             <div class="modal-footer">
                 <button type="button"
-                        class="btn btn-light"
-                        data-bs-dismiss="modal">
+                    class="btn btn-light"
+                    data-bs-dismiss="modal">
                     Cancel
                 </button>
                 <button class="btn btn-primary">Save</button>
@@ -85,7 +90,10 @@
 
             <div class="modal-header">
                 <h5>Edit Cast Role</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"></button>
+
             </div>
 
             <div class="modal-body">
@@ -100,8 +108,8 @@
 
             <div class="modal-footer">
                 <button type="button"
-                        class="btn btn-light"
-                        data-bs-dismiss="modal">
+                    class="btn btn-light"
+                    data-bs-dismiss="modal">
                     Cancel
                 </button>
                 <button class="btn btn-primary">Update</button>
@@ -127,8 +135,8 @@
 
             <div class="modal-footer">
                 <button type="button"
-                        class="btn btn-light"
-                        data-bs-dismiss="modal">
+                    class="btn btn-light"
+                    data-bs-dismiss="modal">
                     Cancel
                 </button>
                 <button class="btn btn-danger">Delete</button>
@@ -140,7 +148,7 @@
 <script>
     document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            editRoleId.value   = btn.dataset.id;
+            editRoleId.value = btn.dataset.id;
             editRoleName.value = btn.dataset.name;
             new bootstrap.Modal(editRoleModal).show();
         });
