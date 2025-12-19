@@ -17,13 +17,26 @@ class MovieController extends Controller
             die('Movie not found');
         }
 
-        // FETCH CAST
+        // ✅ THIS WAS THE MISSING PART FOR SERIES
         $cast = $movieModel->getCastByMovie($id);
 
+        // OPTIONAL: for series
+        $seasons = [];
+        $episodes = [];
+
+        if ($movie['type'] === 'series') {
+            $seasonModel  = $this->model('Season');
+            $episodeModel = $this->model('Episode');
+
+            $seasons  = $seasonModel->getByMovie($id);
+            $episodes = $episodeModel->getByMovie($id);
+        }
+
         $this->view('Frontend/movie/show', [
-            'movie' => $movie,
-            'cast'  => $cast
+            'movie'    => $movie,
+            'cast'     => $cast,      // 🔥 REQUIRED
+            'seasons'  => $seasons,
+            'episodes' => $episodes
         ]);
     }
-
 }

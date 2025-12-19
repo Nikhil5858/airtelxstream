@@ -77,4 +77,21 @@ class Episode
             ->prepare("DELETE FROM episodes WHERE id = :id")
             ->execute(['id' => $id]);
     }
+    
+    public function getByMovie(int $movieId): array
+    {
+        $stmt = $this->db->prepare("
+        SELECT 
+            e.*,
+            s.season_number
+        FROM episodes e
+        INNER JOIN seasons s ON s.id = e.season_id
+        WHERE s.movie_id = :mid
+        ORDER BY s.season_number, e.episode_number
+    ");
+
+        $stmt->execute(['mid' => $movieId]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

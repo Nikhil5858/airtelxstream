@@ -129,5 +129,17 @@ class Season
         return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getByMovie(int $movieId): array
+    {
+        $stmt = $this->db->prepare("
+        SELECT *
+        FROM seasons
+        WHERE movie_id = :mid
+        ORDER BY season_number
+    ");
 
+        $stmt->execute(['mid' => $movieId]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

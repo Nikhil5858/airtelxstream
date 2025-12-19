@@ -1,4 +1,5 @@
 <?php
+
 /** @var array $movie */
 /** @var array $cast */
 ?>
@@ -7,7 +8,7 @@
 <div class="smv-hero">
 
     <div class="smv-bg"
-         style="background-image: url('<?= BASE_URL ?>/assets/images/<?= htmlspecialchars($movie['banner_url']) ?>')">
+        style="background-image: url('<?= BASE_URL ?>/assets/images/<?= htmlspecialchars($movie['banner_url']) ?>')">
     </div>
 
     <video class="smv-video" muted preload="none">
@@ -26,12 +27,12 @@
             <?= (int)$movie['release_year'] ?>
         </p>
         <?php
-            $desc = strip_tags($movie['description']);
-            $limit = 180;
+        $desc = strip_tags($movie['description']);
+        $limit = 180;
 
-            if (strlen($desc) > $limit) {
-                $desc = substr($desc, 0, $limit) . '...';
-            }
+        if (strlen($desc) > $limit) {
+            $desc = substr($desc, 0, $limit) . '...';
+        }
         ?>
         <p class="smv-desc w-50 fs-6">
             <?= htmlspecialchars($desc) ?>
@@ -42,7 +43,7 @@
 
         <div class="smv-actions d-flex gap-3 mt-3">
             <a href="<?= BASE_URL ?>/assets/videos/<?= htmlspecialchars($movie['movie_url']) ?>"
-               class="btn btn-light px-4 py-2">
+                class="btn btn-light px-4 py-2">
                 <i class="bi bi-play me-2"></i> Watch Now
             </a>
 
@@ -57,41 +58,86 @@
 <div class="smv-tabs-container mt-4">
 
     <div class="smv-tabs">
-        <button class="smv-tab active" data-target="#about">About</button>
-        <button class="smv-tab" data-target="#cast">Cast</button>
+        <?php if ($movie['type'] === 'series'): ?>
+            <button class="smv-tab active" data-target="#episodes">Episodes</button>
+            <button class="smv-tab" data-target="#cast">Cast & More</button>
+        <?php else: ?>
+            <button class="smv-tab active" data-target="#about">About</button>
+            <button class="smv-tab" data-target="#cast">Cast</button>
+        <?php endif; ?>
     </div>
 
     <div class="smv-tab-underline mb-4"></div>
 
     <div class="smv-content-area">
 
-        <!-- ABOUT (DEFAULT) -->
-        <div id="about" class="smv-tab-content active">
-            <h3 class="text-white mb-4">
-                About <?= htmlspecialchars($movie['title']) ?>
-            </h3>
+        <?php if ($movie['type'] === 'series'): ?>
+            <div id="episodes" class="smv-tab-content active">
 
-            <div class="row text-white">
-                <div class="col-md-6 mb-3">
-                    <strong>Genre</strong>
-                    <p><?= htmlspecialchars($movie['genre']) ?></p>
+                <div class="eps-header">
+                    <div class="eps-dropdown">
+                        <div class="eps-selected">
+                            Season 1
+                            <i class="bi bi-caret-down-fill"></i>
+                        </div>
+
+                        <ul class="eps-list">
+                            <?php foreach ($seasons as $s): ?>
+                                <li data-season="<?= $s['season_number'] ?>">
+                                    Season <?= $s['season_number'] ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <strong>Language</strong>
-                    <p><?= htmlspecialchars($movie['language']) ?></p>
+                <div class="eps-grid mt-4">
+                    <?php foreach ($episodes as $e): ?>
+                        <div class="eps-card" data-season="<?= $e['season_number'] ?>">
+                            <img src="<?= BASE_URL ?>/assets/images/<?= $e['poster_img'] ?>">
+                            <div class="eps-info">
+                                <h5>
+                                    Ep <?= $e['episode_number'] ?>.
+                                    <?= htmlspecialchars($e['title']) ?>
+                                </h5>
+                                <span>—</span>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <strong>Release Year</strong>
-                    <p><?= (int)$movie['release_year'] ?></p>
-                </div>
             </div>
+        <?php endif; ?>
 
-            <hr class="border-secondary">
+        <?php if ($movie['type'] === 'movie'): ?>
+            <!-- ABOUT (DEFAULT) -->
+            <div id="about" class="smv-tab-content active">
+                <h3 class="text-white mb-4">
+                    About <?= htmlspecialchars($movie['title']) ?>
+                </h3>
 
-            <p><?= nl2br(htmlspecialchars($movie['description'])) ?></p>
-        </div>
+                <div class="row text-white">
+                    <div class="col-md-6 mb-3">
+                        <strong>Genre</strong>
+                        <p><?= htmlspecialchars($movie['genre']) ?></p>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Language</strong>
+                        <p><?= htmlspecialchars($movie['language']) ?></p>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Release Year</strong>
+                        <p><?= (int)$movie['release_year'] ?></p>
+                    </div>
+                </div>
+
+                <hr class="border-secondary">
+
+                <p><?= nl2br(htmlspecialchars($movie['description'])) ?></p>
+            </div>
+        <?php endif; ?>
 
         <!-- CAST -->
         <div id="cast" class="smv-tab-content">
@@ -101,7 +147,7 @@
 
             <?php if (!empty($cast)): ?>
                 <div class="cast-section">
-                    
+
                     <div class="cast-scroll-container">
                         <div class="cast-scroller">
                             <div class="cast-scroll-inner">
@@ -143,6 +189,7 @@
 
 <!-- ================= JS ================= -->
 <script>
+    /* ================= TABS ================= */
     const tabs = document.querySelectorAll('.smv-tab');
     const contents = document.querySelectorAll('.smv-tab-content');
 
@@ -156,19 +203,72 @@
         });
     });
 
-    const hero  = document.querySelector('.smv-hero');
+    /* ================= HERO VIDEO ================= */
+    const hero = document.querySelector('.smv-hero');
     const video = document.querySelector('.smv-video');
-    const bg    = document.querySelector('.smv-bg');
+    const bg = document.querySelector('.smv-bg');
 
-    hero.addEventListener('mouseenter', () => {
-        video.style.opacity = "1";
-        bg.style.opacity = "0";
-        video.currentTime = 0;
-        video.play();
-    });
+    if (hero && video && bg) {
+        hero.addEventListener('mouseenter', () => {
+            video.style.opacity = "1";
+            bg.style.opacity = "0";
+            video.currentTime = 0;
+            video.play();
+        });
 
-    video.addEventListener('ended', () => {
-        video.style.opacity = "0";
-        bg.style.opacity = "1";
-    });
+        video.addEventListener('ended', () => {
+            video.style.opacity = "0";
+            bg.style.opacity = "1";
+        });
+    }
+
+    /* ================= SERIES ONLY LOGIC ================= */
+    const epsDropdown = document.querySelector('.eps-dropdown');
+    const epsSelected = document.querySelector('.eps-selected');
+    const seasonItems = document.querySelectorAll('.eps-list li');
+    const epsCards = document.querySelectorAll('.eps-card');
+
+    if (epsDropdown && epsSelected && seasonItems.length && epsCards.length) {
+
+        function showSeason(season) {
+            epsCards.forEach(card => {
+                card.style.display =
+                    card.dataset.season === season ? 'block' : 'none';
+            });
+        }
+
+        const firstSeason = seasonItems[0].dataset.season;
+        epsSelected.innerHTML =
+            'Season ' + firstSeason + ' <i class="bi bi-caret-down-fill"></i>';
+        showSeason(firstSeason);
+
+        const epsList = document.querySelector('.eps-list');
+
+        if (epsList) {
+            epsList.style.display = 'none';
+        }
+
+        epsSelected.addEventListener('click', (e) => {
+            e.stopPropagation();
+            epsList.style.display =
+                epsList.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', () => {
+            epsList.style.display = 'none';
+        });
+
+        seasonItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const season = item.dataset.season;
+
+                epsSelected.innerHTML =
+                    'Season ' + season + ' <i class="bi bi-caret-down-fill"></i>';
+
+                showSeason(season);
+                epsList.style.display = 'none';
+            });
+        });
+
+    }
 </script>

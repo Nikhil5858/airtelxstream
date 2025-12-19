@@ -6,6 +6,8 @@ $routes = [
     "" => "Frontend/HomeController@index",
     "home/index" => "Frontend/HomeController@index",
     "movie/show" => "Frontend/MovieController@show",
+    "series/show" => "Frontend/MovieController@series",
+
 
     //Single Page
     "singlepage" => "Frontend/SinglepageController@index",
