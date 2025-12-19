@@ -26,7 +26,7 @@
 
                     <?php foreach ($trending as $movie): ?>
                         <div class="live-card-wrapper">
-                            <a href="<?= BASE_URL ?>/movie/<?= $movie['id'] ?>">
+                            <a href="<?= BASE_URL ?>/movie/show?id=<?= (int)$movie['id'] ?>" class="movie-link">
                                 <div class="live-card">
                                     <img src="<?= BASE_URL ?>/assets/images/<?= htmlspecialchars($movie['banner_url']) ?>">
 

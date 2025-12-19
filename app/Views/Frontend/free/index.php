@@ -23,7 +23,7 @@
 
                     <?php foreach ($section['movies'] as $movie): ?>
                         <div class="movie-card-wrapper">
-                            <a href="<?= BASE_URL ?>/movie/show/<?= (int)$movie['id'] ?>" class="movie-link">
+                            <a href="<?= BASE_URL ?>/movie/show?id=<?= (int)$movie['id'] ?>" class="movie-link">
                                 <div class="movie-card">
 
                                     <?php if ($movie['is_free']): ?>
