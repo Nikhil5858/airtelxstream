@@ -26,16 +26,17 @@ class Movie
     public function create(array $data): bool
     {
         $stmt = $this->db->prepare("
-            INSERT INTO movies 
-            (title, description, release_year, language, type,
-             movie_url, trailer_url, banner_url, poster_url,
-             is_free, is_new_release, is_feature, is_banner,
-             genre_id, created_at)
+            INSERT INTO movies (
+            title, description, release_year, language, type,
+            movie_url, trailer_url, banner_url, poster_url,
+            is_free, is_new_release, is_feature, is_banner,
+            genre_id, ott_id, created_at
+            )
             VALUES
             (:title, :description, :release_year, :language, :type,
              :movie_url, :trailer_url, :banner_url, :poster_url,
              :is_free, :is_new_release, :is_feature, :is_banner,
-             :genre_id, NOW())
+             :genre_id, :ott_id,NOW())
         ");
 
         return $stmt->execute($data);
@@ -57,6 +58,7 @@ class Movie
                 is_feature=:is_feature,
                 is_banner=:is_banner,
                 genre_id=:genre_id,
+                ott_id = :ott_id,
                 updated_at=NOW()
             WHERE id=:id
         ");
@@ -74,8 +76,10 @@ class Movie
             'is_new_release' => $data['is_new_release'] ?? 0,
             'is_feature'     => $data['is_feature'] ?? 0,
             'is_banner'      => $data['is_banner'] ?? 0,
-            'genre_id'       => $data['genre_id']
+            'genre_id'       => $data['genre_id'],
+            'ott_id'         => $data['ott_id']
         ]);
+
     }
 
 

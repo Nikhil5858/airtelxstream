@@ -15,12 +15,15 @@ class MovieController extends Controller
 
         // fetch genres for dropdown
         $genres = $this->model('Genre')->all();
+        $otts = $this->model('OttProvider')->allActive();
 
         $this->view("Admin/movies/index", [
             "layout" => "admin",
             "movies" => $movies,
-            "genres" => $genres
+            "genres" => $genres,
+            "otts"   => $otts
         ]);
+
     }
 
     public function store()
@@ -75,6 +78,7 @@ class MovieController extends Controller
             "release_year"   => $_POST['release_year'] ?? null,
             "language"       => $_POST['language'] ?? null,
             "type"           => $_POST['type'] ?? 'movie',
+            "ott_id"         => $_POST['ott_id'] ?? null,
             "movie_url"      => $movieName,
             "trailer_url"    => $trailerName,
             "poster_url"     => $posterName,
@@ -117,6 +121,7 @@ class MovieController extends Controller
             'release_year'   => $_POST['release_year'],
             'language'       => $_POST['language'],
             'type'           => $_POST['type'],
+            "ott_id"         => $_POST['ott_id'] ?? null,
             'poster_url'     => $posterName,
             'banner_url'     => $bannerName,
             'is_free'        => $_POST['is_free'] ?? 0,

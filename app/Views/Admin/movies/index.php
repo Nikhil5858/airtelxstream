@@ -32,6 +32,7 @@
                         <th>Title</th>
                         <th>Description</th>
                         <th>Year</th>
+                        <th>Ott</th>
                         <th>Language</th>
                         <th>Type</th>
                         <th>Genre</th>
@@ -64,6 +65,7 @@
                                 ?>
                                 <td><?= htmlspecialchars($desc) ?></td>
                                 <td><?= $m['release_year'] ?></td>
+                                <td><?= htmlspecialchars($m['ott']) ?></td>
                                 <td><?= htmlspecialchars($m['language']) ?></td>
                                 <td><?= ucfirst($m['type']) ?></td>
                                 <td><?= htmlspecialchars($m['genre']) ?></td>
@@ -88,6 +90,7 @@
                                         data-free="<?= $m['is_free'] ?>"
                                         data-new="<?= $m['is_new_release'] ?>"
                                         data-feature="<?= $m['is_feature'] ?>"
+                                        data-ott="<?= $m['ott_id'] ?>"
                                         data-bannerflag="<?= $m['is_banner'] ?>">
                                         <i class="bi bi-pencil"></i>
                                     </button>
@@ -192,6 +195,20 @@
                             data-required="true" data-error="Movie Type is required">
                             <option value="movie">Movie</option>
                             <option value="series">Series</option>
+                        </select>
+                    </div>
+
+                    <!-- OTT -->
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label">OTT Platform</label>
+                            <span class="error-message text-danger small d-none"></span>
+                        </div>
+                        <select name="ott_id" class="form-select" data-required="true" data-error="Movie Ott is required">
+                            <option value="">-- Select OTT --</option>
+                            <?php foreach ($otts as $o): ?>
+                                <option value="<?= $o['id'] ?>"><?= htmlspecialchars($o['name']) ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
 
@@ -377,6 +394,16 @@
                         </select>
                     </div>
 
+                    <div class="col-md-6">
+                        <label class="form-label">OTT Platform</label>
+                        <select name="ott_id" id="editOtt" class="form-select">
+                            <option value="">-- Select OTT --</option>
+                            <?php foreach ($otts as $o): ?>
+                                <option value="<?= $o['id'] ?>"><?= htmlspecialchars($o['name']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
                     <!-- GENRE -->
                     <div class="col-md-6">
                         <label class="form-label">Genre</label>
@@ -521,6 +548,7 @@
             editYear.value = btn.dataset.year;
             editLanguage.value = btn.dataset.language;
             editType.value = btn.dataset.type;
+            editOtt.value = btn.dataset.ott;
             editGenre.value = btn.dataset.genre;
 
             editFree.checked = btn.dataset.free === '1';
@@ -528,7 +556,6 @@
             editFeature.checked = btn.dataset.feature === '1';
             editBanner.checked = btn.dataset.bannerflag === '1';
 
-            // ✅ THIS WAS MISSING / BROKEN
             editOldPoster.value = btn.dataset.poster;
             editOldBanner.value = btn.dataset.banner;
 
