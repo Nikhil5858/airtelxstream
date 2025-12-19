@@ -25,34 +25,28 @@ class Episode
 
     public function countBySeason(int $seasonId): int
     {
-        return (int)$this->db->query("
-            SELECT COUNT(*) FROM episodes WHERE season_id = $seasonId
-        ")->fetchColumn();
+        return (int)$this->db
+            ->query("SELECT COUNT(*) FROM episodes WHERE season_id = $seasonId")
+            ->fetchColumn();
     }
 
     public function create(array $data): bool
     {
         $stmt = $this->db->prepare("
             INSERT INTO episodes
-            (season_id, episode_number, title, description, video_url, created_at)
+            (season_id, episode_number, title, description, video_url, poster_img, created_at)
             VALUES
-            (:sid, :eno, :title, :desc, :url, NOW())
+            (:sid, :eno, :title, :desc, :video, :poster, NOW())
         ");
 
         return $stmt->execute([
-            'sid'   => $data['season_id'],
-            'eno'   => $data['episode_number'],
-            'title' => $data['title'],
-            'desc'  => $data['description'],
-            'url'   => $data['video_url']
+            'sid'    => $data['season_id'],
+            'eno'    => $data['episode_number'],
+            'title'  => $data['title'],
+            'desc'   => $data['description'],
+            'video'  => $data['video_url'],
+            'poster' => $data['poster_img']
         ]);
-    }
-
-    public function delete(int $id): bool
-    {
-        return $this->db
-            ->prepare("DELETE FROM episodes WHERE id = :id")
-            ->execute(['id' => $id]);
     }
 
     public function update(int $id, array $data): bool
@@ -62,18 +56,25 @@ class Episode
                 episode_number = :eno,
                 title          = :title,
                 description    = :desc,
-                video_url      = :url
+                video_url      = :video,
+                poster_img     = :poster
             WHERE id = :id
         ");
 
         return $stmt->execute([
-            'id'    => $id,
-            'eno'   => $data['episode_number'],
-            'title' => $data['title'],
-            'desc'  => $data['description'],
-            'url'   => $data['video_url']
+            'id'     => $id,
+            'eno'    => $data['episode_number'],
+            'title'  => $data['title'],
+            'desc'   => $data['description'],
+            'video'  => $data['video_url'],
+            'poster' => $data['poster_img']
         ]);
     }
 
-
+    public function delete(int $id): bool
+    {
+        return $this->db
+            ->prepare("DELETE FROM episodes WHERE id = :id")
+            ->execute(['id' => $id]);
+    }
 }

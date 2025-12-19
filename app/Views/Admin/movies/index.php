@@ -187,12 +187,8 @@
 
                     <!-- TYPE -->
                     <div class="col-md-6">
-                        <div class="d-flex justify-content-between align-items-center">
                             <label class="form-label">Type</label>
-                            <span class="error-message text-danger small d-none"></span>
-                        </div>
-                        <select name="type" class="form-select"
-                            data-required="true" data-error="Movie Type is required">
+                        <select name="type" class="form-select">
                             <option value="movie">Movie</option>
                             <option value="series">Series</option>
                         </select>
@@ -214,12 +210,8 @@
 
                     <!-- GENRE -->
                     <div class="col-md-6">
-                        <div class="d-flex justify-content-between align-items-center">
                             <label class="form-label">Genre</label>
-                            <span class="error-message text-danger small d-none"></span>
-                        </div>
-                        <select name="genre_id" class="form-select"
-                            data-required="true" data-error="Movie Genre is required">
+                        <select name="genre_id" class="form-select">
                             <?php foreach ($genres as $g): ?>
                                 <option value="<?= $g['id'] ?>"><?= $g['name'] ?></option>
                             <?php endforeach; ?>

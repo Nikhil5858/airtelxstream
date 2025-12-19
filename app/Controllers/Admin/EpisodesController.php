@@ -1,4 +1,5 @@
 <?php
+
 class EpisodesController extends Controller
 {
     private Episode $episode;
@@ -14,9 +15,9 @@ class EpisodesController extends Controller
     public function index()
     {
         $this->view('Admin/episodes/index', [
-            'layout'  => 'admin',
-            'seasons' => $this->season->allWithEpisodeUsage(),
-            'episodes'=> $this->episode->allWithSeason()
+            'layout'   => 'admin',
+            'seasons'  => $this->season->allWithEpisodeUsage(),
+            'episodes' => $this->episode->allWithSeason()
         ]);
     }
 
@@ -31,12 +32,24 @@ class EpisodesController extends Controller
             return;
         }
 
-        $limit = $this->season->getEpisodeLimit($seasonId);
-        $count = $this->episode->countBySeason($seasonId);
+        // ✅ POSTER IMAGE
+        $posterName = null;
+        if (!empty($_FILES['poster_img']['name'])) {
+            $posterName = time().'_'.$_FILES['poster_img']['name'];
+            move_uploaded_file(
+                $_FILES['poster_img']['tmp_name'],
+                ROOT_PATH.'public/assets/images/'.$posterName
+            );
+        }
 
-        if ($count >= $limit) {
-            $this->redirect('admin/episodes');
-            return;
+        // ✅ VIDEO FILE
+        $videoName = null;
+        if (!empty($_FILES['video_file']['name'])) {
+            $videoName = time().'_'.$_FILES['video_file']['name'];
+            move_uploaded_file(
+                $_FILES['video_file']['tmp_name'],
+                ROOT_PATH.'public/assets/videos/'.$videoName
+            );
         }
 
         $this->episode->create([
@@ -44,7 +57,48 @@ class EpisodesController extends Controller
             'episode_number' => $epNo,
             'title'          => $title,
             'description'    => $_POST['description'] ?? '',
-            'video_url'      => $_POST['video_url'] ?? ''
+            'video_url'      => $videoName,
+            'poster_img'     => $posterName
+        ]);
+
+        $this->redirect('admin/episodes');
+    }
+
+    public function update()
+    {
+        $id    = (int)($_POST['id'] ?? 0);
+        $epNo  = (int)($_POST['episode_number'] ?? 0);
+        $title = trim($_POST['title'] ?? '');
+
+        if ($id <= 0 || $epNo <= 0 || $title === '') {
+            $this->redirect('admin/episodes');
+            return;
+        }
+
+        $posterName = $_POST['old_poster'] ?? null;
+        if (!empty($_FILES['poster_img']['name'])) {
+            $posterName = time().'_'.$_FILES['poster_img']['name'];
+            move_uploaded_file(
+                $_FILES['poster_img']['tmp_name'],
+                ROOT_PATH.'public/assets/images/'.$posterName
+            );
+        }
+
+        $videoName = $_POST['old_video'] ?? null;
+        if (!empty($_FILES['video_file']['name'])) {
+            $videoName = time().'_'.$_FILES['video_file']['name'];
+            move_uploaded_file(
+                $_FILES['video_file']['tmp_name'],
+                ROOT_PATH.'public/assets/videos/'.$videoName
+            );
+        }
+
+        $this->episode->update($id, [
+            'episode_number' => $epNo,
+            'title'          => $title,
+            'description'    => $_POST['description'] ?? '',
+            'video_url'      => $videoName,
+            'poster_img'     => $posterName
         ]);
 
         $this->redirect('admin/episodes');
@@ -57,26 +111,4 @@ class EpisodesController extends Controller
         }
         $this->redirect('admin/episodes');
     }
-
-    public function update()
-    {
-        $id      = (int)($_POST['id'] ?? 0);
-        $epNo    = (int)($_POST['episode_number'] ?? 0);
-        $title   = trim($_POST['title'] ?? '');
-
-        if ($id <= 0 || $epNo <= 0 || $title === '') {
-            $this->redirect('admin/episodes');
-            return;
-        }
-
-        $this->episode->update($id, [
-            'episode_number' => $epNo,
-            'title'          => $title,
-            'description'    => $_POST['description'] ?? '',
-            'video_url'      => $_POST['video_url'] ?? ''
-        ]);
-
-        $this->redirect('admin/episodes');
-    }
-
 }
