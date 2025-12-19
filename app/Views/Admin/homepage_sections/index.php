@@ -110,7 +110,7 @@
                     <label class="form-label">Type</label>
                     <select name="type" id="editSectionType" class="form-control mb-2" >
                         <option value="slider">Slider</option>
-                        <option value="grid">Grid</option>
+                        <option value="top10">Top 10</option>
                     </select>
                     <label>
                         <input type="checkbox" name="is_active" id="editSectionActive">
@@ -185,9 +185,11 @@
                     <input type="text" name="title" class="form-control mb-2" data-required="true" data-error="Movie Title is required">
                     
                     <label class="form-label">Type</label>
-                    <select name="type" class="form-control mb-2" >
+                    <select name="type" class="form-select">
                         <option value="slider">Slider</option>
+                        <option value="top10">Top 10</option>
                     </select>
+
                     
                     <label>
                         <input type="checkbox" name="is_active" checked> Active

@@ -99,7 +99,7 @@ class HomepageSectionController extends Controller
         $allMovies = $this->movie->all();
 
         // SELECTED movies in correct order (right column)
-        $sectionMovies = $this->movie->getBySection($sectionId);
+        $sectionMovies = $this->movie->getBySection($sectionId, 0);
 
         $this->view("Admin/homepage_sections/movies", [
             "layout"        => "admin",
@@ -122,7 +122,6 @@ class HomepageSectionController extends Controller
     }
 
 
-    /** Save selected movies for a section */
     public function saveMovies()
     {
         $sectionId = (int)($_POST['section_id'] ?? 0);
@@ -132,7 +131,14 @@ class HomepageSectionController extends Controller
             $this->redirect('admin/homepage_sections');
         }
 
+        $section = $this->section->find($sectionId);
+
+        if ($section['type'] === 'top10') {
+            $movieIds = array_slice($movieIds, 0, 10);
+        }
+
         $this->section->syncMovies($sectionId, $movieIds);
         $this->redirect('admin/homepage_sections');
     }
+
 }

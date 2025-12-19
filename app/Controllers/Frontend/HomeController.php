@@ -26,6 +26,7 @@ class HomeController extends Controller
             );
         }
 
+        
         // New Releases section
         $newReleases = $movieModel->getNewReleases($userId);
 

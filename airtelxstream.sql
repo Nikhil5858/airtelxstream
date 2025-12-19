@@ -105,7 +105,7 @@ INSERT INTO movies VALUES
 CREATE TABLE homepage_sections (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    type ENUM('slider', 'grid') DEFAULT 'slider',
+    type ENUM('slider', 'top10') DEFAULT 'slider',
     source ENUM('manual') NOT NULL,
     position INT NOT NULL,
     is_active TINYINT(1) DEFAULT 1
