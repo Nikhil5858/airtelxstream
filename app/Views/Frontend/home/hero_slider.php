@@ -1,4 +1,3 @@
-
 <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3500">
     <div class="carousel-inner">
 
@@ -6,7 +5,7 @@
             <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
 
                 <img src="<?= BASE_URL . '/assets/images/' . htmlspecialchars($movie['banner_url']) ?>"
-                     class="d-block w-100 hero-slide-img">
+                    class="d-block w-100 hero-slide-img">
 
 
                 <div class="hero-overlay"></div>
@@ -30,7 +29,16 @@
                     </div>
 
                     <div class="hero-right">
-                        <button class="hero-watchlist-btn">+ Add to Watchlist</button>
+                        <?php if (!empty($movie['in_watchlist'])): ?>
+                            <button class="watchlist-btn added" disabled>
+                                ✓ Added
+                            </button>
+                        <?php else: ?>
+                            <button class="watchlist-btn"
+                                data-movie-id="<?= (int)$movie['id'] ?>">
+                                <span>+</span> Add To Watchlist
+                            </button>
+                        <?php endif; ?>
 
                         <?php if (!empty($movie['movie_url'])): ?>
                             <a href="<?= BASE_URL . '/assets/videos/' . htmlspecialchars($movie['movie_url']) ?>">
@@ -47,12 +55,32 @@
     </div>
 
     <button class="hero-arrow hero-prev" type="button"
-            data-bs-target="#heroCarousel" data-bs-slide="prev">
+        data-bs-target="#heroCarousel" data-bs-slide="prev">
         <i>&lt;</i>
     </button>
 
     <button class="hero-arrow hero-next" type="button"
-            data-bs-target="#heroCarousel" data-bs-slide="next">
+        data-bs-target="#heroCarousel" data-bs-slide="next">
         <i>&gt;</i>
     </button>
 </div>
+<script>
+    document.querySelectorAll('.watchlist-btn:not(.added)').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+
+            fetch("<?= BASE_URL ?>/movie/add-watchlist", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: "movie_id=" + btn.dataset.movieId
+                })
+                .then(() => {
+                    btn.classList.add('added');
+                    btn.innerHTML = "✓ Added";
+                    btn.disabled = true;
+                });
+        });
+    });
+</script>

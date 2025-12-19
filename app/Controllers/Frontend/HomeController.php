@@ -12,8 +12,7 @@ class HomeController extends Controller
         $sectionModel = $this->model('HomepageSection');
 
         // REQUIRED by hero_slider.php
-        $banners = $movieModel->getBannerMovies();
-
+        $banners = $movieModel->getBannerMovies($userId);
         // REQUIRED by categories.php
         $genres = $genreModel->all();
 

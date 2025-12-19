@@ -86,9 +86,9 @@ class Movie
             ->execute([$id]);
     }
 
-    public function getBannerMovies(): array
+    public function getBannerMovies(int $userId): array
     {
-        $stmt = $this->db->query("
+        $stmt = $this->db->prepare("
             SELECT 
                 m.id,
                 m.title,
@@ -96,12 +96,20 @@ class Movie
                 m.movie_url,
                 m.trailer_url,
                 m.banner_url,
-                g.name AS genre
+                g.name AS genre,
+                IF(w.id IS NULL, 0, 1) AS in_watchlist
             FROM movies m
+            LEFT JOIN watchlist w 
+                ON w.movie_id = m.id
+            AND w.user_id = :uid
             LEFT JOIN genres g ON g.id = m.genre_id
             WHERE m.is_banner = 1
             ORDER BY m.id DESC
         ");
+
+        $stmt->execute([
+            'uid' => $userId
+        ]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -214,21 +222,28 @@ class Movie
     }
 
 
-    public function getByOtt(int $ottId): array
+    public function getByOtt(int $ottId, int $userId): array
     {
         $stmt = $this->db->prepare("
-            SELECT *
-            FROM movies
-            WHERE ott_id = :ott_id
-            ORDER BY id DESC
+            SELECT 
+                m.*,
+                IF(w.id IS NULL, 0, 1) AS in_watchlist
+            FROM movies m
+            LEFT JOIN watchlist w
+                ON w.movie_id = m.id
+            AND w.user_id = :uid
+            WHERE m.ott_id = :ott_id
+            ORDER BY m.id DESC
         ");
 
         $stmt->execute([
-            'ott_id' => $ottId
+            'ott_id' => $ottId,
+            'uid'    => $userId
         ]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     public function find(int $id): ?array
     {

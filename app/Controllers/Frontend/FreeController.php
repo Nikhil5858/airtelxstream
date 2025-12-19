@@ -9,12 +9,13 @@ class FreeController extends Controller
     {
         $userId = $_SESSION['user_id'] ?? 0;
 
-        $genreModel   = new Genre();
-        $movieModel   = new Movie();
+        $genreModel   = $this->model('Genre');
+        $movieModel   = $this->model('Movie');
         $sectionModel = $this->model('HomepageSection');
 
-        $genres  = $genreModel->all();
-        $banners = $movieModel->getBannerMovies();
+        // FIX: pass userId
+        $banners  = $movieModel->getBannerMovies($userId);
+        $genres   = $genreModel->all();
         $sections = $sectionModel->allActive();
 
         foreach ($sections as &$section) {
