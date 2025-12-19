@@ -58,9 +58,9 @@
                                             <button class="watchlist-btn added" disabled>
                                                 ✓ Added
                                             </button>
-                                            <?php else: ?>
+                                        <?php else: ?>
                                             <button class="watchlist-btn"
-                                                    data-movie-id="<?= (int)$movie['id'] ?>">
+                                                data-movie-id="<?= (int)$movie['id'] ?>">
                                                 <span>+</span> Add To Watchlist
                                             </button>
                                         <?php endif; ?>
@@ -82,13 +82,18 @@
 <?php endforeach; ?>
 
 
-
+<?php require ROOT_PATH . "app/Views/Frontend/home/language.php"; ?>
 
 <!-- Top 10 -->
 <?php require ROOT_PATH . "app/Views/Frontend/home/top10.php"; ?>
 
 <!-- Live News -->
 <?php require ROOT_PATH . "app/Views/Frontend/home/live_news.php"; ?>
+
+<!-- Banner -->
+<div class="text-center mx-3 mt-3 mb-3">
+    <a href="#"><img src="<?= BASE_URL ?>/assets/images/index/banner.png" class="img-fluid rounded-2 wifi-banner"></a>
+</div>
 
 <!-- Upper Footer -->
 <?php require ROOT_PATH . "app/Views/layouts/upper_footer.php"; ?>
@@ -99,17 +104,17 @@
             e.preventDefault();
 
             fetch("<?= BASE_URL ?>/movie/add-watchlist", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: "movie_id=" + btn.dataset.movieId
-            })
-            .then(() => {
-                btn.classList.add('added');
-                btn.innerHTML = "✓ Added";
-                btn.disabled = true;
-            });
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: "movie_id=" + btn.dataset.movieId
+                })
+                .then(() => {
+                    btn.classList.add('added');
+                    btn.innerHTML = "✓ Added";
+                    btn.disabled = true;
+                });
         });
     });
 </script>
