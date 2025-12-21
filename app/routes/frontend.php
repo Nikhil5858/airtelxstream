@@ -49,5 +49,8 @@ $routes = [
     // See all
     "seeall/show" => "Frontend/SeeallController@show",
     "seeall/new-releases" => "Frontend/SeeallController@newReleases",
+
+    // Category Filter
+    "genre/show" => "Frontend/GenreController@show",
     
 ];

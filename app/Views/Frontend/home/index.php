@@ -28,9 +28,6 @@
 
 <!-- Top 10 -->
 
-<!-- Live News -->
-<?php require ROOT_PATH . "app/Views/Frontend/home/live_news.php"; ?>
-
 <!-- Banner -->
 <div class="text-center mx-3 mt-3 mb-3">
     <a href="<?= BASE_URL ?>/free"><img src="<?= BASE_URL ?>/assets/images/index/banner.png" class="img-fluid rounded-2 wifi-banner"></a>

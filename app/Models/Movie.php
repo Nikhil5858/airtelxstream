@@ -297,4 +297,32 @@ class Movie
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getBySectionAndGenre(
+        int $sectionId,
+        int $genreId,
+        int $userId
+    ): array {
+        $stmt = $this->db->prepare("
+        SELECT 
+            m.*,
+            IF(w.id IS NULL, 0, 1) AS in_watchlist
+        FROM homepage_section_movies sm
+        JOIN movies m ON m.id = sm.movie_id
+        LEFT JOIN watchlist w
+            ON w.movie_id = m.id
+           AND w.user_id = :uid
+        WHERE sm.section_id = :sid
+          AND m.genre_id = :gid
+        ORDER BY sm.position ASC
+    ");
+
+        $stmt->execute([
+            'sid' => $sectionId,
+            'gid' => $genreId,
+            'uid' => $userId
+        ]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

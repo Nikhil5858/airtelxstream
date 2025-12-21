@@ -305,6 +305,7 @@ body {
   font-size: 15px;
   cursor: pointer;
   transition: 0.15s ease-in-out;
+  text-decoration: none;
 }
 
 .category-btn:hover {

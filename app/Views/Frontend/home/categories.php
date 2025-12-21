@@ -8,13 +8,15 @@
             $moreGenres = array_slice($genres, $visibleLimit);
             ?>
 
+            <!-- VISIBLE GENRES -->
             <?php foreach ($visibleGenres as $g): ?>
-                <button class="category-btn"
-                        data-genre-id="<?= $g['id'] ?>">
+                <a href="<?= BASE_URL ?>/genre/show?id=<?= (int)$g['id'] ?>"
+                   class="category-btn">
                     <?= htmlspecialchars($g['name']) ?>
-                </button>
+                </a>
             <?php endforeach; ?>
 
+            <!-- SEE MORE DROPDOWN -->
             <?php if (!empty($moreGenres)): ?>
                 <div class="dropdown">
                     <button class="category-btn dropdown-toggle"
@@ -25,9 +27,8 @@
                     <ul class="dropdown-menu dropdown-menu-dark">
                         <?php foreach ($moreGenres as $g): ?>
                             <li>
-                                <a class="dropdown-item"
-                                   href="#"
-                                   data-genre-id="<?= $g['id'] ?>">
+                                <a href="<?= BASE_URL ?>/genre/show?id=<?= (int)$g['id'] ?>"
+                                   class="dropdown-item">
                                     <?= htmlspecialchars($g['name']) ?>
                                 </a>
                             </li>
@@ -39,3 +40,4 @@
         </div>
     </div>
 </div>
+                            

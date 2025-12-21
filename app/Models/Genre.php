@@ -60,4 +60,18 @@ class Genre
             'id' => $id
         ]);
     }
+
+    public function find(int $id): ?array
+    {
+        $stmt = $this->db->prepare("
+        SELECT *
+        FROM genres
+        WHERE id = :id
+        LIMIT 1
+    ");
+
+        $stmt->execute(['id' => $id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
 }
