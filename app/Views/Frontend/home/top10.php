@@ -18,41 +18,42 @@ if (
 
                 <?php foreach ($section['movies'] as $index => $movie): ?>
                     <div class="top10-card-wrapper ms-4">
-
-                        <div class="top10-number">
-                            <?= $index + 1 ?>
-                        </div>
-
-                        <div class="top10-card ms-3">
-                            <img
-                                src="<?= BASE_URL ?>/assets/images/<?= htmlspecialchars($movie['poster_url']) ?>"
-                                alt="<?= htmlspecialchars($movie['title']) ?>">
-
-                            <div class="top10-overlay">
-                                <h5 class="top10-title">
-                                    <?= htmlspecialchars($movie['title']) ?>
-                                </h5>
-
-                                <div class="top10-badges">
-                                    <span class="top10-badge age">U/A 13+</span>
-                                    <span class="top10-badge type">
-                                        <?= ucfirst($movie['type']) ?>
-                                    </span>
-                                </div>
-
-                                <?php if (!empty($movie['in_watchlist'])): ?>
-                                    <button class="watchlist-btn added" disabled>
-                                        ✓ Added
-                                    </button>
-                                <?php else: ?>
-                                    <button
-                                        class="watchlist-btn"
-                                        data-movie-id="<?= (int)$movie['id'] ?>">
-                                        <span>+</span> Add To Watchlist
-                                    </button>
-                                <?php endif; ?>
+                        <a href="<?= BASE_URL ?>/movie/show?id=<?= (int)$movie['id'] ?>" class="movie-link">
+                            <div class="top10-number">
+                                <?= $index + 1 ?>
                             </div>
-                        </div>
+
+                            <div class="top10-card ms-3">
+                                <img
+                                    src="<?= BASE_URL ?>/assets/images/<?= htmlspecialchars($movie['poster_url']) ?>"
+                                    alt="<?= htmlspecialchars($movie['title']) ?>">
+
+                                <div class="top10-overlay">
+                                    <h5 class="top10-title">
+                                        <?= htmlspecialchars($movie['title']) ?>
+                                    </h5>
+
+                                    <div class="top10-badges">
+                                        <span class="top10-badge age">U/A 13+</span>
+                                        <span class="top10-badge type">
+                                            <?= ucfirst($movie['type']) ?>
+                                        </span>
+                                    </div>
+
+                                    <?php if (!empty($movie['in_watchlist'])): ?>
+                                        <button class="watchlist-btn added" disabled>
+                                            ✓ Added
+                                        </button>
+                                    <?php else: ?>
+                                        <button
+                                            class="watchlist-btn"
+                                            data-movie-id="<?= (int)$movie['id'] ?>">
+                                            <span>+</span> Add To Watchlist
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 <?php endforeach; ?>
 

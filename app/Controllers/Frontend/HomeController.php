@@ -1,6 +1,8 @@
 <?php
 require_once ROOT_PATH . 'app/models/Genre.php';
 require_once ROOT_PATH . 'app/models/Movie.php';
+require_once ROOT_PATH . 'app/models/OttProvider.php';
+
 class HomeController extends Controller
 {
     public function index()
@@ -10,6 +12,7 @@ class HomeController extends Controller
         $movieModel   = $this->model('Movie');
         $genreModel   = $this->model('Genre');
         $sectionModel = $this->model('HomepageSection');
+        $ottModel     = $this->model('OttProvider');
 
         $banners = $movieModel->getBannerMovies($userId);
         $genres = $genreModel->all();
@@ -27,12 +30,14 @@ class HomeController extends Controller
         
         // New Releases section
         $newReleases = $movieModel->getNewReleases($userId);
+        $otts = $ottModel->allActive();
 
         $this->view("Frontend/home/index", [
             'banners'     => $banners,
             'genres'      => $genres,
             'sections'    => $sections,
-            'newReleases' => $newReleases
+            'newReleases' => $newReleases,
+            'otts'        => $otts
         ]);
     }
 }

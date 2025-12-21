@@ -12,10 +12,12 @@ class FreeController extends Controller
         $genreModel   = $this->model('Genre');
         $movieModel   = $this->model('Movie');
         $sectionModel = $this->model('HomepageSection');
+        $ottModel   = $this->model('OttProvider');
 
         $banners  = $movieModel->getBannerMovies($userId);
         $genres   = $genreModel->all();
         $sections = $sectionModel->allActive();
+        $otts = $ottModel->allActive();
 
         foreach ($sections as &$section) {
             $section['movies'] = $movieModel->getFreeBySection(
@@ -27,7 +29,8 @@ class FreeController extends Controller
         $this->view("Frontend/free/index", [
             'genres'   => $genres,
             'banners'  => $banners,
-            'sections' => $sections
+            'sections' => $sections,
+            'otts'     => $otts
         ]);
     }
 }

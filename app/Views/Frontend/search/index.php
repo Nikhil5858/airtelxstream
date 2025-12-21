@@ -97,7 +97,7 @@
 
                     data.forEach(movie => {
                         resultsBox.innerHTML += `
-                            <a href="<?= BASE_URL ?>/movie/${movie.id}">
+                            <a href="<?= BASE_URL ?>/movie/show?id=${movie.id}" class="movie-link">
                                 <div class="live-card-wrapper">
                                     <div class="live-card">
                                         <img src="<?= BASE_URL ?>/assets/images/${movie.banner_url}">

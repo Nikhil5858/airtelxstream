@@ -2,68 +2,12 @@
 <div class="ott-section">
     <div class="d-flex justify-content-between align-items-center">
         <h3 class="ott-title m-0">Explore OTTs</h3>
-        <a href="./seeallotts.html" class="text-white">See All</a>
     </div>
     <div class="ott-scroll-container">
 
         <button class="ott-scroll-btn ott-left-btn">❮</button>
 
         <div class="ott-scroller">
-
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-jio">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan2.webp">
-                    </div>
-                </div>
-            </a>
-
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-zee">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan3.webp">
-                    </div>
-                </div>
-            </a>
-
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-sony">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan4.webp">
-                    </div>
-                </div>
-            </a>
-
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-aha">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan5.webp">
-                    </div>
-                </div>
-            </a>
-
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-lionsgate">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan12.webp">
-                    </div>
-                </div>
-            </a>
-
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-hungama">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan14.webp">
-                    </div>
-                </div>
-            </a>
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-sunnxt">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan15.webp">
-                    </div>
-                </div>
-            </a>
 
             <a href="./singleott.html">
                 <div class="ott-card-wrapper">
@@ -194,23 +138,23 @@
     <!-- Upper Footer -->
     <?php require ROOT_PATH . "app/Views/layouts/upper_footer.php"; ?>
 
-<script>
-    document.querySelectorAll('.watchlist-btn:not(.added)').forEach(btn => {
-        btn.addEventListener('click', e => {
-            e.preventDefault();
+    <script>
+        document.querySelectorAll('.watchlist-btn:not(.added)').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault();
 
-            fetch("<?= BASE_URL ?>/movie/add-watchlist", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: "movie_id=" + btn.dataset.movieId
-                })
-                .then(() => {
-                    btn.classList.add('added');
-                    btn.innerHTML = "✓ Added";
-                    btn.disabled = true;
-                });
+                fetch("<?= BASE_URL ?>/movie/add-watchlist", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: "movie_id=" + btn.dataset.movieId
+                    })
+                    .then(() => {
+                        btn.classList.add('added');
+                        btn.innerHTML = "✓ Added";
+                        btn.disabled = true;
+                    });
+            });
         });
-    });
-</script>
+    </script>

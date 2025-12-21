@@ -10,7 +10,7 @@ class OttController extends Controller
         $userId = $_SESSION['user_id'] ?? 0;
 
         $movieModel = $this->model('Movie');
-        $ottModel   = $this->model('OttProvider'); // ✅ FIXED
+        $ottModel   = $this->model('OttProvider');
 
         $otts = $ottModel->allActive();
 
