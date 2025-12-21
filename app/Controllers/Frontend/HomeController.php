@@ -11,9 +11,7 @@ class HomeController extends Controller
         $genreModel   = $this->model('Genre');
         $sectionModel = $this->model('HomepageSection');
 
-        // REQUIRED by hero_slider.php
         $banners = $movieModel->getBannerMovies($userId);
-        // REQUIRED by categories.php
         $genres = $genreModel->all();
 
         // Homepage sections

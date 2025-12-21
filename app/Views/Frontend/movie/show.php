@@ -42,14 +42,25 @@
         </p>
 
         <div class="smv-actions d-flex gap-3 mt-3">
-            <a href="<?= BASE_URL ?>/assets/videos/<?= htmlspecialchars($movie['movie_url']) ?>"
-                class="btn btn-light px-4 py-2">
-                <i class="bi bi-play me-2"></i> Watch Now
-            </a>
+            <div class="hero-right">
+                <?php if (!empty($movie['in_watchlist'])): ?>
+                    <button class="watchlist-btn added" disabled>
+                        ✓ Added
+                    </button>
+                <?php else: ?>
+                    <button class="watchlist-btn"
+                        data-movie-id="<?= (int)$movie['id'] ?>">
+                        <span>+</span> Add To Watchlist
+                    </button>
+                <?php endif; ?>
 
-            <button class="btn btn-outline-light px-4 py-2">
-                <i class="bi bi-plus-lg me-2"></i> Add To Watchlist
-            </button>
+                <?php if (!empty($movie['movie_url'])): ?>
+                    <a href="<?= BASE_URL . '/assets/videos/' . htmlspecialchars($movie['movie_url']) ?>">
+                        <button class="hero-watchnow-btn">▶ Watch Now</button>
+                    </a>
+
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </div>
@@ -189,7 +200,25 @@
 
 <!-- ================= JS ================= -->
 <script>
-    /* ================= TABS ================= */
+    document.querySelectorAll('.watchlist-btn:not(.added)').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+
+            fetch("<?= BASE_URL ?>/movie/add-watchlist", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: "movie_id=" + btn.dataset.movieId
+                })
+                .then(() => {
+                    btn.classList.add('added');
+                    btn.innerHTML = "✓ Added";
+                    btn.disabled = true;
+                });
+        });
+    });
+
     const tabs = document.querySelectorAll('.smv-tab');
     const contents = document.querySelectorAll('.smv-tab-content');
 

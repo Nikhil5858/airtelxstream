@@ -79,7 +79,6 @@ class Movie
             'genre_id'       => $data['genre_id'],
             'ott_id'         => $data['ott_id']
         ]);
-
     }
 
 
@@ -201,7 +200,7 @@ class Movie
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-   public function getFreeBySection(int $sectionId, int $userId): array
+    public function getFreeBySection(int $sectionId, int $userId): array
     {
         $stmt = $this->db->prepare("
             SELECT 
@@ -249,22 +248,31 @@ class Movie
     }
 
 
-    public function find(int $id): ?array
+    public function find(int $id, int $userId): ?array
     {
         $stmt = $this->db->prepare("
-            SELECT 
-                m.*,
-                g.name AS genre
-            FROM movies m
-            LEFT JOIN genres g ON g.id = m.genre_id
-            WHERE m.id = :id
-            LIMIT 1
-        ");
+        SELECT 
+            m.*,
+            g.name AS genre,
+            IF(w.id IS NULL, 0, 1) AS in_watchlist
+        FROM movies m
+        LEFT JOIN genres g 
+            ON g.id = m.genre_id
+        LEFT JOIN watchlist w
+            ON w.movie_id = m.id
+           AND w.user_id = :uid
+        WHERE m.id = :id
+        LIMIT 1
+    ");
 
-        $stmt->execute(['id' => $id]);
+        $stmt->execute([
+            'id'  => $id,
+            'uid' => $userId
+        ]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
+
 
     public function getCastByMovie(int $movieId): array
     {
@@ -289,6 +297,4 @@ class Movie
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-
 }

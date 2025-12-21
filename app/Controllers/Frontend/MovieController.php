@@ -1,5 +1,4 @@
 <?php
-require_once ROOT_PATH . 'app/models/Movie.php';
 class MovieController extends Controller
 {
     public function show()
@@ -9,18 +8,17 @@ class MovieController extends Controller
         }
 
         $id = (int) $_GET['id'];
+        $userId = $_SESSION['user_id'] ?? 0;
 
         $movieModel = $this->model('Movie');
 
-        $movie = $movieModel->find($id);
+        $movie = $movieModel->find($id, $userId);
         if (!$movie) {
             die('Movie not found');
         }
 
-        // ✅ THIS WAS THE MISSING PART FOR SERIES
         $cast = $movieModel->getCastByMovie($id);
 
-        // OPTIONAL: for series
         $seasons = [];
         $episodes = [];
 
@@ -34,7 +32,7 @@ class MovieController extends Controller
 
         $this->view('Frontend/movie/show', [
             'movie'    => $movie,
-            'cast'     => $cast,      // 🔥 REQUIRED
+            'cast'     => $cast,
             'seasons'  => $seasons,
             'episodes' => $episodes
         ]);

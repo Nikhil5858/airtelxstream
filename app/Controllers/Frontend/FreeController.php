@@ -13,7 +13,6 @@ class FreeController extends Controller
         $movieModel   = $this->model('Movie');
         $sectionModel = $this->model('HomepageSection');
 
-        // FIX: pass userId
         $banners  = $movieModel->getBannerMovies($userId);
         $genres   = $genreModel->all();
         $sections = $sectionModel->allActive();

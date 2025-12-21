@@ -19,7 +19,7 @@ class SearchController extends Controller
         ]);
     }
 
-    /** AJAX search */
+    /* search */
     public function results()
     {
         $query = trim($_GET['q'] ?? '');
