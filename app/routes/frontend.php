@@ -41,9 +41,13 @@ $routes = [
 
     //Cast
     "cast/show" => "Frontend/CastController@show",
-
+    
     //WatchList Remove
     "movie/add-watchlist" => "Frontend/ProfileController@addToWatchlist",
     "movie/remove-watchlist" => "Frontend/ProfileController@removeFromWatchlist",
-
+    
+    // See all
+    "seeall/show" => "Frontend/SeeallController@show",
+    "seeall/new-releases" => "Frontend/SeeallController@newReleases",
+    
 ];

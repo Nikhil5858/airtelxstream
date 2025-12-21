@@ -1,50 +1,49 @@
 <div class="search-container">
     <i class="search-icon bi bi-search"></i>
     <input type="text"
-       id="searchInput"
-       placeholder="Search for movies, shows, channels..."
-       autocomplete="off" />
+        id="searchInput"
+        placeholder="Search for movies, shows, channels..."
+        autocomplete="off" />
 
 </div>
 <hr>
 
 <div class="live-section mt-3">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="text-white m-0"><i class="bi bi-arrow-up-right"></i>  Trending</h3>
-        <a href="seeall.html" class="text-white">See All</a>
+        <h3 class="text-white m-0"><i class="bi bi-arrow-up-right"></i> Trending</h3>
     </div>
 
     <div class="live-scroll-container">
         <button class="scroll-btn left-btn">❮</button>
 
-            <div class="live-scroller">
-                <div id="searchLoader" class="text-center my-4 d-none">
-                    <div class="spinner-border text-light" role="status"></div>
-                </div>
+        <div class="live-scroller">
+            <div id="searchLoader" class="text-center my-4 d-none">
+                <div class="spinner-border text-light" role="status"></div>
+            </div>
 
-                <div class="live-scroll-inner" id="searchResults">
+            <div class="live-scroll-inner" id="searchResults">
 
-                    <?php foreach ($trending as $movie): ?>
-                        <div class="live-card-wrapper">
-                            <a href="<?= BASE_URL ?>/movie/show?id=<?= (int)$movie['id'] ?>" class="movie-link">
-                                <div class="live-card">
-                                    <img src="<?= BASE_URL ?>/assets/images/<?= htmlspecialchars($movie['banner_url']) ?>">
+                <?php foreach ($trending as $movie): ?>
+                    <div class="live-card-wrapper">
+                        <a href="<?= BASE_URL ?>/movie/show?id=<?= (int)$movie['id'] ?>" class="movie-link">
+                            <div class="live-card">
+                                <img src="<?= BASE_URL ?>/assets/images/<?= htmlspecialchars($movie['banner_url']) ?>">
 
-                                    <div class="live-overlay">
-                                        <h5 class="live-title"><?= htmlspecialchars($movie['title']) ?></h5>
+                                <div class="live-overlay">
+                                    <h5 class="live-title"><?= htmlspecialchars($movie['title']) ?></h5>
 
-                                        <div class="live-badges">
-                                            <span class="badge live">Trending</span>
-                                            <span class="badge type"><?= htmlspecialchars($movie['type']) ?></span>
-                                        </div>
+                                    <div class="live-badges">
+                                        <span class="badge live">Trending</span>
+                                        <span class="badge type"><?= htmlspecialchars($movie['type']) ?></span>
                                     </div>
                                 </div>
-                            </a>
-                        </div>
-                    <?php endforeach; ?>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
 
-                </div>
             </div>
+        </div>
 
         <button class="scroll-btn right-btn">❯</button>
     </div>
@@ -122,4 +121,3 @@
         }, 300);
     });
 </script>
-

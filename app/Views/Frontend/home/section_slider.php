@@ -5,7 +5,10 @@
         <h3 class="text-white m-0">
             <?= htmlspecialchars($section['title']) ?>
         </h3>
-        <a href="#" class="text-white">See All</a>
+        <a href="<?= BASE_URL ?>/seeall/show?id=<?= (int)$section['id'] ?>"
+            class="text-white">
+            See All
+        </a>
     </div>
 
     <div class="movie-scroll-container">

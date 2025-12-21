@@ -1,7 +1,10 @@
 <div class="movie-section mt-3">
     <div class="d-flex justify-content-between align-items-center">
         <h3 class="text-white m-0">New Releases</h3>
-        <a href="./seeall.html" class="text-white">See All</a>
+        <a href="<?= BASE_URL ?>/seeall/new-releases" class="text-white">
+            See All
+        </a>
+
     </div>
     <div class="movie-scroll-container">
         <button class="scroll-btn left-btn">❮</button>
