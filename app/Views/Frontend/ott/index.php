@@ -1,75 +1,5 @@
-<!-- OTT Logos Row -->
-<div class="ott-section">
-    <div class="d-flex justify-content-between align-items-center">
-        <h3 class="ott-title m-0">Explore OTTs</h3>
-    </div>
-    <div class="ott-scroll-container">
-
-        <button class="ott-scroll-btn ott-left-btn">❮</button>
-
-        <div class="ott-scroller">
-
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-jio">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan2.webp">
-                    </div>
-                </div>
-            </a>
-
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-zee">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan3.webp">
-                    </div>
-                </div>
-            </a>
-
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-sony">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan4.webp">
-                    </div>
-                </div>
-            </a>
-
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-aha">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan5.webp">
-                    </div>
-                </div>
-            </a>
-
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-lionsgate">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan12.webp">
-                    </div>
-                </div>
-            </a>
-
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-hungama">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan14.webp">
-                    </div>
-                </div>
-            </a>
-            <a href="./singleott.html">
-                <div class="ott-card-wrapper">
-                    <div class="ott-card bg-sunnxt">
-                        <img src="<?= BASE_URL ?>/assets/images/ott/plan15.webp">
-                    </div>
-                </div>
-            </a>
-
-        </div>
-
-
-        <button class="ott-scroll-btn ott-right-btn">❯</button>
-
-    </div>
+<div class="text-center mx-3 mt-3 mb-3">
+    <a href="<?= BASE_URL ?>/myplan"><img src="<?= BASE_URL ?>/assets/images/index/lionsgateselect.webp" class="img-fluid rounded-2 wifi-banner"></a>
 </div>
 
 <?php foreach ($otts as $ott): ?>
@@ -135,6 +65,11 @@
     <?php endforeach; ?>
 
     </div>
+
+    <!-- Banner -->
+<?php require ROOT_PATH . "app/Views/Frontend/home/wifi_banner.php"; ?>
+
+
     <!-- Upper Footer -->
     <?php require ROOT_PATH . "app/Views/layouts/upper_footer.php"; ?>
 

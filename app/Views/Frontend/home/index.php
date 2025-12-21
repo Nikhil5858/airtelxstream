@@ -33,7 +33,7 @@
 
 <!-- Banner -->
 <div class="text-center mx-3 mt-3 mb-3">
-    <a href="#"><img src="<?= BASE_URL ?>/assets/images/index/banner.png" class="img-fluid rounded-2 wifi-banner"></a>
+    <a href="<?= BASE_URL ?>/free"><img src="<?= BASE_URL ?>/assets/images/index/banner.png" class="img-fluid rounded-2 wifi-banner"></a>
 </div>
 
 <!-- Upper Footer -->
