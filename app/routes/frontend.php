@@ -37,6 +37,7 @@ $routes = [
 
     //Ott
     "ott" => "Frontend/OttController@index",
+    "ott/show" => "Frontend/OttController@show",
 
     //Cast
     "cast/show" => "Frontend/CastController@show",
