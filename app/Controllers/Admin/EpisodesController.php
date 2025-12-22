@@ -32,7 +32,6 @@ class EpisodesController extends Controller
             return;
         }
 
-        // ✅ POSTER IMAGE
         $posterName = null;
         if (!empty($_FILES['poster_img']['name'])) {
             $posterName = time().'_'.$_FILES['poster_img']['name'];
@@ -42,7 +41,6 @@ class EpisodesController extends Controller
             );
         }
 
-        // ✅ VIDEO FILE
         $videoName = null;
         if (!empty($_FILES['video_file']['name'])) {
             $videoName = time().'_'.$_FILES['video_file']['name'];
